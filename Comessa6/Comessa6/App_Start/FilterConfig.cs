@@ -3,11 +3,12 @@ using System.Web.Mvc;
 
 namespace Comessa6
 {
-  public class FilterConfig
-  {
-    public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+    public class FilterConfig
     {
-      filters.Add(new HandleErrorAttribute());
+        public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+        {
+            filters.Add(new HandleErrorAttribute());
+            filters.Add(new AuthorizeAttribute());//New Line
+        }
     }
-  }
 }
