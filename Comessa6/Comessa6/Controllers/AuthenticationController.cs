@@ -15,6 +15,7 @@ namespace Comessa6.Controllers
     public ActionResult Logout()
     {
       FormsAuthentication.SignOut();
+      Session["UserName"] = null;
       return RedirectToAction("Login");
     }
 
@@ -25,10 +26,12 @@ namespace Comessa6.Controllers
     }
 
     [HttpPost]
-    public ActionResult DoLogin(UserDetails u)
+    public ActionResult DoLogin(UserViewModel u)
     {
       if (ModelState.IsValid)
       {
+        Session["UserName"] = u.Name;
+        FormsAuthentication.SetAuthCookie(u.Name, u.RememberMe);
         return RedirectToAction("Index", "Home");
         //EmployeeBusinessLayer bal = new EmployeeBusinessLayer();
         //if (bal.IsValidUser(u))
