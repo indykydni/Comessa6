@@ -25,5 +25,8 @@ namespace Comessa6.Models
         public Nullable<int> status { get; set; }
         public System.DateTime date { get; set; }
         public System.DateTime lastModified { get; set; }
+    
+        public virtual citem citem { get; set; }
+        public virtual cuser cuser { get; set; }
     }
 }

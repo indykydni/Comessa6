@@ -14,6 +14,15 @@ namespace Comessa6.Models
     
     public partial class cuser
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public cuser()
+        {
+            this.cnotification = new HashSet<cnotification>();
+            this.cnotification1 = new HashSet<cnotification>();
+            this.corder = new HashSet<corder>();
+            this.cpayment = new HashSet<cpayment>();
+        }
+    
         public int id { get; set; }
         public string name { get; set; }
         public string login { get; set; }
@@ -21,5 +30,14 @@ namespace Comessa6.Models
         public string ip { get; set; }
         public bool isMasterServer { get; set; }
         public bool isServer { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<cnotification> cnotification { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<cnotification> cnotification1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<corder> corder { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<cpayment> cpayment { get; set; }
     }
 }

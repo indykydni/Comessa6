@@ -21,5 +21,7 @@ namespace Comessa6.Models
         public Nullable<int> recipientId { get; set; }
         public decimal amount { get; set; }
         public System.DateTime date { get; set; }
+    
+        public virtual cuser cuser { get; set; }
     }
 }

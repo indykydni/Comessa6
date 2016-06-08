@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Web;
 
-namespace Comessa6.Utils
+namespace Comessa6
 {
   public static class Utils
   {

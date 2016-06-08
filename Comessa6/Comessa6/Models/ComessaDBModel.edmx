@@ -24,10 +24,10 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="userId" Type="int" Nullable="false" />
+          <Property Name="senderId" Type="int" />
           <Property Name="date" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="text" Type="text" />
-          <Property Name="cmdType" Type="tinyint" Nullable="false" />
-          <Property Name="cmdText" Type="text" />
+          <Property Name="eventCode" Type="text" />
         </EntityType>
         <EntityType Name="corder">
           <Key>
@@ -83,6 +83,78 @@
           <Property Name="isMasterServer" Type="bool" Nullable="false" />
           <Property Name="isServer" Type="bool" Nullable="false" />
         </EntityType>
+        <Association Name="FK_cnotification_cuser">
+          <End Role="cuser" Type="Self.cuser" Multiplicity="1" />
+          <End Role="cnotification" Type="Self.cnotification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cuser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cnotification">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cnotification_cuser_2">
+          <End Role="cuser" Type="Self.cuser" Multiplicity="0..1" />
+          <End Role="cnotification" Type="Self.cnotification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cuser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cnotification">
+              <PropertyRef Name="senderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cpayment_cuser">
+          <End Role="cuser" Type="Self.cuser" Multiplicity="0..1" />
+          <End Role="cpayment" Type="Self.cpayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cuser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cpayment">
+              <PropertyRef Name="senderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="itemID">
+          <End Role="citem" Type="Self.citem" Multiplicity="0..1" />
+          <End Role="corder" Type="Self.corder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="citem">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="corder">
+              <PropertyRef Name="itemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="providerId">
+          <End Role="cprovider" Type="Self.cprovider" Multiplicity="0..1" />
+          <End Role="citem" Type="Self.citem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cprovider">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="citem">
+              <PropertyRef Name="providerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="userID">
+          <End Role="cuser" Type="Self.cuser" Multiplicity="0..1" />
+          <End Role="corder" Type="Self.corder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cuser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="corder">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="comessa5ModelStoreContainer">
           <EntitySet Name="citem" EntityType="Self.citem" Schema="comessa5" store:Type="Tables" />
           <EntitySet Name="cnotification" EntityType="Self.cnotification" Schema="comessa5" store:Type="Tables" />
@@ -90,6 +162,30 @@
           <EntitySet Name="cpayment" EntityType="Self.cpayment" Schema="comessa5" store:Type="Tables" />
           <EntitySet Name="cprovider" EntityType="Self.cprovider" Schema="comessa5" store:Type="Tables" />
           <EntitySet Name="cuser" EntityType="Self.cuser" Schema="comessa5" store:Type="Tables" />
+          <AssociationSet Name="FK_cnotification_cuser" Association="Self.FK_cnotification_cuser">
+            <End Role="cuser" EntitySet="cuser" />
+            <End Role="cnotification" EntitySet="cnotification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cnotification_cuser_2" Association="Self.FK_cnotification_cuser_2">
+            <End Role="cuser" EntitySet="cuser" />
+            <End Role="cnotification" EntitySet="cnotification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cpayment_cuser" Association="Self.FK_cpayment_cuser">
+            <End Role="cuser" EntitySet="cuser" />
+            <End Role="cpayment" EntitySet="cpayment" />
+          </AssociationSet>
+          <AssociationSet Name="itemID" Association="Self.itemID">
+            <End Role="citem" EntitySet="citem" />
+            <End Role="corder" EntitySet="corder" />
+          </AssociationSet>
+          <AssociationSet Name="providerId" Association="Self.providerId">
+            <End Role="cprovider" EntitySet="cprovider" />
+            <End Role="citem" EntitySet="citem" />
+          </AssociationSet>
+          <AssociationSet Name="userID" Association="Self.userID">
+            <End Role="cuser" EntitySet="cuser" />
+            <End Role="corder" EntitySet="corder" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -108,6 +204,8 @@
           <Property Name="isVisible" Type="Boolean" Nullable="false" />
           <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="priority" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="corder" Relationship="Self.itemID" FromRole="citem" ToRole="corder" />
+          <NavigationProperty Name="cprovider" Relationship="Self.providerId" FromRole="citem" ToRole="cprovider" />
         </EntityType>
         <EntityType Name="cnotification">
           <Key>
@@ -115,10 +213,12 @@
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="userId" Type="Int32" Nullable="false" />
+          <Property Name="senderId" Type="Int32" />
           <Property Name="date" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="text" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="cmdType" Type="SByte" Nullable="false" />
-          <Property Name="cmdText" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="eventCode" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="cuser" Relationship="Self.FK_cnotification_cuser" FromRole="cnotification" ToRole="cuser" />
+          <NavigationProperty Name="cuser1" Relationship="Self.FK_cnotification_cuser_2" FromRole="cnotification" ToRole="cuser" />
         </EntityType>
         <EntityType Name="corder">
           <Key>
@@ -135,6 +235,8 @@
           <Property Name="status" Type="Int32" />
           <Property Name="date" Type="DateTime" Nullable="false" />
           <Property Name="lastModified" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="citem" Relationship="Self.itemID" FromRole="corder" ToRole="citem" />
+          <NavigationProperty Name="cuser" Relationship="Self.userID" FromRole="corder" ToRole="cuser" />
         </EntityType>
         <EntityType Name="cpayment">
           <Key>
@@ -147,6 +249,7 @@
           <Property Name="recipientId" Type="Int32" />
           <Property Name="amount" Type="Decimal" Nullable="false" />
           <Property Name="date" Type="DateTime" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="cuser" Relationship="Self.FK_cpayment_cuser" FromRole="cpayment" ToRole="cuser" />
         </EntityType>
         <EntityType Name="cprovider">
           <Key>
@@ -161,6 +264,7 @@
           <Property Name="dinnerText" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="dinnerLastModified" Type="DateTime" Nullable="false" />
           <Property Name="priority" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="citem" Relationship="Self.providerId" FromRole="cprovider" ToRole="citem" />
         </EntityType>
         <EntityType Name="cuser">
           <Key>
@@ -173,21 +277,121 @@
           <Property Name="ip" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="isMasterServer" Type="Boolean" Nullable="false" />
           <Property Name="isServer" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="cnotification" Relationship="Self.FK_cnotification_cuser" FromRole="cuser" ToRole="cnotification" />
+          <NavigationProperty Name="cnotification1" Relationship="Self.FK_cnotification_cuser_2" FromRole="cuser" ToRole="cnotification" />
+          <NavigationProperty Name="corder" Relationship="Self.userID" FromRole="cuser" ToRole="corder" />
+          <NavigationProperty Name="cpayment" Relationship="Self.FK_cpayment_cuser" FromRole="cuser" ToRole="cpayment" />
         </EntityType>
-        <EntityContainer Name="comessa5Entities" annotation:LazyLoadingEnabled="true">
+        <Association Name="itemID">
+          <End Role="citem" Type="Self.citem" Multiplicity="0..1" />
+          <End Role="corder" Type="Self.corder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="citem">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="corder">
+              <PropertyRef Name="itemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="providerId">
+          <End Role="cprovider" Type="Self.cprovider" Multiplicity="0..1" />
+          <End Role="citem" Type="Self.citem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cprovider">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="citem">
+              <PropertyRef Name="providerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cnotification_cuser">
+          <End Role="cuser" Type="Self.cuser" Multiplicity="1" />
+          <End Role="cnotification" Type="Self.cnotification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cuser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cnotification">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cnotification_cuser_2">
+          <End Role="cuser" Type="Self.cuser" Multiplicity="0..1" />
+          <End Role="cnotification" Type="Self.cnotification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cuser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cnotification">
+              <PropertyRef Name="senderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="userID">
+          <End Role="cuser" Type="Self.cuser" Multiplicity="0..1" />
+          <End Role="corder" Type="Self.corder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cuser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="corder">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_cpayment_cuser">
+          <End Role="cuser" Type="Self.cuser" Multiplicity="0..1" />
+          <End Role="cpayment" Type="Self.cpayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cuser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cpayment">
+              <PropertyRef Name="senderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="comessa5Entities3" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="citem" EntityType="Self.citem" />
           <EntitySet Name="cnotification" EntityType="Self.cnotification" />
           <EntitySet Name="corder" EntityType="Self.corder" />
           <EntitySet Name="cpayment" EntityType="Self.cpayment" />
           <EntitySet Name="cprovider" EntityType="Self.cprovider" />
           <EntitySet Name="cuser" EntityType="Self.cuser" />
+          <AssociationSet Name="itemID" Association="Self.itemID">
+            <End Role="citem" EntitySet="citem" />
+            <End Role="corder" EntitySet="corder" />
+          </AssociationSet>
+          <AssociationSet Name="providerId" Association="Self.providerId">
+            <End Role="cprovider" EntitySet="cprovider" />
+            <End Role="citem" EntitySet="citem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cnotification_cuser" Association="Self.FK_cnotification_cuser">
+            <End Role="cuser" EntitySet="cuser" />
+            <End Role="cnotification" EntitySet="cnotification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cnotification_cuser_2" Association="Self.FK_cnotification_cuser_2">
+            <End Role="cuser" EntitySet="cuser" />
+            <End Role="cnotification" EntitySet="cnotification" />
+          </AssociationSet>
+          <AssociationSet Name="userID" Association="Self.userID">
+            <End Role="cuser" EntitySet="cuser" />
+            <End Role="corder" EntitySet="corder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_cpayment_cuser" Association="Self.FK_cpayment_cuser">
+            <End Role="cuser" EntitySet="cuser" />
+            <End Role="cpayment" EntitySet="cpayment" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="comessa5ModelStoreContainer" CdmEntityContainer="comessa5Entities">
+        <EntityContainerMapping StorageEntityContainer="comessa5ModelStoreContainer" CdmEntityContainer="comessa5Entities3">
           <EntitySetMapping Name="citem">
             <EntityTypeMapping TypeName="comessa5Model.citem">
               <MappingFragment StoreEntitySet="citem">
@@ -207,10 +411,10 @@
               <MappingFragment StoreEntitySet="cnotification">
                 <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="senderId" ColumnName="senderId" />
                 <ScalarProperty Name="date" ColumnName="date" />
                 <ScalarProperty Name="text" ColumnName="text" />
-                <ScalarProperty Name="cmdType" ColumnName="cmdType" />
-                <ScalarProperty Name="cmdText" ColumnName="cmdText" />
+                <ScalarProperty Name="eventCode" ColumnName="eventCode" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -30,20 +30,20 @@ namespace Comessa6.Controllers
     {
       if (ModelState.IsValid)
       {
-        Session["UserName"] = u.Name;
-        FormsAuthentication.SetAuthCookie(u.Name, u.RememberMe);
-        return RedirectToAction("Index", "Home");
-        //EmployeeBusinessLayer bal = new EmployeeBusinessLayer();
-        //if (bal.IsValidUser(u))
-        //{
-        //  FormsAuthentication.SetAuthCookie(u.Name, false);
-        //  return RedirectToAction("Index", "Employee");
-        //}
-        //else
-        //{
-        //  ModelState.AddModelError("CredentialError", "Invalid Name or Password");
-        //  return View("Login");
-        //}
+        using (var db = new comessa5Entities())
+        {
+          cuser dbUser = db.cuser.Where(user => string.Equals(user.login, u.Name)).FirstOrDefault();
+          if (dbUser == null || !string.Equals(u.Password.CalculateMD5Hash(), dbUser.password, StringComparison.InvariantCultureIgnoreCase))
+          {
+            ModelState.AddModelError("CredentialError", "Invalid Name or Password");
+              return View("Login");
+          }
+          Session["UserName"] = u.Name;
+          Session["UserID"] = dbUser.id;
+          Session["IsAdmin"] = dbUser.isServer;
+          FormsAuthentication.SetAuthCookie(u.Name, u.RememberMe);
+          return RedirectToAction("Index", "Home");
+        }
       }
       return View("Login");
     }

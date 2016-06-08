@@ -14,6 +14,12 @@ namespace Comessa6.Models
     
     public partial class citem
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public citem()
+        {
+            this.corder = new HashSet<corder>();
+        }
+    
         public int id { get; set; }
         public string name { get; set; }
         public string keywords { get; set; }
@@ -22,5 +28,9 @@ namespace Comessa6.Models
         public bool isVisible { get; set; }
         public byte[] image { get; set; }
         public int priority { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<corder> corder { get; set; }
+        public virtual cprovider cprovider { get; set; }
     }
 }

@@ -16,9 +16,12 @@ namespace Comessa6.Models
     {
         public int id { get; set; }
         public int userId { get; set; }
+        public Nullable<int> senderId { get; set; }
         public System.DateTime date { get; set; }
         public string text { get; set; }
-        public sbyte cmdType { get; set; }
-        public string cmdText { get; set; }
+        public string eventCode { get; set; }
+    
+        public virtual cuser cuser { get; set; }
+        public virtual cuser cuser1 { get; set; }
     }
 }
