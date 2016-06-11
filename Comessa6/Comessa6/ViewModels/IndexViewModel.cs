@@ -7,6 +7,6 @@ namespace Comessa6.ViewModels
 {
   public class IndexViewModel
   {
-    public OrdersViewModel Orders { get; set; }
+    public OrdersViewModel RecentOrders { get; set; }
   }
 }

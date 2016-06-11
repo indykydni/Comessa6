@@ -18,12 +18,13 @@ namespace Comessa6.Controllers
         //System.Web.Security.FormsAuthentication.GetAuthCookie()
         return RedirectToAction("Login", "Authentication");
       }
-      OrdersViewModel orders = new OrdersViewModel();
+      IndexViewModel indexVM = new IndexViewModel();
+      indexVM.RecentOrders = new OrdersViewModel();
       using (var db = new comessa5Entities())
       {
         int id = (int)Session["UserID"];
-        var s = db.corder.Include("citem").Include("citem.cprovider")
-          .Where(order => order.userId == id).ToList();
+        var ordersInfo = db.corder.Include("citem").Include("citem.cprovider")
+          .Where(order => order.userId == id).OrderBy(order => order.date).Take(10);
         //var ss = (from corder order in db.corder
         //          where order.userId.Equals(Session["UserID"])
         //          select new OrderViewModel
@@ -35,9 +36,19 @@ namespace Comessa6.Controllers
         //            UserName = Session["UserName"].ToString()//,
         //                                          //ProviderName = from citem item in db.citem where item.id == order.itemId select item.
         //          });
+        foreach(var orderInfo in ordersInfo.ToList())
+        {
+          indexVM.RecentOrders.Orders.Add(new OrderViewModel
+          {
+            ItemName = orderInfo.citem.name,
+            Price = orderInfo.price,
+            Comment = orderInfo.comment,
+            ProviderName = orderInfo.citem.cprovider.name
+          });
+        }
         
       }
-      return View();
+      return View(indexVM);
     }
 
     public ActionResult About()

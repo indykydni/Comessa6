@@ -8,6 +8,16 @@ namespace Comessa6.ViewModels
 {
   public class OrdersViewModel
   {
-    List<OrderViewModel> Orders { get; set; }
+    public OrdersViewModel()
+    {
+      this.Orders = new List<OrderViewModel>();
+    }
+
+    public OrdersViewModel(List<OrderViewModel> orders)
+    {
+      this.Orders = orders;
+    }
+
+    public List<OrderViewModel> Orders { get; set; }
   }
 }
