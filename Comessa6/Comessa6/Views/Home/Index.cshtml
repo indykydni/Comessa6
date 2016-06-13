@@ -1,42 +1,67 @@
-﻿@{
-    ViewBag.Title = "Comessa6";
+﻿<!DOCTYPE html>
+@{
+  ViewBag.Title = "Comessa6";
 }
 @using Comessa6.ViewModels;
 @model IndexViewModel
-
-<div class="jumbotron">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+    <title>Comessa6</title>
+    <!-- Bootstrap core CSS -->
+    <link href="../../Content/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    @*<link href="../../Content/dashboard.css" rel="stylesheet">
+    <link href="../../Content/panels.css" rel="stylesheet">*@
+</head>
+@*<div class="jumbotron">
     <h1>Comessa6</h1>
     <p class="lead">Order your lunch here</p>
+</div>*@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
+                <li><a href="#">Reports</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="">Nav item</a></li>
+                <li><a href="">Nav item again</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="">Nav item again</a></li>
+            </ul>
+        </div>
+    <div class="col-md-4">
+        <div class="panel-group">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h5 class="panel-title pull-left">
+                        Current orders
+                    </h5>
+                </div>
+                @foreach (OrderViewModel order in Model.RecentOrders.Orders)
+                {
+                <div class="panel-body">
+                    <h3 class="panel-title pull-left">
+                        @order.ItemName
+                    </h3>
+                    <h4 class="panel-title">
+                        @order.Price
+                    </h4>
+                    <button class="btn btn-default pull-right">Remove</button>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="panel-footer" style="font-size: 12px">@order.ProviderName</div>
+                }
+            </div>
+        </div>
+    </div>
 </div>
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;<span class="badge">33</span></a></p>
-    </div>
-    <div class="col-md-4">
-        @foreach (OrderViewModel order in Model.RecentOrders.Orders)
-        {
-        <tr>
-            <td>@order.ProviderName</td>
-            <td>@order.ItemName</td>
-            <td>@order.Comment</td>
-            <td>@order.Price</td>
-            <td>@order.Quantity</td>
-        </tr>
-        }
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
 </div>

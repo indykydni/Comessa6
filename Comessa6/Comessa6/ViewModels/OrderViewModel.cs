@@ -20,5 +20,6 @@ namespace Comessa6.ViewModels
     public decimal Price { get; set; }
     public string UserName { get; set; }
     public string Comment { get; set; }
+    public OrderStatus Status { get; set; }
   }
 }

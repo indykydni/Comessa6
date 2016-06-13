@@ -30,4 +30,15 @@ namespace Comessa6
       }
     }
   }
+
+  /// <summary>
+  /// As already defined in the existing DB
+  /// </summary>
+  public enum OrderStatus
+  {
+    Ordered = 0,
+    InProgress = 1,
+    Done = 2,
+    Payment = 99
+  }
 }

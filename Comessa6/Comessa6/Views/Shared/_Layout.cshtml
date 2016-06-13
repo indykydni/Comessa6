@@ -24,6 +24,7 @@
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    @*<li><span class="glyphicon glyphicon-log-out"></span></li>*@
                     <li>@Html.ActionLink(string.IsNullOrEmpty(HttpContext.Current.Session["UserName"]?.ToString()) ? "Log in" : "Log out " + HttpContext.Current.Session["UserName"].ToString(), "Logout", "Authentication")</li>
                 </ul>
             </div>
@@ -33,7 +34,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Comessa6</p>
         </footer>
     </div>
 

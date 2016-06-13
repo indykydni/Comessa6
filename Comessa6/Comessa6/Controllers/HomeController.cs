@@ -43,7 +43,8 @@ namespace Comessa6.Controllers
             ItemName = orderInfo.citem.name,
             Price = orderInfo.price,
             Comment = orderInfo.comment,
-            ProviderName = orderInfo.citem.cprovider.name
+            ProviderName = orderInfo.citem.cprovider.name,
+            Status = (OrderStatus)orderInfo.status
           });
         }
         
