@@ -39,28 +39,32 @@
             </ul>
         </div>
     <div class="col-md-4">
-        <div class="panel-group">
+        <div class="panel-group" id="accordion">
             <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <h5 class="panel-title pull-left">
-                        Current orders
-                    </h5>
-                </div>
+                @{int i = 0; }
                 @foreach (OrderViewModel order in Model.RecentOrders.Orders)
                 {
-                <div class="panel-body">
+                  i++;
+                <div class="panel-heading">
                     <h3 class="panel-title pull-left">
-                        @order.ItemName
+                        <a data-toggle="collapse" data-parent="#accordion" href="#@i.ToString()">@order.ItemName</a>
                     </h3>
-                    <h4 class="panel-title">
-                        @order.Price
-                    </h4>
-                    <button class="btn btn-default pull-right">Remove</button>
-                    <div class="clearfix"></div>
                 </div>
-                <div class="panel-footer" style="font-size: 12px">@order.ProviderName</div>
-                }
-            </div>
+                <div id="@i.ToString()" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <h5 class="panel-title pull-left">
+                            @order.ProviderName
+                        </h5>
+                        <h5 class="panel-title">
+                            @order.Price
+                        </h5>
+                        <button class="btn btn-default pull-right">Remove</button>
+                        <div class="clearfix"></div>
+                    </div>
+                    </div>
+                    @*<div class="panel-footer" style="font-size: 12px">@order.ProviderName</div>*@
+                    }
+                </div>
         </div>
     </div>
 </div>

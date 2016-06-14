@@ -24,7 +24,7 @@ namespace Comessa6.Controllers
       {
         int id = (int)Session["UserID"];
         var ordersInfo = db.corder.Include("citem").Include("citem.cprovider")
-          .Where(order => order.userId == id).OrderBy(order => order.date).Take(10);
+          .Where(order => order.userId == id).OrderByDescending(order => order.date).Take(10);
         //var ss = (from corder order in db.corder
         //          where order.userId.Equals(Session["UserID"])
         //          select new OrderViewModel
