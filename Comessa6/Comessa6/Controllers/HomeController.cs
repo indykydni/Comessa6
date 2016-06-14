@@ -22,24 +22,16 @@ namespace Comessa6.Controllers
       indexVM.RecentOrders = new OrdersViewModel();
       using (var db = new comessa5Entities())
       {
+        #region Get orders
         int id = (int)Session["UserID"];
         var ordersInfo = db.corder.Include("citem").Include("citem.cprovider")
           .Where(order => order.userId == id).OrderByDescending(order => order.date).Take(10);
-        //var ss = (from corder order in db.corder
-        //          where order.userId.Equals(Session["UserID"])
-        //          select new OrderViewModel
-        //          {
-        //            ItemName = order.itemName,
-        //            Price = order.price,
-        //            Comment = order.comment,
-        //            Quantity = order.quantity,
-        //            UserName = Session["UserName"].ToString()//,
-        //                                          //ProviderName = from citem item in db.citem where item.id == order.itemId select item.
-        //          });
-        foreach(var orderInfo in ordersInfo.ToList())
+
+        foreach (var orderInfo in ordersInfo)
         {
           indexVM.RecentOrders.Orders.Add(new OrderViewModel
           {
+            ID = orderInfo.id,
             ItemName = orderInfo.citem.name,
             Price = orderInfo.price,
             Comment = orderInfo.comment,
@@ -47,7 +39,19 @@ namespace Comessa6.Controllers
             Status = (OrderStatus)orderInfo.status
           });
         }
-        
+        #endregion
+        #region Get Items
+        indexVM.Providers = new Dictionary<string, List<ItemViewModel>>();
+        var itemsInfo = db.citem.Include("cprovider").Where(item => item.isVisible).OrderBy(item => item.cprovider.priority).ThenBy(item => item.priority);
+        foreach (var itemInfo in itemsInfo)
+        {
+          ItemViewModel itemVM = new ItemViewModel { ID = itemInfo.id, Name = itemInfo.name, Price = itemInfo.price };
+          if (indexVM.Providers.ContainsKey(itemInfo.cprovider.name))
+            indexVM.Providers[itemInfo.cprovider.name].Add(itemVM);
+          else
+            indexVM.Providers.Add(itemInfo.cprovider.name, new List<ItemViewModel> { itemVM});
+        }
+        #endregion
       }
       return View(indexVM);
     }

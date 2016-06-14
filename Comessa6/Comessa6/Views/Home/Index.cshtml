@@ -16,41 +16,50 @@
     <!-- Bootstrap core CSS -->
     <link href="../../Content/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    @*<link href="../../Content/dashboard.css" rel="stylesheet">
-    <link href="../../Content/panels.css" rel="stylesheet">*@
+    @*<link href="../../Content/panels.css" rel="stylesheet">*@
 </head>
-@*<div class="jumbotron">
-    <h1>Comessa6</h1>
-    <p class="lead">Order your lunch here</p>
-</div>*@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
-                <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Reports</a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li><a href="">Nav item</a></li>
-                <li><a href="">Nav item again</a></li>
-            </ul>
-            <ul class="nav nav-sidebar">
-                <li><a href="">Nav item again</a></li>
-            </ul>
+        <div class="col-md-4 col-md-4 sidebar">
+            <div class="panel-group" id="providers">
+                <div class="panel panel-default">
+                    @{int i = 0; }
+                    @foreach (KeyValuePair<string, List<ItemViewModel>> provider in Model.Providers)
+                    {
+                        i++;
+                    <div class="panel-heading">
+                            <a data-toggle="collapse" data-parent="#providers" href="#@("i" + i.ToString())">@provider.Key</a>                        
+                    </div>
+                    <div id="@("i" + i.ToString())" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            @foreach (ItemViewModel item in provider.Value)
+                            {
+                            <table>
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td align="right">@item.Price</td>
+                                </tr>
+                            </table>
+                            }
+                        </div>
+                    </div>
+                    }
+                </div>
+            </div>
         </div>
     <div class="col-md-4">
         <div class="panel-group" id="accordion">
             <div class="panel panel-primary">
-                @{int i = 0; }
+                @{int j = 0; }
                 @foreach (OrderViewModel order in Model.RecentOrders.Orders)
                 {
-                  i++;
+                  j++;
                 <div class="panel-heading">
                     <h3 class="panel-title pull-left">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#@i.ToString()">@order.ItemName</a>
+                        <a data-toggle="collapse" data-parent="#accordion" href="#@("o" + j.ToString())">@order.ItemName</a>
                     </h3>
                 </div>
-                <div id="@i.ToString()" class="panel-collapse collapse">
+                <div id="@("o" + j.ToString())" class="panel-collapse collapse">
                     <div class="panel-body">
                         <h5 class="panel-title pull-left">
                             @order.ProviderName

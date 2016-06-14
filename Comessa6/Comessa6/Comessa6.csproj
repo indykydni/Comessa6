@@ -210,6 +210,9 @@
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\FooterViewModel.cs" />
     <Compile Include="ViewModels\IndexViewModel.cs" />
+    <Compile Include="ViewModels\ItemViewModel.cs" />
+    <Compile Include="ViewModels\ProviderViewModel.cs" />
+    <Compile Include="ViewModels\ProvidersViewModel.cs" />
     <Compile Include="ViewModels\OrdersViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
@@ -217,7 +220,6 @@
     <Compile Include="Utils\Utils.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\dashboard.css" />
     <Content Include="Content\panels.css" />
     <Content Include="favicon.ico" />
     <Content Include="Content\bootstrap-theme.css" />
