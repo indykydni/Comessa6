@@ -16,7 +16,7 @@
     <!-- Bootstrap core CSS -->
     <link href="../../Content/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
-    @*<link href="../../Content/panels.css" rel="stylesheet">*@
+    <link href="../../Content/Site.css" rel="stylesheet">
 </head>
 <div class="container-fluid">
     <div class="row">
@@ -48,33 +48,51 @@
             </div>
         </div>
     <div class="col-md-4">
-        <div class="panel-group" id="accordion">
-            <div class="panel panel-primary">
-                @{int j = 0; }
-                @foreach (OrderViewModel order in Model.RecentOrders.Orders)
-                {
-                  j++;
-                <div class="panel-heading">
-                    <h3 class="panel-title pull-left">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#@("o" + j.ToString())">@order.ItemName</a>
-                    </h3>
+        <div class="panel panel-success">
+            <div class="panel panel-header">
+                <h3 class="panel-title">
+                    To order
+                </h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-sm-6 form-group">
+                        <input class="form-control" id="item" name="item" placeholder="Item" type="text" required>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <input class="form-control" id="quantity" name="quantity" placeholder="Quantity" type="number" required>
+                    </div>
                 </div>
-                <div id="@("o" + j.ToString())" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <h5 class="panel-title pull-left">
-                            @order.ProviderName
-                        </h5>
-                        <h5 class="panel-title">
-                            @order.Price
-                        </h5>
-                        <button class="btn btn-default pull-right">Remove</button>
-                        <div class="clearfix"></div>
-                    </div>
-                    </div>
-                    @*<div class="panel-footer" style="font-size: 12px">@order.ProviderName</div>*@
+                <textarea class="form-control" id="comments" name="comments" placeholder="Comments" rows="5"></textarea>
+            </div>
+            </div>
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    @{int j = 0; }
+                    @foreach (OrderViewModel order in Model.RecentOrders.Orders)
+                    {
+                        j++;
+                        <div class="panel-heading">
+                            <h3 class="panel-title pull-left">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#@("o" + j.ToString())">@order.ItemName</a>
+                            </h3>
+                        </div>
+                        <div id="@("o" + j.ToString())" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <h5 class="panel-title pull-left">
+                                    @order.ProviderName
+                                </h5>
+                                <h5 class="panel-title">
+                                    @order.Price
+                                </h5>
+                                <button class="btn btn-default pull-right">Remove</button>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        @*<div class="panel-footer" style="font-size: 12px">@order.ProviderName</div>*@
                     }
                 </div>
+            </div>
         </div>
-    </div>
 </div>
 </div>
