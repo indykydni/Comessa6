@@ -4,6 +4,7 @@
 }
 @using Comessa6.ViewModels;
 @model IndexViewModel
+<script type="text/javascript" src="../../Scripts/ordering.js"></script>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -34,9 +35,15 @@
                         <div class="panel-body">
                             @foreach (ItemViewModel item in provider.Value)
                             {
+                                
                             <table>
                                 <tr>
-                                    <td>@item.Name</td>
+                                    <td>
+                                        <button class="btn pull-right" type="submit" id=@item.ID name="BtnItem@(i.ToString())" onclick="ItemClicked(this.id)">
+                                            <p>@item.Name</p>
+                                        </button>
+                                        @*<input id=@item.ID type="submit" name="BtnItem@(i.ToString())" value="@item.Name" onclick="ItemClicked(this.id)" />*@
+                                    </td>
                                     <td align="right">@item.Price</td>
                                 </tr>
                             </table>
@@ -57,13 +64,23 @@
             <div class="panel-body">
                 <div class="row">
                     <div class="col-sm-6 form-group">
-                        <input class="form-control" id="item" name="item" placeholder="Item" type="text" required>
+                        <input class="form-control" id="orderItem" name="item" placeholder="Item" type="text" required>
                     </div>
                     <div class="col-sm-6 form-group">
-                        <input class="form-control" id="quantity" name="quantity" placeholder="Quantity" type="number" required>
+                        <input class="form-control" id="orderQuantity" name="quantity" placeholder="Quantity" type="number" required>
                     </div>
                 </div>
-                <textarea class="form-control" id="comments" name="comments" placeholder="Comments" rows="5"></textarea>
+                <div class="row">
+                    <div class="col-sm-9 form-group">
+                        <textarea class="form-control" id="orderComments" name="comments" placeholder="Comments" rows="5"></textarea>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <button class="btn pull-right" type="submit">Order</button>
+                    </div>
+                    <div class="col-md-3 form-group">
+                        <button class="btn pull-right" type="submit">Cancel</button>
+                    </div>
+                 </div>
             </div>
             </div>
             <div class="panel-group" id="accordion">
@@ -96,3 +113,9 @@
         </div>
 </div>
 </div>
+@*<script type="text/javascript">
+    function ItemClicked(clicked_id)
+{
+    alert(clicked_id);
+}
+</script>*@
