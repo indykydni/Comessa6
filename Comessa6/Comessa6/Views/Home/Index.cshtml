@@ -29,10 +29,8 @@
                     @foreach (ProviderViewModel provider in Model.Providers.Providers)
                     {
                         i++;
-                    @using (Ajax.BeginForm("GetItems", new AjaxOptions() { UpdateTargetId = "provider" + provider.ID.ToString() }))
-                    {
                     <div class="panel-heading">
-                        <a data-toggle="collapse" data-parent="#providers" href="#@("i" + i.ToString())" onclick="ProviderClicked(@provider.ID)">@provider.Name</a>                        
+                        <button class="btn" data-toggle="collapse" data-parent="#providers" href="#@("i" + i.ToString())" providerID="@provider.ID">@provider.Name</button>
                     </div>
                     <div id="@("i" + i.ToString())" class="panel-collapse collapse">
                         <div class="panel-body">
@@ -54,7 +52,7 @@
                             }*@
                         </div>
                     </div>
-                    }
+                    
                     }
                 </div>
             </div>
@@ -122,19 +120,21 @@
 </div>
 <script>
     $(function () {
-        $(".btn").each(function (){
+        $(".btn").each(function (){            
             var button = $(this);
-            var parentDiv = button.parent();
-            var employeeId = parentDiv.attr("data-id");
-
-            button.click(function (){
-                $.ajax({
-                    url: @Url.Action("GetEmployeeDetails"),
-                    type: 'POST',
-                    data: { employeeId : employeeId },
-                    success: function (data) { parentDiv.html(data); }
+            var providerID = button.attr("providerID");
+            if (providerID)
+                {
+                button.click(function (){
+                    alert(providerID);
+                    @*$.ajax({
+                        url: @Url.Action("GetItems"),
+                        type: 'POST',
+                        data: { providerID : providerId },
+                        success: function (data) { parentDiv.html(data); }
+                    });*@
                 });
-            });
+            }
         });
     });
 </script>
