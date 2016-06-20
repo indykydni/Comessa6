@@ -8,32 +8,35 @@ namespace Comessa6.ViewModels
 {
   public class ProviderViewModel
   {
-    //public OrderViewModel(corder order)
+    private List<ItemViewModel> items = null;
+    public ProviderViewModel()
+    {
+      this.Items = new List<ItemViewModel>();
+    }
+    public int ID { get; set; }
+    public string Name { get; set; }
+
+    public List<ItemViewModel> Items
+    {
+      get
+      {
+        if (this.items == null)
+          this.items = new List<ItemViewModel>();
+        return this.items;
+      }
+      set { this.items = value; }
+    }
+
+    //public override bool Equals(object obj)
     //{
-    //  this.order = order;
-    //  this.ItemName = order.itemName
+    //  ProviderViewModel other = obj as ProviderViewModel;
+    //  if (other == null) return false;
+    //  return this.ID == other.ID;
     //}
 
-    public int ID { get; set; }
-    public string ItemName { get; set; }
-    public string ProviderName { get; set; }
-    public decimal Quantity { get; set; }
-    public decimal Price { get; set; }
-    public string UserName { get; set; }
-    public string Comment { get; set; }
-    public int Priority { get; set; }
-    public OrderStatus Status { get; set; }
-
-    public override bool Equals(object obj)
-    {
-      ProviderViewModel other = obj as ProviderViewModel;
-      if (other == null) return false;
-      return this.ID == other.ID;
-    }
-
-    public override int GetHashCode()
-    {
-      return this.ID ^ this.Priority;
-    }
+    //public override int GetHashCode()
+    //{
+    //  return this.ID ^ this.ID + this.Name[0];
+    //}
   }
 }

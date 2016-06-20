@@ -40,16 +40,31 @@ namespace Comessa6.Controllers
           });
         }
         #endregion
-        #region Get Items
-        indexVM.Providers = new Dictionary<string, List<ItemViewModel>>();
-        var itemsInfo = db.citem.Include("cprovider").Where(item => item.isVisible).OrderBy(item => item.cprovider.priority).ThenBy(item => item.priority);
-        foreach (var itemInfo in itemsInfo)
+        #region Get Providers with Items
+        //indexVM.Providers = new ProvidersViewModel();
+        //var itemsInfo = db.citem.Include("cprovider").Where(item => item.isVisible).OrderBy(item => item.cprovider.priority).ThenBy(item => item.priority);
+        //foreach (var itemInfo in itemsInfo)
+        //{
+        //  ItemViewModel itemVM = new ItemViewModel { ID = itemInfo.id, Name = itemInfo.name, Price = itemInfo.price };
+        //  ProviderViewModel providerVM = indexVM.Providers.Providers.Where(prov => prov.ID.Equals(itemInfo.providerId)).FirstOrDefault();
+        //  if (!itemInfo.providerId.HasValue)
+        //    continue;
+        //  if (providerVM == null)
+        //  {
+        //    providerVM = new ProviderViewModel { Name = itemInfo.cprovider.name, ID = itemInfo.providerId.Value };
+        //    indexVM.Providers.Providers.Add(providerVM);
+        //  }
+
+        //  providerVM.Items.Add(itemVM);
+        //}
+        #endregion
+        #region Get Providers
+        indexVM.Providers = new ProvidersViewModel();
+        var itemsInfo = db.cprovider.OrderBy(provider => provider.priority);
+        foreach (var providerInfo in itemsInfo)
         {
-          ItemViewModel itemVM = new ItemViewModel { ID = itemInfo.id, Name = itemInfo.name, Price = itemInfo.price };
-          if (indexVM.Providers.ContainsKey(itemInfo.cprovider.name))
-            indexVM.Providers[itemInfo.cprovider.name].Add(itemVM);
-          else
-            indexVM.Providers.Add(itemInfo.cprovider.name, new List<ItemViewModel> { itemVM});
+          ProviderViewModel providerVM = new ProviderViewModel { ID = providerInfo.id, Name = providerInfo.name };
+          indexVM.Providers.Providers.Add(providerVM);
         }
         #endregion
       }

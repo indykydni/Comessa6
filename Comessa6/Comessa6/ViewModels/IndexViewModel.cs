@@ -9,6 +9,6 @@ namespace Comessa6.ViewModels
   {
     public OrdersViewModel RecentOrders { get; set; }
     //key is the providers' name
-    public Dictionary<string, List<ItemViewModel>> Providers { get; set; }
+    public ProvidersViewModel Providers { get; set; }
   }
 }

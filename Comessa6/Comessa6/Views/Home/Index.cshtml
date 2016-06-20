@@ -5,6 +5,7 @@
 @using Comessa6.ViewModels;
 @model IndexViewModel
 <script type="text/javascript" src="../../Scripts/ordering.js"></script>
+<script type="text/javascript" src="../../Scripts/jquery-1.10.2.min.js"></script>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,15 +26,20 @@
             <div class="panel-group" id="providers">
                 <div class="panel panel-default">
                     @{int i = 0; }
-                    @foreach (KeyValuePair<string, List<ItemViewModel>> provider in Model.Providers)
+                    @foreach (ProviderViewModel provider in Model.Providers.Providers)
                     {
                         i++;
+                    @using (Ajax.BeginForm("GetItems", new AjaxOptions() { UpdateTargetId = "provider" + provider.ID.ToString() }))
+                    {
                     <div class="panel-heading">
-                            <a data-toggle="collapse" data-parent="#providers" href="#@("i" + i.ToString())">@provider.Key</a>                        
+                        <a data-toggle="collapse" data-parent="#providers" href="#@("i" + i.ToString())" onclick="ProviderClicked(@provider.ID)">@provider.Name</a>                        
                     </div>
                     <div id="@("i" + i.ToString())" class="panel-collapse collapse">
                         <div class="panel-body">
-                            @foreach (ItemViewModel item in provider.Value)
+                            <div id="@("provider" + provider.ID.ToString())">
+                                ...
+                            </div>
+                            @*@foreach (ItemViewModel item in provider.Items)
                             {                                
                             <table>
                                 <tr>
@@ -41,14 +47,14 @@
                                         <button class="btn pull-right" type="submit" id=@item.ID itemName="@item.Name" name="BtnItem@(i.ToString())" onclick="ItemClicked(this)">
                                             <p>@item.Name</p>
                                         </button>
-                                        @*<input id=@item.ID type="submit" name="BtnItem@(i.ToString())" value="@item.Name" onclick="ItemClicked(this.id)" />*@
                                     </td>
                                     <td align="right">@item.Price</td>
                                 </tr>
                             </table>
-                            }
+                            }*@
                         </div>
                     </div>
+                    }
                     }
                 </div>
             </div>
@@ -114,6 +120,24 @@
         </div>
 </div>
 </div>
+<script>
+    $(function () {
+        $(".btn").each(function (){
+            var button = $(this);
+            var parentDiv = button.parent();
+            var employeeId = parentDiv.attr("data-id");
+
+            button.click(function (){
+                $.ajax({
+                    url: @Url.Action("GetEmployeeDetails"),
+                    type: 'POST',
+                    data: { employeeId : employeeId },
+                    success: function (data) { parentDiv.html(data); }
+                });
+            });
+        });
+    }
+</script>
 @*<script type="text/javascript">
     function ItemClicked(clicked_id)
 {
