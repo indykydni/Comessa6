@@ -33,10 +33,10 @@
                         <button class="btn" data-toggle="collapse" data-parent="#providers" href="#@("i" + i.ToString())" providerID="@provider.ID">@provider.Name</button>
                     </div>
                     <div id="@("i" + i.ToString())" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <div id="@("provider" + provider.ID.ToString())">
+                        <div class="panel-body" id="@("provider" + provider.ID.ToString())">
+                            @*<div id="@("provider" + provider.ID.ToString())">
                                 ...
-                            </div>
+                            </div>*@
                             @*@foreach (ItemViewModel item in provider.Items)
                             {                                
                             <table>
@@ -123,16 +123,17 @@
         $(".btn").each(function (){            
             var button = $(this);
             var providerID = button.attr("providerID");
+            var itemsPanel = $( "#provider" + providerID );
             if (providerID)
                 {
                 button.click(function (){
-                    alert(providerID);
-                    @*$.ajax({
-                        url: @Url.Action("GetItems"),
-                        type: 'POST',
-                        data: { providerID : providerId },
-                        success: function (data) { parentDiv.html(data); }
-                    });*@
+                    $.ajax({
+                        url: "Items/GetItems",//@Url.Action("GetItems"),
+                        type: 'GET',
+                        data: { providerID },                        
+                        success: function (result) { itemsPanel.html(result); },//itemsPanel.html(result);
+                        error: function (error) { alert("Fail:" + error.statusText); }
+                    });
                 });
             }
         });
