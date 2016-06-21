@@ -7,11 +7,9 @@
 }
 
 function CancelOrder() {
-    document.getElementById("orderPanel").style.visibility = "visible";
     document.getElementById("orderItem").value = "";
     document.getElementById("orderQuantity").value = "";
     document.getElementById("orderComments").value = "";
-    document.getElementById("orderPanel").style.visibility = "collapse";
     $("#orderPanel").collapse("hide");
 
 }
