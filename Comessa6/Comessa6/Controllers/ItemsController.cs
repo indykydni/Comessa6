@@ -14,7 +14,6 @@ namespace Comessa6.Controllers
 {
   public class ItemsController : Controller
   {
-    // GET: Items
     [HttpGet]
     public async Task<ActionResult> GetItems(int providerID)
     {
@@ -33,13 +32,5 @@ namespace Comessa6.Controllers
         return PartialView("ItemsView", items);
       }
     }
-
-    /*[HttpGet]
-public async Task<ActionResult> GetCategoryProducts(string categoryId)  
-{
-    var lookupId = int.Parse(categoryId);
-    var model = await this.GetFullAndPartialViewModel(lookupId);
-    return PartialView("CategoryResults", model);
-}*/
   }
 }

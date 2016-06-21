@@ -16,6 +16,7 @@ namespace Comessa6.ViewModels
 
     public int ID { get; set; }
     public string ItemName { get; set; }
+    public int ItemID { get; set; }
     public string ProviderName { get; set; }
     public decimal Quantity { get; set; }
     public decimal Price { get; set; }

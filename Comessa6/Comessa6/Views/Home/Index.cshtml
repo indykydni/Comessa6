@@ -33,24 +33,7 @@
                         <button class="btn" data-toggle="collapse" data-parent="#providers" href="#@("i" + i.ToString())" providerID="@provider.ID">@provider.Name</button>
                     </div>
                     <div id="@("i" + i.ToString())" class="panel-collapse collapse">
-                        <div class="panel-body" id="@("provider" + provider.ID.ToString())">
-                            @*<div id="@("provider" + provider.ID.ToString())">
-                                ...
-                            </div>*@
-                            @*@foreach (ItemViewModel item in provider.Items)
-                            {                                
-                            <table>
-                                <tr>
-                                    <td>
-                                        <button class="btn pull-right" type="submit" id=@item.ID itemName="@item.Name" name="BtnItem@(i.ToString())" onclick="ItemClicked(this)">
-                                            <p>@item.Name</p>
-                                        </button>
-                                    </td>
-                                    <td align="right">@item.Price</td>
-                                </tr>
-                            </table>
-                            }*@
-                        </div>
+                        <div class="panel-body" id="@("provider" + provider.ID.ToString())"></div>
                     </div>
                     
                     }
@@ -58,82 +41,89 @@
             </div>
         </div>
     <div class="col-md-4">
-        <div class="panel panel-success">
-            <div class="panel panel-header">
-                <h3 class="panel-title">
-                    To order
-                </h3>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-lg-12 form-group">
-                        <input class="form-control" id="orderItem" name="item" placeholder="Item" type="text" required>
-                    </div>
+        <div class="collapse" id="orderPanel">
+            <div class="panel panel-success">
+                <div class="panel panel-header">
+                    <h3 class="panel-title">
+                        To order
+                    </h3>
                 </div>
-                <div class="row">
-                    <div class="col-lg-12 form-group">
-                        <textarea class="form-control" id="orderComments" name="comments" placeholder="Comments" rows="5"></textarea>
-                    </div>
-                 </div>
-                <div class="row">
-                    <div class="col-lg-5 form-group">
-                        <input class="form-control" id="orderQuantity" name="quantity" placeholder="Quantity" type="number" required>
-                    </div>
-                    <div class="col-lg-3 form-group">
-                        <button class="btn pull-right" type="submit">Order</button>
-                    </div>
-                    <div class="col-lg-3 form-group">
-                        <button class="btn pull-right" type="submit">Cancel</button>
-                    </div>
-                </div>
-            </div>
-            </div>
-            <div class="panel-group" id="accordion">
-                <div class="panel panel-default">
-                    @{int j = 0; }
-                    @foreach (OrderViewModel order in Model.RecentOrders.Orders)
-                    {
-                        j++;
-                        <div class="panel-heading">
-                            <h3 class="panel-title pull-left">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#@("o" + j.ToString())">@order.ItemName</a>
-                            </h3>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-lg-12 form-group">
+                            <input class="form-control" id="orderItem" name="item" placeholder="Item" type="text" required>
                         </div>
-                        <div id="@("o" + j.ToString())" class="panel-collapse collapse">
-                            <div class="panel-body">
-                                <h5 class="panel-title pull-left">
-                                    @order.ProviderName
-                                </h5>
-                                <h5 class="panel-title">
-                                    @order.Price
-                                </h5>
-                                <button class="btn btn-default pull-right">Remove</button>
-                                <div class="clearfix"></div>
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 form-group">
+                            <textarea class="form-control" id="orderComments" name="comments" placeholder="Comments" rows="5"></textarea>
                         </div>
-                        @*<div class="panel-footer" style="font-size: 12px">@order.ProviderName</div>*@
-                    }
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-5 form-group">
+                            <input class="form-control" id="orderQuantity" name="quantity" placeholder="Quantity" type="number" required>
+                        </div>
+                        <div class="col-lg-3 form-group">
+                            <button class="btn pull-right" type="submit">Order</button>
+                        </div>
+                        <div class="col-lg-3 form-group">
+                            <button class="btn pull-right" type="submit" onclick="CancelOrder();">Cancel</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                @{int j = 0; }
+                @foreach (OrderViewModel order in Model.RecentOrders.Orders)
+                {
+                    j++;
+                <div class="panel-heading">
+                    <h3 class="panel-title pull-left">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#@("o" + j.ToString())">@order.ItemName</a>
+                    </h3>
+                </div>
+                    <div id="@("o" + j.ToString())" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <h5 class="panel-title pull-left">
+                                @order.ProviderName
+                            </h5>
+                            <h5 class="panel-title">
+                                @order.Price
+                            </h5>
+                            <button class="btn btn-default pull-right">Remove</button>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    @*<div class="panel-footer" style="font-size: 12px">@order.ProviderName</div>*@
+                }
+            </div>
+        </div>
+    </div>
 </div>
 </div>
-<script>
+<script>    
     $(function () {
         $(".btn").each(function (){            
             var button = $(this);
             var providerID = button.attr("providerID");
-            var itemsPanel = $( "#provider" + providerID );
             if (providerID)
-                {
-                button.click(function (){
+            {
+                button.click(function () {
+                    var itemsPanel = $("#provider" + providerID);
+                    var orderPanel = document.getElementById("orderPanel");
+                    $("#orderPanel").collapse("hide");
+                    if (itemsPanel.itemsLoaded)
+                        return;
                     $.ajax({
                         url: "Items/GetItems",//@Url.Action("GetItems"),
                         type: 'GET',
                         data: { providerID },                        
-                        success: function (result) { itemsPanel.html(result); },//itemsPanel.html(result);
-                        error: function (error) { alert("Fail:" + error.statusText); }
+                        success: function (result) { itemsPanel.html(result); },
+                        error: function (error) { alert("Database failure: " + error.statusText); }
                     });
+                    itemsPanel.itemsLoaded = true;
                 });
             }
         });
