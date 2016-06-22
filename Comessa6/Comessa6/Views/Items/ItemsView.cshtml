@@ -5,22 +5,34 @@
 {
     <tr>
         <td>
-            <button class="btn" type="submit" id=@item.ID itemName="@item.Name" onclick="ItemClicked(this)">
+            <button class="btn" type="submit" id="@item.ID" itemName="@item.Name" onclick="ItemClicked(this)">
                 @item.Name
             </button>
         </td>
         <td>@item.Price</td>
     </tr>
-    @*<tr>
+    <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            <div class="panel-body" id="@("panel" + item.ID.ToString())"></div>
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Price)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ProviderId)
-        </td>        
-    </tr>*@
+    </tr>
 }
 </table>
+@*<script>
+$(function () {
+    $('.btn').click(function () {
+        var button = $(this);
+        var itemID = button.attr("id");
+        var orderPanel = $("#panel" + itemID);
+        $.ajax({
+            url: "Orders/CreateOrder",
+            type: 'GET',
+            cache: false,
+            data: { itemID },
+            success: function (result) { orderPanel.html(result);},
+            error: function (error) { alert("Database failure: " + error.statusText); }            
+        });
+        return false;
+    });
+});
+</script>*@

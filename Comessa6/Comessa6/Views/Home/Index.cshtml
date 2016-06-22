@@ -41,7 +41,7 @@
             </div>
         </div>
     <div class="col-md-4">
-        <div class="collapse" id="orderPanel">
+        @*<div class="collapse" id="orderPanel">
             <div class="panel panel-success">
                 <div class="panel panel-header">
                     <h3 class="panel-title">
@@ -72,7 +72,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
         <div class="panel-group" id="accordion">
             <div class="panel panel-default">
                 @{int j = 0; }
@@ -113,12 +113,13 @@
                 button.click(function () {
                     var itemsPanel = $("#provider" + providerID);
                     var orderPanel = document.getElementById("orderPanel");
-                    $("#orderPanel").collapse("hide");
+                    //$("#orderPanel").collapse("hide");
                     if (itemsPanel.itemsLoaded)
                         return;
                     $.ajax({
                         url: "Items/GetItems",//@Url.Action("GetItems"),
                         type: 'GET',
+                        cache: false,
                         data: { providerID },                        
                         success: function (result) { itemsPanel.html(result); },
                         error: function (error) { alert("Database failure: " + error.statusText); }
