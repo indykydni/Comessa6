@@ -1,25 +1,28 @@
 ﻿@model Comessa6.ViewModels.OrderViewModel
 
 <div @*class="collapse"*@ id="orderPanel">
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-lg-12 form-group">
-                <input class="form-control" id="orderQuantity" name="quantity" placeholder="Quantity" type="number" value="@Model.Quantity" required>
+    @using (Html.BeginForm("SaveOrder", "Orders", FormMethod.Post))
+    {
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-12 form-group">
+                    <input class="form-control" id="orderQuantity" name="quantity" placeholder="Quantity" type="number" value="@Model.Quantity" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 form-group">
+                    <textarea class="form-control" id="orderComments" name="comment" placeholder="Comments" rows="5" value="@Model.Comment"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-5 form-group">
+                    <button class="btn pull-right" value="SaveOrder" type="submit">Order</button>
+                </div>
+                <div class="col-lg-2 form-group"></div>
+                <div class="col-lg-5 form-group">
+                    <button class="btn pull-right" type="submit" onclick="CancelOrder();">Cancel</button>
+                </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-12 form-group">
-                <textarea class="form-control" id="orderComments" name="comments" placeholder="Comments" rows="5" value="@Model.Comment"></textarea>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-5 form-group">
-                <button class="btn pull-right" type="submit">Order</button>
-            </div>
-            <div class="col-lg-2 form-group"></div>
-            <div class="col-lg-5 form-group">
-                <button class="btn pull-right" type="submit" onclick="CancelOrder();">Cancel</button>
-            </div>
-        </div>
-    </div>
+    }
 </div>

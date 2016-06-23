@@ -17,6 +17,13 @@ namespace Comessa6.Controllers
         }
 
         [HttpPost]
+        public ActionResult SaveOrder(OrderViewModel orderVM)
+        {
+
+            return new EmptyResult();
+        }
+
+        [HttpPost]
         public JsonResult Delete(int ID)
         {
             // Delete the item in the database
