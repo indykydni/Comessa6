@@ -17,8 +17,10 @@ namespace Comessa6.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveOrder(OrderViewModel orderVM)
+        public ActionResult SaveOrder(OrderViewModel orderVM, string BtnSubmit)
         {
+            if (string.IsNullOrEmpty(BtnSubmit))
+                RedirectToAction("Index", "Home");
 
             return new EmptyResult();
         }
