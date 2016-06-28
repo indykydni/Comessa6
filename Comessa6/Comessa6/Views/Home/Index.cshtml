@@ -29,13 +29,10 @@
                     @foreach (ProviderViewModel provider in Model.Providers.Providers)
                     {
                         i++;
-                    <div class="panel-heading">
-                        <button class="btn" data-toggle="collapse" data-parent="#providers" href="#@("i" + i.ToString())" providerID="@provider.ID">@provider.Name</button>
-                    </div>
-                    <div id="@("i" + i.ToString())" class="panel-collapse collapse">
-                        <div class="panel-body" id="@("provider" + provider.ID.ToString())"></div>
-                    </div>
-
+                        <div class="panel-heading" data-toggle="collapse" data-parent="#providers" href="#@("i" + i.ToString())" providerID="@provider.ID">@provider.Name</div>
+                        <div id="@("i" + i.ToString())" class="panel-collapse collapse">
+                            <div class="panel-body" id="@("provider" + provider.ID.ToString())"></div>
+                        </div>
                     }
                 </div>
             </div>
@@ -48,7 +45,7 @@
                 {
                     j++;
                 <div class="panel-heading">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#@("o" + j.ToString())">@order.ItemName</a>                    
+                    <a style="display:block" data-toggle="collapse" data-parent="#accordion" href="#@("o" + j.ToString())">@order.ItemName</a>                    
                 </div>
                     <div id="@("o" + j.ToString())" class="panel-collapse collapse">
                         <div class="panel-body">
@@ -58,9 +55,9 @@
                             <div class="panel-title">
                                 @order.Price
                             </div>
-                            @if (order.Status.HasFlag(OrderStatus.Ordered))
+                            @if (order.Status == OrderStatus.Ordered)
                             {
-                                <button class="btn btn-default pull-right" style="visibility:hidden ">Remove</button>
+                                <button class="btn btn-default pull-right">Remove</button>
                             }
                             <div class="clearfix"></div>
                         </div>
@@ -74,7 +71,7 @@
 </div>
 <script>    
     $(function () {
-        $(".btn").each(function (){            
+        $(".panel-heading").each(function () {
             var button = $(this);
             var providerID = button.attr("providerID");
             if (providerID)

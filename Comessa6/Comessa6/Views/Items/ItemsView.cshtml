@@ -1,38 +1,11 @@
 ﻿@model IEnumerable<Comessa6.ViewModels.ItemViewModel>
 
-<table class="table">
-@foreach (var item in Model)
-{
-    <tr>
-        <td>
-            <button class="btn" type="submit" id="@item.ID" itemName="@item.Name" onclick="ItemClicked(this)">
-                @item.Name
-            </button>
-        </td>
-        <td>@item.Price</td>
-    </tr>
-    <tr>
-        <td>
-            <div class="panel-body" id="@("panel" + item.ID.ToString())"></div>
-        </td>
-    </tr>
-}
-</table>
-@*<script>
-$(function () {
-    $('.btn').click(function () {
-        var button = $(this);
-        var itemID = button.attr("id");
-        var orderPanel = $("#panel" + itemID);
-        $.ajax({
-            url: "Orders/CreateOrder",
-            type: 'GET',
-            cache: false,
-            data: { itemID },
-            success: function (result) { orderPanel.html(result);},
-            error: function (error) { alert("Database failure: " + error.statusText); }            
-        });
-        return false;
-    });
-});
-</script>*@
+<div class="list-group">
+    @foreach (var item in Model)
+    {
+        <div style="display:block" type="submit" id="@item.ID" itemName="@item.Name" onclick="ItemClicked(this)">
+            @item.Name @item.Price
+        </div>
+    <div class="panel-body" id="@("panel" + item.ID.ToString())"></div>
+    }
+</div>
