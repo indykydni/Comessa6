@@ -14,8 +14,8 @@
     $.ajax({
         url: "Orders/CreateOrder",
         type: 'GET',
-        cache: false,
-        async: false,        
+        cache: true,
+        async: true,        
         data: { itemID },
         success: function (result) { orderPanel.html(result); },
         error: function (error) { alert("Database failure: " + error.statusText); }

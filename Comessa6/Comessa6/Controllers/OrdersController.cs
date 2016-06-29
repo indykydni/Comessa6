@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Comessa6.ViewModels;
+using System.Threading.Tasks;
 
 namespace Comessa6.Controllers
 {
@@ -17,12 +18,12 @@ namespace Comessa6.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveOrder(OrderViewModel orderVM, string BtnSubmit)
+        public async Task<ActionResult> SaveOrder(int itemID, int quantity, string comments)
         {
-            if (string.IsNullOrEmpty(BtnSubmit))
-                RedirectToAction("Index", "Home");
+            //if (string.IsNullOrEmpty(xxx))
+            //    RedirectToAction("Index", "Home");
 
-            return new EmptyResult();
+            return Json(true);
         }
 
         [HttpPost]
