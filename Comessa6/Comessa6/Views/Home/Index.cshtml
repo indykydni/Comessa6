@@ -39,7 +39,7 @@
         </div>
     <div class="col-md-4">
         <div class="panel-group" id="accordion">
-            <div class="panel panel-default">
+            <div class="panel panel-default">@*ToDo: move this to a PartialView implement cancel*@
                 @{int j = 0; }
                 @foreach (OrderViewModel order in Model.RecentOrders.Orders)
                 {
@@ -57,7 +57,7 @@
                             </div>
                             @if (order.Status == OrderStatus.Ordered)
                             {
-                                <button class="btn btn-default pull-right">Remove</button>
+                                <button orderID="@order.ID" class="btn btn-default pull-right" onclick="DeleteOrder">Remove</button>
                             }
                             <div class="clearfix"></div>
                         </div>
