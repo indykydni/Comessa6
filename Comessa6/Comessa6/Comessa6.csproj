@@ -215,7 +215,6 @@
     <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\ProviderViewModel.cs" />
     <Compile Include="ViewModels\ProvidersViewModel.cs" />
-    <Compile Include="ViewModels\OrdersViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -258,7 +257,6 @@
     <Content Include="Models\ComessaDBModel.edmx.diagram">
       <DependentUpon>ComessaDBModel.edmx</DependentUpon>
     </Content>
-    <None Include="Properties\PublishProfiles\xxx.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -295,9 +293,11 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Items\ItemsView.cshtml" />
     <Content Include="Views\Orders\CreateOrderView.cshtml" />
+    <Content Include="Views\Orders\OrdersView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

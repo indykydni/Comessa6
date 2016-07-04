@@ -1,11 +1,39 @@
 ﻿@model IEnumerable<Comessa6.ViewModels.ItemViewModel>
+<body>
+    <div class="list-group">
+        @foreach (var item in Model)
+        {
+            <div style="display:block" type="submit" id="@item.ID" itemName="@item.Name" onclick="ItemClicked(this)">
+                @item.Name @item.Price
+            </div>
+        <div class="panel-body" id="@("panel" + item.ID.ToString())"></div>
+        }
+    </div>
 
-<div class="list-group">
-    @foreach (var item in Model)
-    {
-        <div style="display:block" type="submit" id="@item.ID" itemName="@item.Name" onclick="ItemClicked(this)">
-            @item.Name @item.Price
-        </div>
-    <div class="panel-body" id="@("panel" + item.ID.ToString())"></div>
-    }
-</div>
+    <script>
+            function ItemClicked(button) {
+                //var orderItem = document.getElementById("orderItem");
+                //document.getElementById("orderItem").value = button.getAttribute("itemName");
+                //orderItem.setAttribute("itemID", button.id);
+                //document.getElementById("orderQuantity").value = 1;
+                //$("#orderPanel").collapse("show");
+
+                var shownPanel = $("#orderPanel");
+                if (shownPanel)
+                    shownPanel.remove();
+                var itemID = button.getAttribute("id");
+                var orderPanel = $("#panel" + itemID);
+                //orderPanel.html(itemID);
+                $.ajax({
+                    url: '@Url.Action("CreateOrder", "Orders")',
+                    type: 'GET',
+                    cache: true,
+                    async: true,
+                    data: { itemID },
+                    success: function (result) { orderPanel.html(result); },
+                    error: function (error) { alert("Database failure: " + error.statusText); }
+                });
+                return false;
+            }
+    </script>
+</body>

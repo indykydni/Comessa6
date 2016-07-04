@@ -19,27 +19,8 @@ namespace Comessa6.Controllers
         return RedirectToAction("Login", "Authentication");
       }
       IndexViewModel indexVM = new IndexViewModel();
-      indexVM.RecentOrders = new OrdersViewModel();
       using (var db = new comessa5Entities())
       {
-        #region Get orders
-        int id = (int)Session["UserID"];
-        var ordersInfo = db.corder.Include("citem").Include("citem.cprovider")
-          .Where(order => order.userId == id).OrderByDescending(order => order.date).Take(10);
-
-        foreach (var orderInfo in ordersInfo)
-        {
-          indexVM.RecentOrders.Orders.Add(new OrderViewModel
-          {
-            ID = orderInfo.id,
-            ItemName = orderInfo.citem.name,
-            Price = orderInfo.price,
-            Comment = orderInfo.comment,
-            ProviderName = orderInfo.citem.cprovider.name,
-            Status = (OrderStatus)orderInfo.status
-          });
-        }
-        #endregion
         #region Get Providers with Items
         //indexVM.Providers = new ProvidersViewModel();
         //var itemsInfo = db.citem.Include("cprovider").Where(item => item.isVisible).OrderBy(item => item.cprovider.priority).ThenBy(item => item.priority);

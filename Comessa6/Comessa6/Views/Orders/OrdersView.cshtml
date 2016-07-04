@@ -1,0 +1,36 @@
+﻿@using Comessa6.ViewModels;
+@model IEnumerable<OrderViewModel>
+<body>
+    <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+            @*ToDo: move this to a PartialView implement cancel*@
+        @{int j = 0; }
+        @foreach (OrderViewModel order in Model)
+        {
+            j++;
+            <div class="panel-heading">
+                <a style="display:block" data-toggle="collapse" data-parent="#accordion" href="#@("o" + j.ToString())">@order.ItemName</a>
+            </div>
+                <div id="@("o" + j.ToString())" class="panel-collapse collapse">
+                    <div class="panel-body">
+                        <div class="panel-title pull-left">
+                            @order.ProviderName
+                        </div>
+                        <div class="panel-title">
+                            @order.Price
+                        </div>
+                        @if (order.Status == OrderStatus.Ordered)
+                        {
+                            <button orderID="@order.ID" class="btn btn-default pull-right" onclick="DeleteOrder">Remove</button>
+                        }
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                    @*<div class="panel-footer" style="font-size: 12px">@order.ProviderName</div>*@
+        }
+    </div>
+</div>
+    <script>
+
+    </script>
+</body>

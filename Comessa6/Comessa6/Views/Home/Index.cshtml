@@ -37,39 +37,12 @@
                 </div>
             </div>
         </div>
-    <div class="col-md-4">
-        <div class="panel-group" id="accordion">
-            <div class="panel panel-default">@*ToDo: move this to a PartialView implement cancel*@
-                @{int j = 0; }
-                @foreach (OrderViewModel order in Model.RecentOrders.Orders)
-                {
-                    j++;
-                <div class="panel-heading">
-                    <a style="display:block" data-toggle="collapse" data-parent="#accordion" href="#@("o" + j.ToString())">@order.ItemName</a>                    
-                </div>
-                    <div id="@("o" + j.ToString())" class="panel-collapse collapse">
-                        <div class="panel-body">
-                            <div class="panel-title pull-left">
-                                @order.ProviderName
-                            </div>
-                            <div class="panel-title">
-                                @order.Price
-                            </div>
-                            @if (order.Status == OrderStatus.Ordered)
-                            {
-                                <button orderID="@order.ID" class="btn btn-default pull-right" onclick="DeleteOrder">Remove</button>
-                            }
-                            <div class="clearfix"></div>
-                        </div>
-                    </div>
-                    @*<div class="panel-footer" style="font-size: 12px">@order.ProviderName</div>*@
-                }
-            </div>
-        </div>
-    </div>
+    <div class="col-md-4" id="currentOrders"/>
 </div>
 </div>
-<script>    
+<script>$(document).ready(function () {
+    $("#currentOrders").load('@Url.Action("GetOrders", "Orders")');
+    });
     $(function () {
         $(".panel-heading").each(function () {
             var button = $(this);
@@ -78,15 +51,13 @@
             {
                 button.click(function () {
                     var itemsPanel = $("#provider" + providerID);
-                    //var orderPanel = document.getElementById("orderPanel");
-                    //$("#orderPanel").collapse("hide");
                     if (itemsPanel.itemsLoaded)
                         return;
                     $.ajax({
-                        url: "Items/GetItems",//@Url.Action("GetItems"),
+                        url: '@Url.Action("GetItems", "Items")',
                         type: 'GET',
                         cache: false,
-                        data: { providerID },                        
+                        data: { providerID },
                         success: function (result) { itemsPanel.html(result); },
                         error: function (error) { alert("Database failure: " + error.statusText); }
                     });
@@ -96,9 +67,3 @@
         });
     });
 </script>
-@*<script type="text/javascript">
-    function ItemClicked(clicked_id)
-{
-    alert(clicked_id);
-}
-</script>*@
