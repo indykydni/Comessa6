@@ -33,10 +33,11 @@ namespace Comessa6.Controllers
                       Comment = orderInfo.comment,
                       ProviderName = orderInfo.citem.cprovider.name,
                       Status = (OrderStatus)orderInfo.status,
-                      UserName = orderInfo.cuser.name
+                      UserName = orderInfo.cuser.name,
+                      UserID = orderInfo.userId ?? -1
                   }
                   ).ToListAsync();
-                
+
                 return PartialView("OrdersView", orders);
                 #endregion
             }
@@ -44,7 +45,7 @@ namespace Comessa6.Controllers
         [HttpGet]
         public ActionResult CreateOrder(int itemID)
         {
-          return PartialView("CreateOrderView", new OrderViewModel { ItemID = itemID, Quantity = 1 });
+            return PartialView("CreateOrderView", new OrderViewModel { ItemID = itemID, Quantity = 1 });
         }
 
         [HttpPost]
@@ -69,14 +70,22 @@ namespace Comessa6.Controllers
                 });
                 await db.SaveChangesAsync();
             }
-                return Json(true);
+            return Json(true);
         }
 
         [HttpPost]
-        public JsonResult Delete(int ID)
+        public async Task<ActionResult> DeleteOrder(int ID)
         {
+            using (var db = new comessa5Entities())
+            {
+                var toRemove = db.corder.Where(order => order.id == ID).SingleOrDefault();
+                if (toRemove == null) return Json(false);
+                db.corder.Remove(toRemove);
+                await db.SaveChangesAsync();
+            }
             // Delete the item in the database
             return Json(true); // or if there is an error, return Json(null); to indicate failure
         }
     }
+
 }

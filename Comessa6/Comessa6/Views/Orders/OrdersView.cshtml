@@ -8,10 +8,11 @@
         @foreach (OrderViewModel order in Model)
         {
             j++;
-            <div class="panel-heading">
-                <a style="display:block" data-toggle="collapse" data-parent="#accordion" href="#@("o" + j.ToString())">@order.ItemName</a>
-            </div>
-                <div id="@("o" + j.ToString())" class="panel-collapse collapse">
+            @*<div id="@("panel" + order.ID.ToString())">*@
+                <div class="panel-heading" id="@("header" + order.ID.ToString())">
+                    <a style="display:block" data-toggle="collapse" data-parent="#accordion" href="#@("panel" + order.ID.ToString())">@order.ItemName</a>
+                </div>
+                <div id="@("panel" + order.ID.ToString())" class="panel-collapse collapse">
                     <div class="panel-body">
                         <div class="panel-title pull-left">
                             @order.ProviderName
@@ -19,18 +20,38 @@
                         <div class="panel-title">
                             @order.Price
                         </div>
-                        @if (order.Status == OrderStatus.Ordered)
+                        @if (order.Status == OrderStatus.Ordered && string.Equals(order.UserID, Session["UserID"]))
                         {
-                            <button orderID="@order.ID" class="btn btn-default pull-right" onclick="DeleteOrder">Remove</button>
+                            <button orderID="@order.ID" class="btn btn-default pull-right" onclick="DeleteClicked(this)">Remove</button>
                         }
                         <div class="clearfix"></div>
                     </div>
                 </div>
-                    @*<div class="panel-footer" style="font-size: 12px">@order.ProviderName</div>*@
+            @*<div class="panel-footer" style="font-size: 12px">@order.ProviderName</div>*@
         }
     </div>
 </div>
     <script>
-
+        function DeleteClicked(button) {
+            var orderID = button.getAttribute("orderID");
+            $.ajax({
+                url: '@Url.Action("DeleteOrder", "Orders")',
+                type: 'POST',
+                data: JSON.stringify({ "ID": orderID }),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (result)
+                {
+                    var orderPanel = $("#header" + orderID);
+                    if (orderPanel)
+                        orderPanel.remove();
+                    var orderPanel = $("#panel" + orderID);
+                    if (orderPanel)
+                        orderPanel.remove();
+                },
+                error: function (error) { alert("Database failure: " + error.statusText); }
+            });
+            return false;
+        }
     </script>
 </body>
