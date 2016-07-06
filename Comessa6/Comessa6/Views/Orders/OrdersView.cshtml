@@ -4,38 +4,38 @@
       <link href="../../Content/index.css" rel="stylesheet">
   </head>
 <body>
-    <div class="panel-group" id="accordion">
-        <div class="panel panel-default">
-            @*ToDo: move this to a PartialView implement cancel*@
-        @{int j = 0; }
-        @foreach (OrderViewModel order in Model)
-        {
-            j++;
-            @*<div id="@("panel" + order.ID.ToString())">*@
-                <div class="panel-heading" id="@("header" + order.ID.ToString())">
-                    <a style="display:block" data-toggle="collapse" data-parent="#accordion" href="#@("panel" + order.ID.ToString())">@order.ItemName</a>
-                </div>
-                <div id="@("panel" + order.ID.ToString())" class="panel-collapse collapse">
-                    <ul class="panel-body">
-                        <li class="order-section">
-                            @order.ProviderName
+    <div id="orders-list-box">
+        <div id="orders-list-wrapper">
+            <div id="orders-list-content">
+                <ul id="orders-list">
+                    @foreach (OrderViewModel order in Model)
+                    {
+                        bool isMine = string.Equals(order.UserID, Session["UserID"]);
+                        string itemClass = isMine ? "order-item driver via" : "order-item passenger";
+                        
+                        <li class="@itemClass" id="@("header" + order.ID.ToString())">                        
+                            <ul class="order-item-wrapper" id="@("order" + order.ID.ToString())">
+                                <li class="order-item-content order-item-start">
+                                    <div class="item"><div class="autoFontSize">@order.ItemName</div></div>
+                                    <div class="provider"><span class="fonticon"></span>@order.ProviderName</div>
+                                </li>
+                                <li class="order-item-content order-item-date">
+                                    <span class="price">@order.Price</span>
+                                    <span class="userName">@order.UserName</span>
+                                </li>
+                                @if (order.Status == OrderStatus.Ordered && isMine)
+                                {
+                                    <li class="order-item-content">
+                                        <button style="display: inline" orderID="@order.ID" class="btn btn-default pull-right" onclick="DeleteClicked(this)">Remove</button>
+                                    </li>
+                                }
+                            </ul>
                         </li>
-                        <li class="order-section">
-                            @order.Price
-                        </li>
-                        @if (order.Status == OrderStatus.Ordered && string.Equals(order.UserID, Session["UserID"]))
-                        {
-                        <li class="order-section">
-                            <button style="display: inline" orderID="@order.ID" class="btn btn-default pull-right" onclick="DeleteClicked(this)">Remove</button>
-                        </li>
-                        }
-                        @*<li class="clearfix"></li>*@
+                    }
                     </ul>
-                </div>
-            @*<div class="panel-footer" style="font-size: 12px">@order.ProviderName</div>*@
-        }
-    </div>
 </div>
+        </div>
+        </div>
     <script>
         function DeleteClicked(button) {
             var orderID = button.getAttribute("orderID");
