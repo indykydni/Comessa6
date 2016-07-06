@@ -1,5 +1,8 @@
 ﻿@using Comessa6.ViewModels;
 @model IEnumerable<OrderViewModel>
+  <head>
+      <link href="../../Content/index.css" rel="stylesheet">
+  </head>
 <body>
     <div class="panel-group" id="accordion">
         <div class="panel panel-default">
@@ -13,19 +16,21 @@
                     <a style="display:block" data-toggle="collapse" data-parent="#accordion" href="#@("panel" + order.ID.ToString())">@order.ItemName</a>
                 </div>
                 <div id="@("panel" + order.ID.ToString())" class="panel-collapse collapse">
-                    <div class="panel-body">
-                        <div class="panel-title pull-left">
+                    <ul class="panel-body">
+                        <li class="order-section">
                             @order.ProviderName
-                        </div>
-                        <div class="panel-title">
+                        </li>
+                        <li class="order-section">
                             @order.Price
-                        </div>
+                        </li>
                         @if (order.Status == OrderStatus.Ordered && string.Equals(order.UserID, Session["UserID"]))
                         {
-                            <button orderID="@order.ID" class="btn btn-default pull-right" onclick="DeleteClicked(this)">Remove</button>
+                        <li class="order-section">
+                            <button style="display: inline" orderID="@order.ID" class="btn btn-default pull-right" onclick="DeleteClicked(this)">Remove</button>
+                        </li>
                         }
-                        <div class="clearfix"></div>
-                    </div>
+                        @*<li class="clearfix"></li>*@
+                    </ul>
                 </div>
             @*<div class="panel-footer" style="font-size: 12px">@order.ProviderName</div>*@
         }
