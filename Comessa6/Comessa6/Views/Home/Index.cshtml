@@ -21,24 +21,22 @@
     <link href="../../Content/Site.css" rel="stylesheet">
 </head>
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-4 col-md-4 sidebar">
-            <div class="panel-group" id="providers">
-                <div class="panel panel-default">
-                    @{int i = 0; }
-                    @foreach (ProviderViewModel provider in Model.Providers.Providers)
-                    {
-                        i++;
-                        <div class="panel-heading" data-toggle="collapse" data-parent="#providers" href="#@("i" + i.ToString())" providerID="@provider.ID">@provider.Name</div>
-                        <div id="@("i" + i.ToString())" class="panel-collapse collapse">
-                            <div class="panel-body" id="@("provider" + provider.ID.ToString())"></div>
-                        </div>
-                    }
-                </div>
+    <div class="col-md-4 sidebar">
+        <div class="panel-group" id="providers">
+            <div class="panel panel-default order-item-date userName">
+                @{int i = 0; }
+                @foreach (ProviderViewModel provider in Model.Providers.Providers)
+                {
+                    i++;
+                    <div class="panel-heading" data-toggle="collapse" data-parent="#providers" href="#@("i" + i.ToString())" providerID="@provider.ID">@provider.Name</div>
+                    <div id="@("i" + i.ToString())" class="panel-collapse collapse">
+                        <div class="panel-body" id="@("provider" + provider.ID.ToString())"></div>
+                    </div>
+                }
             </div>
         </div>
+    </div>
     <div class="col-md-4" id="currentOrders"/>
-</div>
 </div>
 <script>$(document).ready(function () {
     $("#currentOrders").load('@Url.Action("GetOrders", "Orders")');

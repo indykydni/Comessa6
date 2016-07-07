@@ -584,7 +584,7 @@ ul.ui-autocomplete a {
 	width: 							626px;
 	height:							auto;
 	padding:						0 0 0 20px;
-	margin:							120px 0 5px 240px;
+	margin:							0px 0 5px 0px;
 	background: 					transparent url('/images/dots-left.png') no-repeat top left;
 }
 
@@ -697,7 +697,7 @@ ul.ui-autocomplete a {
 	position:						relative;
 	width:							586px;
 	height:							auto;
-	padding:						0 0 50px 8px;
+	padding:						0 0 0 0;
 	margin:							0;
 	list-style: 					none;
 }
@@ -778,13 +778,13 @@ ul.ui-autocomplete a {
 /* date */
 
 #orders-list .order-item-date {
-	width:							105px;
+	width:							250px;
 	height:							40px;
-	margin:							0 0 0 35px;
+	margin:							0 0 0 0px;
 
 	font-family: 					"Helvetica Neue", Helvetica, Arial, sans-serif;
 	text-align:						right;
-	font-size:						1.4em;
+	font-size:						1.2em;
 	font-style:						normal;
 	letter-spacing:					0.1em;
 	color:							#888888;
@@ -820,12 +820,12 @@ ul.ui-autocomplete a {
 /* start */
 
 #orders-list .order-item-start {
-	width:							195px;
+	width:							300px;
 	height:							40px;
 
 	font-family: 					"Helvetica Neue", Helvetica, Arial, sans-serif;
-	text-align:						right;
-	font-size:						1.4em;
+	text-align:						left;
+	font-size:						1.2em;
 	font-style:						normal;
 	letter-spacing:					0.1em;
 	color:							#888888;
@@ -833,8 +833,8 @@ ul.ui-autocomplete a {
 
 #orders-list .order-item-start .item {
 	position:						relative;
-	float:							right;
-	width:							98%;
+	float:							left;
+	width:							100%;
 	height:							25px;
 	line-height:					25px;
 	padding:						0;
@@ -846,14 +846,14 @@ ul.ui-autocomplete a {
 
 #orders-list .order-item-start .provider {
 	position:						relative;
-	float:							right;
+	float:							left;
 	width:							100%;
 	height:							10px;
 	line-height:					10px;
 	padding:						0;
 	margin:							0;
 
-	font-size:						0.8em;
+	font-size:						0.6em;
 	font-weight:					300;
 }
 
