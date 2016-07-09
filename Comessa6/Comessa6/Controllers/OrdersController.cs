@@ -21,9 +21,13 @@ namespace Comessa6.Controllers
             using (var db = new comessa5Entities())
             {
                 #region Get orders
+                DateTime ordersOlderThan = DateTime.Now;
+#if DEBUG
+                ordersOlderThan -= TimeSpan.FromDays(3.0);
+#endif
                 //int id = (int)Session["UserID"];
                 List<OrderViewModel> orders = await db.corder.Include("citem").Include("citem.cprovider").Include("cuser")
-                  .Where(order => order.date > DateTime.Today)
+                  .Where(order => order.date > ordersOlderThan)
                   .OrderByDescending(order => order.date)
                   .Select(orderInfo => new OrderViewModel
                   {

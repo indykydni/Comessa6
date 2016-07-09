@@ -711,7 +711,6 @@ ul.ui-autocomplete a {
 	margin:							0;
 	cursor:							pointer;
 	background-color: 				#fff;
-	background-image:				url('/images/icon_order_type.png');
 	background-repeat:				no-repeat;
 }
 
@@ -768,17 +767,12 @@ ul.ui-autocomplete a {
 	top:							0px;
 	left:							0px;
 	margin:							0;
-	background: 					transparent url('/images/icon_owner.png') no-repeat center center;
-}
-
-#orders-list .order-item-owner.tripset {
-	background: 					transparent url('/images/icon_owner_tripset.png') no-repeat center center;
 }
 
 /* date */
 
 #orders-list .order-item-date {
-	width:							250px;
+	width:							240px;
 	height:							40px;
 	margin:							0 0 0 0px;
 
@@ -863,7 +857,6 @@ ul.ui-autocomplete a {
 	width:							20px;
 	height:							20px;
 	margin:							10px 6px 10px 6px;
-	background: 					transparent url('/images/icon_stopover.png') no-repeat -20px 0px;
 }
 
 #orders-list .via .order-item-stopover {
@@ -918,7 +911,6 @@ ul.ui-autocomplete a {
 	padding:						0;
 	margin:							9px 0 9px 0;
 	cursor:							pointer;
-	background: 					transparent url('/images/icon-more.png') no-repeat top left;
 
 	-webkit-transition: 			-webkit-transform 0.25s ease;
 	-moz-transition:				-moz-transform 0.25s ease;

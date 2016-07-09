@@ -15,6 +15,7 @@
                         
                         <li class="@itemClass" id="@("header" + order.ID.ToString())">                        
                             <ul class="order-item-wrapper" id="@("order" + order.ID.ToString())">
+
                                 <li class="order-item-content order-item-start">
                                     <div class="item"><div class="autoFontSize">@order.ItemName</div></div>
                                     <div class="provider"><span class="fonticon"></span>@order.ProviderName</div>
@@ -22,12 +23,12 @@
                                 <li class="order-item-content order-item-date">
                                     <span class="price">@order.Price</span>
                                     <span class="userName">@order.UserName</span>
-                                </li>
-                                @if (order.Status == OrderStatus.Ordered && isMine)
+                                </li> 
+                                @if (order.Status == OrderStatus.Ordered && (isMine || !Html.IsDebug()))
                                 {
-                                    <li class="order-item-content">
-                                        <button style="display: inline" orderID="@order.ID" class="btn btn-default pull-right" onclick="DeleteClicked(this)">Remove</button>
-                                    </li>
+                                <li class="order-item-content order-item-details">
+                                    <button style="display: inline" orderID="@order.ID" onclick="DeleteClicked(this)">-</button>
+                                </li>
                                 }
                             </ul>
                         </li>
@@ -39,6 +40,7 @@
     <script>
         function DeleteClicked(button) {
             var orderID = button.getAttribute("orderID");
+            alert("dd");
             $.ajax({
                 url: '@Url.Action("DeleteOrder", "Orders")',
                 type: 'POST',
