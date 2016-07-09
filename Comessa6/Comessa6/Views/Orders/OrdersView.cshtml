@@ -3,44 +3,40 @@
   <head>
       <link href="../../Content/index.css" rel="stylesheet">
   </head>
-<body style="background-color: red">
-    <div id="orders-list-box">
-        <div id="orders-list-wrapper">
-            <div id="orders-list-content">
-                <ul id="orders-list">
-                    @foreach (OrderViewModel order in Model)
-                    {
-                        bool isMine = string.Equals(order.UserID, Session["UserID"]);
-                        string itemClass = isMine ? "order-item driver via" : "order-item passenger";
+<body>
+    <div id="orders-list-wrapper">
+        <ul id="orders-list">
+            @foreach (OrderViewModel order in Model)
+            {
+                bool isMine = string.Equals(order.UserID, Session["UserID"]);
+                string itemClass = isMine ? "order-item driver" : "order-item passenger";
                         
-                        <li class="@itemClass" id="@("header" + order.ID.ToString())">                        
-                            <ul class="order-item-wrapper" id="@("order" + order.ID.ToString())">
-
-                                <li class="order-item-content order-item-start">
-                                    <div class="item"><div class="autoFontSize">@order.ItemName</div></div>
-                                    <div class="provider"><span class="fonticon"></span>@order.ProviderName</div>
-                                </li>
-                                <li class="order-item-content order-item-date">
-                                    <span class="price">@order.Price</span>
-                                    <span class="userName">@order.UserName</span>
-                                </li> 
-                                @if (order.Status == OrderStatus.Ordered && (isMine || !Html.IsDebug()))
-                                {
-                                <li class="order-item-content order-item-details">
-                                    <button style="display: inline" orderID="@order.ID" onclick="DeleteClicked(this)">-</button>
-                                </li>
-                                }
-                            </ul>
+                <li class="@itemClass" id="@("header" + order.ID.ToString())">                        
+                    <ul class="order-item-wrapper" id="@("order" + order.ID.ToString())">
+                        <li class="order-item-content order-item-start">
+                            <div class="item"><div class="autoFontSize">@order.ItemName</div></div>
+                            <div class="provider"><span class="fonticon"></span>@order.ProviderName</div>
                         </li>
-                    }
+                        <li class="order-item-content order-item-date">
+                            <span class="price">@order.Price</span>
+                            <span class="userName">@order.UserName</span>
+                        </li> 
+                    </ul>                    
+                    @if (order.Status == OrderStatus.Ordered && (isMine || !Html.IsDebug()))
+                    {
+                    <ul style="display:inline">
+                        <li class="order-item">
+                            <button class="order-item-button" orderID="@order.ID" onclick="DeleteClicked(this)">-</button>
+                        </li>
                     </ul>
-</div>
-        </div>
-        </div>
+                    }
+                </li>
+            }
+        </ul>
+    </div>
     <script>
         function DeleteClicked(button) {
             var orderID = button.getAttribute("orderID");
-            alert("dd");
             $.ajax({
                 url: '@Url.Action("DeleteOrder", "Orders")',
                 type: 'POST',

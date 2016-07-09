@@ -12,14 +12,16 @@
             data: JSON.stringify({ "itemID":itemID, "quantity": $('#orderQuantity').val(), "comments": $('#orderComments').val() }),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
-            success: function (result) {
-                //ToDo: add to orders or reload orders
-            },
+            success: function (result) { success(result); },
             error: function (error) { alert("Database failure: " + error.statusText); }
           });
             CancelOrder();
         });
       });
+
+        function success(result) {
+            $("#currentOrders").load('@Url.Action("GetOrders", "Orders")');
+      }
     </script>
 </head>
 <div @*class="collapse"*@ id="orderPanel">
