@@ -3,7 +3,7 @@
     <div class="list-group">
         @foreach (var item in Model)
         {
-            <div style="display:block" type="submit" id="@item.ID" itemName="@item.Name" onclick="ItemClicked(this)">
+            <div class="itemToOrder" style="display:block" type="submit" id="@item.ID" itemName="@item.Name" onclick="ItemClicked(this)">
                 @item.Name @item.Price
             </div>
         <div class="panel-body" id="@("panel" + item.ID.ToString())"></div>
@@ -11,6 +11,7 @@
     </div>
 
     <script>
+        var previousItemID
             function ItemClicked(button) {
                 //var orderItem = document.getElementById("orderItem");
                 //document.getElementById("orderItem").value = button.getAttribute("itemName");
@@ -18,11 +19,17 @@
                 //document.getElementById("orderQuantity").value = 1;
                 //$("#orderPanel").collapse("show");
 
-                var shownPanel = $("#orderPanel");
-                if (shownPanel)
-                    shownPanel.remove();
                 var itemID = button.getAttribute("id");
+                var shownPanel = $("#orderPanel");
+                if (shownPanel) {
+                    shownPanel.remove();
+                    if (previousItemID == itemID) {
+                        previousItemID = -1;
+                        return;
+                    }
+                }
                 var orderPanel = $("#panel" + itemID);
+                previousItemID = itemID;
                 //orderPanel.html(itemID);
                 $.ajax({
                     url: '@Url.Action("CreateOrder", "Orders")',

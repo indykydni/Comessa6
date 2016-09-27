@@ -19,18 +19,19 @@
     <link href="../../Content/bootstrap.min.css" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="../../Content/Site.css" rel="stylesheet">
+    <link href="../../Content/index.css" rel="stylesheet">
 </head>
 <div class="container-fluid">
-    <div class="col-md-4 sidebar">
+    <div class="col-md-4">
         <div class="panel-group" id="providers">
-            <div class="panel panel-default order-item-date userName">
+            <div class="panel">
                 @{int i = 0; }
                 @foreach (ProviderViewModel provider in Model.Providers.Providers)
                 {
                     i++;
-                    <div class="panel-heading" data-toggle="collapse" data-parent="#providers" href="#@("i" + i.ToString())" providerID="@provider.ID">@provider.Name</div>
+                    <div class="panel-heading provider-header" data-toggle="collapse" data-parent="#providers" href="#@("i" + i.ToString())" providerID="@provider.ID">@provider.Name</div>
                     <div id="@("i" + i.ToString())" class="panel-collapse collapse">
-                        <div class="panel-body" id="@("provider" + provider.ID.ToString())"></div>
+                        <div id="@("provider" + provider.ID.ToString())"></div>
                     </div>
                 }
             </div>
