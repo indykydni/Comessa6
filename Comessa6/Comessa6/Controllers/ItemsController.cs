@@ -27,9 +27,10 @@ namespace Comessa6.Controllers
                                    {
                                      ID = item.id,
                                      Name = item.name,
-                                     Price = item.price
+                                     Price = item.price,
+                                     Priority = item.priority
                                    }).ToListAsync();
-        return PartialView("ItemsView", items);
+        return PartialView("ItemsView", items.OrderBy(item => item.Priority));
       }
     }
   }

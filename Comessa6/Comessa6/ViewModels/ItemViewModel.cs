@@ -5,6 +5,7 @@
     public int ID { get; set; }
     public string Name { get; set; }
     public decimal Price { get; set; }
+    public int Priority { get; internal set; }
     public int? ProviderId { get; set; }
   }
 }
