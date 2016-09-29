@@ -69,6 +69,7 @@
           <Property Name="isDinner" Type="bool" Nullable="false" />
           <Property Name="dinnerText" Type="text" />
           <Property Name="dinnerLastModified" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="isVisible" Type="bool" Nullable="false" />
           <Property Name="priority" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="cuser">
@@ -263,6 +264,7 @@
           <Property Name="isDinner" Type="Boolean" Nullable="false" />
           <Property Name="dinnerText" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
           <Property Name="dinnerLastModified" Type="DateTime" Nullable="false" />
+          <Property Name="isVisible" Type="Boolean" Nullable="false" />
           <Property Name="priority" Type="Int32" Nullable="false" />
           <NavigationProperty Name="citem" Relationship="Self.providerId" FromRole="cprovider" ToRole="citem" />
         </EntityType>
@@ -459,6 +461,7 @@
                 <ScalarProperty Name="isDinner" ColumnName="isDinner" />
                 <ScalarProperty Name="dinnerText" ColumnName="dinnerText" />
                 <ScalarProperty Name="dinnerLastModified" ColumnName="dinnerLastModified" />
+                <ScalarProperty Name="isVisible" ColumnName="isVisible" />
                 <ScalarProperty Name="priority" ColumnName="priority" />
               </MappingFragment>
             </EntityTypeMapping>

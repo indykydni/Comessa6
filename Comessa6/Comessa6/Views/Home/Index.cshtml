@@ -28,6 +28,10 @@
                 @{int i = 0; }
                 @foreach (ProviderViewModel provider in Model.Providers.Providers)
                 {
+                    if (!provider.IsVisible)
+                    {
+                        continue;
+                    }
                     i++;
                     <div class="panel-heading provider-header" data-toggle="collapse" data-parent="#providers" href="#@("i" + i.ToString())" providerID="@provider.ID">@provider.Name</div>
                     <div id="@("i" + i.ToString())" class="panel-collapse collapse">
