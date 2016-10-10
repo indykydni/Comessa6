@@ -44,7 +44,7 @@ namespace Comessa6.Controllers
         var itemsInfo = db.cprovider.OrderBy(provider => provider.priority);
         foreach (var providerInfo in itemsInfo)
         {
-          ProviderViewModel providerVM = new ProviderViewModel { ID = providerInfo.id, Name = providerInfo.name, IsVisible = providerInfo.isVisible };
+          ProviderViewModel providerVM = new ProviderViewModel { ID = providerInfo.id, Name = providerInfo.name, IsVisible = providerInfo.isVisible, TodaysDinner = (DateTime.Today.Year.Equals(providerInfo.dinnerLastModified.Year) && (DateTime.Today.DayOfYear.Equals(providerInfo.dinnerLastModified.DayOfYear))) ? providerInfo.dinnerText : null };
           indexVM.Providers.Providers.Add(providerVM);
         }
         #endregion

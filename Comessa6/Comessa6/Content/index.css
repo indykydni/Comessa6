@@ -612,6 +612,8 @@ body {
 	/*border-left:					2px solid #0066A0;*/
     margin-left: 10px;
     padding-left: 10px;
+    background-color:#FAFAFA;
+    border-radius:3px;
 }
 
 .itemToOrder{

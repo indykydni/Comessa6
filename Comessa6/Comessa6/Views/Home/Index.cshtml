@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    @*<meta name="viewport" content="width=device-width, initial-scale=1">*@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
@@ -21,8 +21,8 @@
     <link href="../../Content/Site.css" rel="stylesheet">
     <link href="../../Content/index.css" rel="stylesheet">
 </head>
-<div class="container-fluid">
-    <div class="col-md-4">
+<div>
+    <div class="col-lg-5">
         <div class="panel-group" id="providers">
             <div class="panel">
                 @{int i = 0; }
@@ -34,14 +34,15 @@
                     }
                     i++;
                     <div class="panel-heading provider-header" data-toggle="collapse" data-parent="#providers" href="#@("i" + i.ToString())" providerID="@provider.ID">@provider.Name</div>
-                    <div id="@("i" + i.ToString())" class="panel-collapse collapse">
+                    <div class="panel-body" style="font-size: x-small; margin:0px; padding:0px;">@provider.TodaysDinner</div>
+                    <div id="@("i" + i.ToString())" class="panel-collapse collapse" style="font-size:small;">
                         <div id="@("provider" + provider.ID.ToString())"></div>
                     </div>
                 }
             </div>
         </div>
     </div>
-    <div class="col-md-4" id="currentOrders"/>
+    <div class="col-lg-6" id="currentOrders"/>
 </div>
 <script>$(document).ready(function () {
     $("#currentOrders").load('@Url.Action("GetOrders", "Orders")');

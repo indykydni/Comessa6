@@ -16,6 +16,7 @@ namespace Comessa6.ViewModels
     public int ID { get; set; }
     public string Name { get; set; }
     public bool IsVisible { get; set; }
+    public string TodaysDinner { get; set; }
 
     public List<ItemViewModel> Items
     {
