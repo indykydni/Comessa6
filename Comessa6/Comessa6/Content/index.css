@@ -253,6 +253,7 @@ body {
 	position:						relative;
 	float:							left;
 	width:							100%;
+	font-size:						0.8em;
 	height:							25px;
 	line-height:					25px;
     overflow:                       hidden;
