@@ -23,7 +23,7 @@
                             <span class="userName">@order.UserName</span>
                         </li> 
                     </ul>                    
-                    @if (order.Status == OrderStatus.Ordered && (isMine || !Html.IsDebug()))
+                    @if (order.Status == OrderStatus.Ordered && isMine)
                     {
                     <ul style="display:inline">
                         <li class="order-item">

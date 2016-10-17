@@ -6,7 +6,6 @@ using System.Web.Mvc;
 using Comessa6.ViewModels;
 using System.Threading.Tasks;
 using Comessa6.Models;
-using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 
@@ -22,9 +21,8 @@ namespace Comessa6.Controllers
             {
                 #region Get orders
                 DateTime ordersOlderThan = DateTime.Now;
-#if DEBUG
-                ordersOlderThan -= TimeSpan.FromDays(3.0);
-#endif
+                ordersOlderThan -= TimeSpan.FromDays(1.0);
+
                 //int id = (int)Session["UserID"];
                 List<OrderViewModel> orders = await db.corder.Include("citem").Include("citem.cprovider").Include("cuser")
                   .Where(order => order.date > ordersOlderThan)

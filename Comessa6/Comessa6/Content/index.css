@@ -133,7 +133,6 @@ body {
 	height:							auto;
 	padding:						0;
 	margin:							0;
-	cursor:							pointer;
 	background-color: 				#fff;
 	background-repeat:				no-repeat;
 }
@@ -593,6 +592,9 @@ body {
 /* -------------------------------------------------------------------------- */
 /* providers and items                                                        */
 /* -------------------------------------------------------------------------- */
+.provider{
+	font-family: 					"Helvetica Neue", Helvetica, Arial, sans-serif;
+}
 
 .provider-header{
 	border-bottom:					2px solid #E6E6E6;
@@ -600,12 +602,31 @@ body {
 	height: 24px;
     margin: 3px 0 3px 0;
     padding: 6px 0 6px 0;
+    font-size: 0.8em;
+    height: 25px;
+    line-height: 25px;
+    overflow: hidden;
+    font-weight: 700;
+    color: #4F5768;
+	letter-spacing: 0.1em;
 }
 
 
 .provider-header:hover {
     cursor: pointer;				
 	border-bottom:					2px solid #0066A0;
+}
+
+.provider-dinner{
+	border-bottom:					2px solid #E6E6E6;
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8em;    
+    /*height: 25px;
+    line-height: 25px;
+    font-weight: 700;*/
+    color: #4F5768;
 }
 
 
@@ -618,7 +639,12 @@ body {
 }
 
 .itemToOrder{
-	height: 24px;
+    border-bottom:					2px solid #E6E6E6;
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 0.8em;  
+    display:block
 }
 
 .itemToOrder:hover{
@@ -626,5 +652,6 @@ body {
 	border-bottom:					2px solid #0066A0;
 }
 
-.panel-body{
+.itemToOrder-panel {
+    padding: 2px;
 }

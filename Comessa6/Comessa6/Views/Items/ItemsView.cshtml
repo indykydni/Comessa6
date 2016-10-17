@@ -3,10 +3,10 @@
     <div class="list-group">
         @foreach (var item in Model)
         {
-            <div class="itemToOrder" style="display:block" type="submit" id="@item.ID" itemName="@item.Name" onclick="ItemClicked(this)">
+            <div class="itemToOrder" type="submit" id="@item.ID" itemName="@item.Name" onclick="ItemClicked(this)">
                 @item.Name @item.Price
             </div>
-        <div class="panel-body" id="@("panel" + item.ID.ToString())"></div>
+        <div class="itemToOrder-panel" id="@("panel" + item.ID.ToString())"></div>
         }
     </div>
 

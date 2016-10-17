@@ -23,7 +23,7 @@
 </head>
 <div>
     <div class="col-lg-5">
-        <div class="panel-group" id="providers">
+        <div class="panel-group provider" id="providers">
             <div class="panel">
                 @{int i = 0; }
                 @foreach (ProviderViewModel provider in Model.Providers.Providers)
@@ -34,7 +34,7 @@
                     }
                     i++;
                     <div class="panel-heading provider-header" data-toggle="collapse" data-parent="#providers" href="#@("i" + i.ToString())" providerID="@provider.ID">@provider.Name</div>
-                    <div style="font-size: x-small; margin:0px; padding:0px; @*white-space: pre-line;*@">@provider.TodaysDinner</div>
+                    <div class="provider-dinner" style="font-size: x-small; margin:0px; padding:0px; ">@provider.TodaysDinner</div>
                     <div id="@("i" + i.ToString())" class="panel-collapse collapse" style="font-size:small;">
                         <div id="@("provider" + provider.ID.ToString())"></div>
                     </div>
