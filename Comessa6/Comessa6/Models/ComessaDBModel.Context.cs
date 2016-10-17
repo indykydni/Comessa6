@@ -16,7 +16,7 @@ namespace Comessa6.Models
     public partial class comessa5Entities : DbContext
     {
         public comessa5Entities()
-            : base("name=comessa5Entities3")
+            : base("name=comessa5Entities")
         {
         }
     

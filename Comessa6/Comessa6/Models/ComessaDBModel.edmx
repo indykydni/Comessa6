@@ -356,7 +356,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="comessa5Entities3" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="comessa5Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="citem" EntityType="Self.citem" />
           <EntitySet Name="cnotification" EntityType="Self.cnotification" />
           <EntitySet Name="corder" EntityType="Self.corder" />
@@ -393,7 +393,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="comessa5ModelStoreContainer" CdmEntityContainer="comessa5Entities3">
+        <EntityContainerMapping StorageEntityContainer="comessa5ModelStoreContainer" CdmEntityContainer="comessa5Entities">
           <EntitySetMapping Name="citem">
             <EntityTypeMapping TypeName="comessa5Model.citem">
               <MappingFragment StoreEntitySet="citem">
