@@ -6,24 +6,22 @@
     <title>@ViewBag.Title</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <link href="~/Content/index.css" rel="stylesheet">
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Comessa6", "Index", "Home", null, new { @class = "navbar-brand" })
+                @Html.ActionLink("Comessa6", "Index", "Home", null, new { @class = "navbar-brand comessaTitle" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-left">
-                </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li style="display:inline"><span class="glyphicon glyphicon-log-out"></span></li>
-                    <li style="display:inline">@Html.ActionLink(string.IsNullOrEmpty(HttpContext.Current.Session["UserName"]?.ToString()) ? "Log in" : "Log out " + HttpContext.Current.Session["UserName"].ToString(), "Logout", "Authentication")</li>
+                    <li>
+                        <div style="margin: 14px;">
+                            @Html.ActionLink(string.IsNullOrEmpty(HttpContext.Current.Session["UserName"]?.ToString()) ? "Zaloguj" : "Wyloguj " + HttpContext.Current.Session["UserName"].ToString(), "Logout", "Authentication", null, new { @class = "comessaLogin" })
+                            <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>

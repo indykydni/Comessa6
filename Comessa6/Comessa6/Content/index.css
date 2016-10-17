@@ -113,8 +113,9 @@ body {
 	background-position: 			0px -240px;
 }
 
+
 /* -------------------------------------------------------------------------- */
-/* PART - orderS LIST: ITEMS                                                   */
+/* PART - orderS LIST: ITEMS                                                  */
 /* -------------------------------------------------------------------------- */
 
 #orders-list {
@@ -654,4 +655,24 @@ body {
 
 .itemToOrder-panel {
     padding: 2px;
+}
+
+
+
+/* -------------------------------------------------------------------------- */
+/* Headers                                                                    */
+/* -------------------------------------------------------------------------- */
+
+.columnHeader {
+	font-family: 					"Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 2.8em;
+    text-align: center;
+}
+
+.comessaTitle {
+    font-size: 2.8em;
+}
+.comessaLogin {
+    color: #777;
+    font-size: 10px;
 }

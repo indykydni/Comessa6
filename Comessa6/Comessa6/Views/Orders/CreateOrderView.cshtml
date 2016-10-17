@@ -30,7 +30,7 @@
         <form class="panel-body">
             <div class="row">
                 <div class="col-md-12 form-group">
-                    <input class="form-control" id="orderQuantity" name="quantity" placeholder="Quantity" type="number" value="@Model.Quantity" required>
+                    <input class="form-control" id="orderQuantity" name="quantity" placeholder="Quantity" type="number" min="0" max="666" value="@Model.Quantity" required>
                 </div>
             </div>
             <div class="row">
