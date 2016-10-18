@@ -22,15 +22,13 @@
                             <span class="price">@order.Price</span>
                             <span class="userName">@order.UserName</span>
                         </li> 
-                    </ul>                    
-                    @if (order.Status == OrderStatus.Ordered && isMine)
-                    {
-                    <ul style="display:inline">
-                        <li class="order-item">
-                            <button class="order-item-button" orderID="@order.ID" onclick="DeleteClicked(this)">-</button>
-                        </li>
-                    </ul>
-                    }
+                        @if (order.Status == OrderStatus.Ordered && isMine)
+                        {
+                            <li>
+                                <button class="order-item-button" orderID="@order.ID" onclick="DeleteClicked(this)">-</button>
+                            </li>
+                        }
+                    </ul>  
                 </li>
             }
         </ul>
