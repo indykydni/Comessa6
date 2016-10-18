@@ -26,7 +26,7 @@ namespace Comessa6.Controllers
                 //int id = (int)Session["UserID"];
                 List<OrderViewModel> orders = await db.corder.Include("citem").Include("citem.cprovider").Include("cuser")
                   .Where(order => order.date > ordersOlderThan)
-                  .OrderByDescending(order => order.date)
+                  .OrderByDescending(order => order.citem.cprovider.id)
                   .Select(orderInfo => new OrderViewModel
                   {
                       ID = orderInfo.id,

@@ -155,13 +155,13 @@ body {
 	border-bottom:					2px solid #E6E6E6;
 }
 
-#orders-list .order-item.passenger:hover .order-item-wrapper, #orders-list .order-item.passenger.active .order-item-wrapper {
+/*#orders-list .order-item.passenger:hover .order-item-wrapper, #orders-list .order-item.passenger.active .order-item-wrapper {
 	border-color:					#0066A0;
 }
 
 #orders-list .order-item.driver:hover .order-item-wrapper, #orders-list .order-item.driver.active .order-item-wrapper {
 	border-color:					#009800;
-}
+}*/
 
 #orders-list .order-item-content {
 	position:						relative;
@@ -206,11 +206,10 @@ body {
 	line-height:					25px;
 	padding:						0;
 	margin:							0;
-
 	font-weight:					700;
 }
 
-#orders-list .order-item-date .userName {
+.userName {
 	position:						relative;
 	float:							right;
 	width:							100%;
@@ -220,7 +219,7 @@ body {
 	margin:							0;
 
 	font-size:						0.6em;
-	font-weight:					300;
+	font-weight:					100;
 	letter-spacing:					0.1em;
 	text-transform: 				none;
 }
@@ -251,7 +250,7 @@ body {
 	color:							#4F5768;
 }
 
-#orders-list .order-item-start .provider {
+#orders-list .order-item-start .comment {
 	position:						relative;
 	float:							left;
 	width:							100%;
@@ -260,8 +259,8 @@ body {
 	padding:						0;
 	margin:							0;
 
-	font-size:						0.6em;
-	font-weight:					300;
+	font-size:						0.8em;
+	font-weight:					700;
 }
 
 /* stopover */
@@ -633,6 +632,13 @@ body {
 
 .itemToOrder-panel {
     padding: 2px;
+}
+
+.providerName{
+	font-family: 					"Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1.0em;
+    border-bottom:2px solid #86d0f4;
+    margin: 10px 0px 10px 0px;
 }
 
 

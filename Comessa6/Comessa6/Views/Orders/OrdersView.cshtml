@@ -6,21 +6,29 @@
 <body>
     <div id="orders-list-wrapper">
         <ul id="orders-list">
+            @{string providerName = string.Empty; }
             @foreach (OrderViewModel order in Model)
             {
                 bool isMine = string.Equals(order.UserID, Session["UserID"]);
                 string itemClass = isMine ? "order-item driver" : "order-item passenger";
-                        
+                
+                if (!string.Equals(order.ProviderName, providerName))
+                {
+                    <li>
+                        <div class="providerName"><span>@order.ProviderName</span></div>
+                    </li>
+
+                }
                 <li class="@itemClass" id="@("header" + order.ID.ToString())">                        
                     <ul class="order-item-wrapper" id="@("order" + order.ID.ToString())">
                         <li class="order-item-content order-item-start">
                             <div class="item"><div class="autoFontSize">@order.ItemName</div></div>
-                            <div class="provider"><span class="fonticon"></span>@order.Comment</div>
-                            <div class="provider"><span class="fonticon"></span>@order.ProviderName</div>
+                            <div class="comment"><span class="fonticon"></span>@order.Comment</div>
+                            <div class="userName">@order.UserName</div>
+                            @*<div class="provider"><span class="fonticon"></span>@order.ProviderName</div>*@
                         </li>
                         <li class="order-item-content order-item-date">
                             <span class="price">@order.Price</span>
-                            <span class="userName">@order.UserName</span>
                         </li> 
                         @if (order.Status == OrderStatus.Ordered && isMine)
                         {
@@ -30,6 +38,7 @@
                         }
                     </ul>  
                 </li>
+                providerName = order.ProviderName;
             }
         </ul>
     </div>
