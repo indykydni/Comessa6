@@ -21,7 +21,7 @@ namespace Comessa6.Controllers
             {
                 #region Get orders
                 DateTime ordersOlderThan = DateTime.Now;
-                ordersOlderThan -= TimeSpan.FromDays(1.0);
+                ordersOlderThan -= TimeSpan.FromHours(ordersOlderThan.Hour);
 
                 //int id = (int)Session["UserID"];
                 List<OrderViewModel> orders = await db.corder.Include("citem").Include("citem.cprovider").Include("cuser")
