@@ -35,7 +35,7 @@
                         continue;
                     }
                     i++;
-                    <div class="panel-heading provider-header" data-toggle="collapse" data-parent="#providers" href="#@("i" + i.ToString())" providerID="@provider.ID">@provider.Name</div>
+                    <div class="provider-header" data-toggle="collapse" data-parent="#providers" href="#@("i" + i.ToString())" providerID="@provider.ID">@provider.Name</div>
                     <div class="provider-dinner">@provider.TodaysDinner</div>
                     <div id="@("i" + i.ToString())" class="panel-collapse collapse" style="font-size:small;">
                         <div id="@("provider" + provider.ID.ToString())"></div>
@@ -53,7 +53,7 @@
     $("#currentOrders").load('@Url.Action("GetOrders", "Orders")');
     });
     $(function () {
-        $(".panel-heading").each(function () {
+        $(".provider-header").each(function () {
             var button = $(this);
             var providerID = button.attr("providerID");
             if (providerID)
