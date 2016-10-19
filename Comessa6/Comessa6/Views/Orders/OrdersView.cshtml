@@ -24,11 +24,11 @@
                         <li class="order-item-content order-item-start">
                             <div class="item"><div class="autoFontSize">@order.ItemName</div></div>
                             <div class="comment"><span class="fonticon"></span>@order.Comment</div>
-                            <div class="userName">@order.UserName</div>
                             @*<div class="provider"><span class="fonticon"></span>@order.ProviderName</div>*@
                         </li>
                         <li class="order-item-content order-item-date">
                             <span class="price">@order.Price</span>
+                            <div class="userName">@order.UserName</div>
                         </li> 
                         @if (order.Status == OrderStatus.Ordered && isMine)
                         {
