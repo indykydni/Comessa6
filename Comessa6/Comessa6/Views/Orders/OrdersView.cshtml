@@ -46,7 +46,7 @@
                         @if (order.Status == OrderStatus.Ordered && isMine)
                         {
                         <li>
-                            <input type="image" src="@Url.Content("~/Images/delete.png")" orderID="@order.ID" onclick="DeleteClicked(this)" />
+                            <input type="image" class="order-item-button" src="@Url.Content("~/Images/delete.png")" orderID="@order.ID" onclick="DeleteClicked(this)" />
                         </li>
                         }
                     </ul>
