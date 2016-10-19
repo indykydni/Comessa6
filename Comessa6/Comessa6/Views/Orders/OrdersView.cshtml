@@ -32,7 +32,7 @@
                     </li>
                     providerSum = 0;
                 }
-                <li class="@itemClass" id="@("header" + order.ID.ToString())">                        
+                <li class="@itemClass" id="@("header" + order.ID.ToString())" itemID="@order.ItemID" onclick="OrderClicked(this)" orderID="@order.ID", comment="@order.Comment">                        
                     <ul class="order-item-wrapper" id="@("order" + order.ID.ToString())">
                         <li class="order-item-content order-item-left">
                             <div class="item"><div class="autoFontSize">@order.ItemName</div></div>
@@ -51,6 +51,8 @@
                         }
                     </ul>  
                 </li>
+
+                <li class="itemToOrder-panel" id="@("panelOrder" + order.ID.ToString())"></li>
                 providerName = order.ProviderName;
                 providerSum += order.Price * order.Quantity;
             }
@@ -74,6 +76,34 @@
                     if (orderPanel)
                         orderPanel.remove();
                 },
+                error: function (error) { alert("Database failure: " + error.statusText); }
+            });
+            return false;
+        }
+
+
+        var previousOrderID
+        function OrderClicked(button) {
+            var itemID = button.getAttribute("itemID");
+            var orderID = button.getAttribute("orderID");
+            var comment = button.getAttribute("comment");
+            var shownPanel = $("#orderPanel");
+            if (shownPanel) {
+                shownPanel.remove();
+                if (previousOrderID == orderID) {
+                    previousItemID = -1;
+                    return;
+                }
+            }
+            var orderPanel = $("#panelOrder" + orderID);
+            previousOrderID = orderID;
+            $.ajax({
+                url: '@Url.Action("CreateOrderFromOrder", "Orders")',
+                type: 'GET',
+                cache: true,
+                async: true,
+                data: { itemID, comment },
+                success: function (result) { orderPanel.html(result); },
                 error: function (error) { alert("Database failure: " + error.statusText); }
             });
             return false;

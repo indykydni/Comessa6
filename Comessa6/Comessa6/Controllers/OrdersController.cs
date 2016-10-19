@@ -31,6 +31,7 @@ namespace Comessa6.Controllers
                   {
                       ID = orderInfo.id,
                       ItemName = orderInfo.citem.name,
+                      ItemID = (int)orderInfo.itemId,
                       Price = orderInfo.price,
                       Quantity = orderInfo.quantity,
                       Comment = orderInfo.comment,
@@ -49,6 +50,12 @@ namespace Comessa6.Controllers
         public ActionResult CreateOrder(int itemID)
         {
             return PartialView("CreateOrderView", new OrderViewModel { ItemID = itemID, Quantity = 1 });
+        }
+
+        [HttpGet]
+        public ActionResult CreateOrderFromOrder(int itemID, string comment)
+        {
+            return PartialView("CreateOrderView", new OrderViewModel { ItemID = itemID, Quantity = 1, Comment = comment });
         }
 
         [HttpPost]
