@@ -10,7 +10,7 @@
             @foreach (OrderViewModel order in Model)
             {
                 bool isMine = string.Equals(order.UserID, Session["UserID"]);
-                string itemClass = isMine ? "order-item driver" : "order-item passenger";
+                string itemClass = isMine ? "order-item-wrapper-mine" : "order-item-wrapper";
 
                 if (!string.Equals(order.ProviderName, providerName))
                 {
@@ -32,8 +32,8 @@
                     </li>
                     providerSum = 0;
                 }
-                <li class="@itemClass" id="@("header" + order.ID.ToString())" itemID="@order.ItemID" onclick="OrderClicked(this)" orderID="@order.ID", comment="@order.Comment">                        
-                    <ul class="order-item-wrapper" id="@("order" + order.ID.ToString())">
+                <li class="order-item" id="@("header" + order.ID.ToString())" @if (!isMine) { <text> itemID="@order.ItemID" onclick="OrderClicked(this)"  orderID="@order.ID" , comment="@order.Comment"</text>   }>
+                    <ul class="@itemClass" id="@("order" + order.ID.ToString())">
                         <li class="order-item-content order-item-left">
                             <div class="item"><div class="autoFontSize">@order.ItemName</div></div>
                             <div class="comment"><span class="fonticon"></span>@order.Comment</div>
@@ -42,14 +42,14 @@
                         <li class="order-item-content order-item-right">
                             <span class="price">@((order.Price * order.Quantity).ToString("N2"))</span>
                             <div class="userName">@order.UserName</div>
-                        </li> 
+                        </li>
                         @if (order.Status == OrderStatus.Ordered && isMine)
                         {
-                            <li>
-                                <button class="order-item-button" orderID="@order.ID" onclick="DeleteClicked(this)">-</button>
-                            </li>
+                        <li>
+                            <input type="image" src="@Url.Content("~/Images/delete.png")" orderID="@order.ID" onclick="DeleteClicked(this)" />
+                        </li>
                         }
-                    </ul>  
+                    </ul>
                 </li>
 
                 <li class="itemToOrder-panel" id="@("panelOrder" + order.ID.ToString())"></li>

@@ -150,6 +150,17 @@ body {
 	border-bottom:					2px solid #E6E6E6;
 }
 
+#orders-list .order-item-wrapper-mine {
+	position:						relative;
+	overflow:						hidden;
+	width:							686px;
+	height:							50px;
+	margin:							0;
+	padding:						0;
+	list-style:						none;
+	border-bottom:					3px solid #c1d7c4;
+}
+
 #orders-list .order-item-wrapper:hover, #orders-list .order-item-wrapper:active{
     cursor: pointer;	
 	border-bottom:					2px solid #0066A0;
@@ -164,14 +175,6 @@ body {
 	padding:						0;
 	list-style:						none;
 }
-
-/*#orders-list .order-item.passenger:hover .order-item-wrapper, #orders-list .order-item.passenger.active .order-item-wrapper {
-	border-color:					#0066A0;
-}
-
-#orders-list .order-item.driver:hover .order-item-wrapper, #orders-list .order-item.driver.active .order-item-wrapper {
-	border-color:					#009800;
-}*/
 
 #orders-list .order-item-content {
 	position:						relative;
