@@ -12,14 +12,14 @@
     <div class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                @Html.ActionLink("Comessa6", "Index", "Home", null, new { @class = "navbar-brand comessaTitle" })
+                <img class="comessaTitle" src="@Url.Content("~/Images/logo.png")" />
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <div style="margin: 14px;">
                             @Html.ActionLink(string.IsNullOrEmpty(HttpContext.Current.Session["UserName"]?.ToString()) ? "Zaloguj" : "Wyloguj " + HttpContext.Current.Session["UserName"].ToString(), "Logout", "Authentication", null, new { @class = "comessaLogin" })
-                            <span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                            <span class="glyphicon glyphicon-log-out" aria-hidden="true" style="font-size:0.6em;"></span>
                         </div>
                     </li>
                 </ul>

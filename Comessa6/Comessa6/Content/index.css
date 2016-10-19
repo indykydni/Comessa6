@@ -138,11 +138,6 @@ body {
 	background-repeat:				no-repeat;
 }
 
-#orders-list .order-item.passenger {
-}
-
-#orders-list .order-item.driver {
-}
 
 #orders-list .order-item-wrapper {
 	position:						relative;
@@ -153,6 +148,16 @@ body {
 	padding:						0;
 	list-style:						none;
 	border-bottom:					2px solid #E6E6E6;
+}
+
+#orders-list .order-item-sum {
+	position:						relative;
+	overflow:						hidden;
+	width:							686px;
+	height:							20px;
+	margin:							0;
+	padding:						0;
+	list-style:						none;
 }
 
 /*#orders-list .order-item.passenger:hover .order-item-wrapper, #orders-list .order-item.passenger.active .order-item-wrapper {
@@ -173,19 +178,9 @@ body {
 
 /* owner */
 
-#orders-list .order-item-owner {
-	position:						absolute;
-	float:							none;
-	width:							40px;
-	height:							40px;
-	top:							0px;
-	left:							0px;
-	margin:							0;
-}
-
 /* date */
 
-#orders-list .order-item-date {
+#orders-list .order-item-right {
 	width:							50px;
 	height:							40px;
 	margin:							0 0 0 0px;
@@ -198,7 +193,7 @@ body {
 	color:							#888888;
 }
 
-#orders-list .order-item-date .price {
+#orders-list .order-item-right .price {
 	position:						relative;
 	float:							right;
 	width:							100%;
@@ -207,6 +202,18 @@ body {
 	padding:						0;
 	margin:							0;
 	font-weight:					700;
+}
+
+#orders-list .order-item-right .sum {
+	position:						relative;
+	float:							right;
+	width:							100%;
+	height:							25px;
+	line-height:					25px;
+	padding:						0;
+	margin:							0;
+	font-weight:					700;
+    color:black;
 }
 
 .userName {
@@ -226,7 +233,7 @@ body {
 
 /* start */
 
-#orders-list .order-item-start {
+#orders-list .order-item-left {
 	width:							510px;
 	height:							40px;
 
@@ -238,7 +245,7 @@ body {
 	color:							#888888;
 }
 
-#orders-list .order-item-start .item {
+#orders-list .order-item-left .item {
 	position:						relative;
 	float:							left;
 	width:							100%;
@@ -250,7 +257,7 @@ body {
 	color:							#4F5768;
 }
 
-#orders-list .order-item-start .comment {
+#orders-list .order-item-left .comment {
 	position:						relative;
 	float:							left;
 	width:							100%;
@@ -258,9 +265,9 @@ body {
 	line-height:					10px;
 	padding:						0;
 	margin:							0;
-
+	letter-spacing:					0.001em;
 	font-size:						0.8em;
-	font-weight:					700;
+	font-weight:					300;
 }
 
 /* stopover */
@@ -630,14 +637,14 @@ body {
 }
 
 .itemToOrder-panel {
-    padding: 2px;
+    padding:                        2px;
 }
 
 .providerName{
 	font-family: 					"Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 1.0em;
-    border-bottom:2px solid #86d0f4;
-    margin: 10px 0px 10px 0px;
+    font-size:                      1.0em;
+    border-bottom:                  2px solid #86d0f4;
+    margin:                         10px 0px 10px 0px;
 }
 
 
@@ -648,14 +655,20 @@ body {
 
 .columnHeader {
 	font-family: 					"Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 2.8em;
-    text-align: center;
+    font-size:                      2.8em;
+    text-align:                     center;
 }
 
 .comessaTitle {
-    font-size: 2.8em;
+    font-size:                      2.8em;
+    color:                          #135d84;
+    margin:                         6px;
+}
+.comessaTitle:hover,
+.comessaTitle:focus {
+  text-decoration: none;
 }
 .comessaLogin {
-    color: #777;
-    font-size: 10px;
+    color:                          #777;
+    font-size:                      10px;
 }

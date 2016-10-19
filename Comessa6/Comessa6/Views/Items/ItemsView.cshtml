@@ -30,7 +30,6 @@
                 }
                 var orderPanel = $("#panel" + itemID);
                 previousItemID = itemID;
-                //orderPanel.html(itemID);
                 $.ajax({
                     url: '@Url.Action("CreateOrder", "Orders")',
                     type: 'GET',

@@ -32,6 +32,7 @@ namespace Comessa6.Controllers
                       ID = orderInfo.id,
                       ItemName = orderInfo.citem.name,
                       Price = orderInfo.price,
+                      Quantity = orderInfo.quantity,
                       Comment = orderInfo.comment,
                       ProviderName = orderInfo.citem.cprovider.name,
                       Status = (OrderStatus)orderInfo.status,

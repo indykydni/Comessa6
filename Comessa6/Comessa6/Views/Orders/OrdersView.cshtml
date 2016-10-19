@@ -6,28 +6,41 @@
 <body>
     <div id="orders-list-wrapper">
         <ul id="orders-list">
-            @{string providerName = string.Empty; }
+            @{string providerName = string.Empty; decimal providerSum = 0;}
             @foreach (OrderViewModel order in Model)
             {
                 bool isMine = string.Equals(order.UserID, Session["UserID"]);
                 string itemClass = isMine ? "order-item driver" : "order-item passenger";
-                
+
                 if (!string.Equals(order.ProviderName, providerName))
                 {
+                    if (!string.Equals(string.Empty, providerName))
+                    {
+                        <li>
+                            <ul class="order-item-sum">
+                                <li class="order-item-content order-item-left">
+                                    <div class="item"><div class="autoFontSize">Suma</div></div>
+                                </li>
+                                <li class="order-item-content order-item-right">
+                                    <div class="sum">@(providerSum.ToString("N2"))</div>
+                                </li>
+                            </ul>
+                        </li>
+                    }
                     <li>
-                        <div class="providerName"><span>@order.ProviderName</span></div>
+                        <div class="providerName"><span>@(order.ProviderName)</span></div>
                     </li>
-
+                    providerSum = 0;
                 }
                 <li class="@itemClass" id="@("header" + order.ID.ToString())">                        
                     <ul class="order-item-wrapper" id="@("order" + order.ID.ToString())">
-                        <li class="order-item-content order-item-start">
+                        <li class="order-item-content order-item-left">
                             <div class="item"><div class="autoFontSize">@order.ItemName</div></div>
                             <div class="comment"><span class="fonticon"></span>@order.Comment</div>
                             @*<div class="provider"><span class="fonticon"></span>@order.ProviderName</div>*@
                         </li>
-                        <li class="order-item-content order-item-date">
-                            <span class="price">@order.Price</span>
+                        <li class="order-item-content order-item-right">
+                            <span class="price">@((order.Price * order.Quantity).ToString("N2"))</span>
                             <div class="userName">@order.UserName</div>
                         </li> 
                         @if (order.Status == OrderStatus.Ordered && isMine)
@@ -39,6 +52,7 @@
                     </ul>  
                 </li>
                 providerName = order.ProviderName;
+                providerSum += order.Price * order.Quantity;
             }
         </ul>
     </div>
