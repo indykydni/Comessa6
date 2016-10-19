@@ -56,6 +56,19 @@
                 providerName = order.ProviderName;
                 providerSum += order.Price * order.Quantity;
             }
+            @if (providerSum != 0)
+            {
+            <li>
+                <ul class="order-item-sum">
+                    <li class="order-item-content order-item-left">
+                        <div class="item"><div class="autoFontSize">Suma</div></div>
+                    </li>
+                    <li class="order-item-content order-item-right">
+                        <div class="sum">@(providerSum.ToString("N2"))</div>
+                    </li>
+                </ul>
+            </li>
+            }
         </ul>
     </div>
     <script>
