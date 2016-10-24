@@ -8,7 +8,7 @@
         <EntityTypeShape EntityType="comessa5Model.citem" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="comessa5Model.cnotification" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="comessa5Model.corder" Width="1.5" PointX="6" PointY="6.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="comessa5Model.cpayment" Width="1.5" PointX="3" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="comessa5Model.cpayment" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
         <EntityTypeShape EntityType="comessa5Model.cprovider" Width="1.5" PointX="1.5" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="comessa5Model.cuser" Width="1.5" PointX="0.75" PointY="6.625" IsExpanded="true" />
         <AssociationConnector Association="comessa5Model.itemID" ManuallyRouted="false" />

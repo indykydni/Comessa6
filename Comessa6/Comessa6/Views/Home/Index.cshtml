@@ -46,9 +46,13 @@
     </div>
     <div class="col-lg-6">
         <div class="columnHeader">Zamówione dziś</div>
-        <div id="currentOrders"/>
+        <div>
+            <div id="currentOrders" />
+        </div>
+        <div>
+            <div id="currentPayments" />
+        </div>
     </div>
-</div>
 <script>
 
     $(function () {
@@ -77,11 +81,19 @@
     function loadOrders() {
         $("#currentOrders").load('@Url.Action("GetOrders", "Orders")');
     };
+    function loadPayments() {
+        $("#currentPayments").load('@Url.Action("GetPayments", "Payments")');
+    };
     $(document).ready(function () {
         loadOrders();
+        loadPayments();
     });
 
     setInterval(function () {
         loadOrders();
+    }, 60000);
+
+    setInterval(function () {
+        loadPayments();
     }, 60000);
 </script>

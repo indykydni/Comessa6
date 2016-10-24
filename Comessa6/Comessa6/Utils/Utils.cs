@@ -56,4 +56,10 @@ namespace Comessa6
         Done = 2,
         Payment = 99
     }
+
+  public enum PaymentType
+  {
+    Transfer = 0,
+    Payment = 1
+  }
 }
