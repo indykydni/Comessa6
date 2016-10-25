@@ -31,5 +31,8 @@ namespace Comessa6.Models
         public virtual DbSet<cpayment> cpayment { get; set; }
         public virtual DbSet<cprovider> cprovider { get; set; }
         public virtual DbSet<cuser> cuser { get; set; }
+        public virtual DbSet<citemcount> citemcount { get; set; }
+        public virtual DbSet<vorders> vorders { get; set; }
+        public virtual DbSet<vpayment> vpayment { get; set; }
     }
 }

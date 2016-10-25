@@ -184,6 +184,9 @@
     <Compile Include="Models\citem.cs">
       <DependentUpon>ComessaDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\citemcount.cs">
+      <DependentUpon>ComessaDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\cnotification.cs">
       <DependentUpon>ComessaDBModel.tt</DependentUpon>
     </Compile>
@@ -212,6 +215,9 @@
       <DependentUpon>ComessaDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\cuser.cs">
+      <DependentUpon>ComessaDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\vorders.cs">
       <DependentUpon>ComessaDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\BaseViewModel.cs" />
