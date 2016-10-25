@@ -1,0 +1,30 @@
+﻿@using Comessa6.ViewModels;
+@model IEnumerable<PaymentViewModel>
+  <head>
+      <link href="~/Content/index.css" rel="stylesheet">
+  </head>
+<body>
+    <div id="orders-list-wrapper">
+        <ul id="orders-list">
+            <li>
+                <div class="providerName"><span>Przelewy</span></div>
+            </li>
+            @foreach (PaymentViewModel payment in Model)
+            {
+                string itemClass = payment.Type == PaymentType.Payment ? "order-item-wrapper-payment" : "order-item-wrapper-transfer";
+
+                <li class="order-item" id="@("header" + payment.ID.ToString())">
+                    <ul class="@itemClass" id="@("order" + payment.ID.ToString())">
+                        <li class="order-item-content order-item-left">
+                            <div class="item"><div class="autoFontSize">@payment.SenderName -> @payment.RecipientName</div></div>
+                            <div class="comment"><span class="fonticon"></span>@payment.Comment</div>
+                        </li>
+                        <li class="order-item-content order-item-right">
+                            <span class="price">@((payment.Value).ToString("N2"))</span>
+                        </li>
+                    </ul>
+                </li>
+            }
+        </ul>
+    </div>
+</body>
