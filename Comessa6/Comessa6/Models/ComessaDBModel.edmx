@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="comessa5Model.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="comessa5Model.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="citem">
           <Key>
             <PropertyRef Name="id" />
@@ -17,6 +17,14 @@
           <Property Name="isVisible" Type="bool" Nullable="false" />
           <Property Name="image" Type="mediumblob" />
           <Property Name="priority" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="citemcount">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="itemId" Type="int" />
+          <Property Name="count" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="cnotification">
           <Key>
@@ -42,7 +50,7 @@
           <Property Name="userId" Type="int" />
           <Property Name="sellerId" Type="int" />
           <Property Name="status" Type="int" />
-          <Property Name="date" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="date" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="lastModified" Type="timestamp" Precision="0" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="cpayment">
@@ -84,55 +92,45 @@
           <Property Name="isMasterServer" Type="bool" Nullable="false" />
           <Property Name="isServer" Type="bool" Nullable="false" />
         </EntityType>
-        <Association Name="FK_cnotification_cuser">
-          <End Role="cuser" Type="Self.cuser" Multiplicity="1" />
-          <End Role="cnotification" Type="Self.cnotification" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cuser">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="cnotification">
-              <PropertyRef Name="userId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_cnotification_cuser_2">
-          <End Role="cuser" Type="Self.cuser" Multiplicity="0..1" />
-          <End Role="cnotification" Type="Self.cnotification" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cuser">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="cnotification">
-              <PropertyRef Name="senderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_cpayment_cuser">
-          <End Role="cuser" Type="Self.cuser" Multiplicity="0..1" />
-          <End Role="cpayment" Type="Self.cpayment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="cuser">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="cpayment">
-              <PropertyRef Name="senderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="itemID">
-          <End Role="citem" Type="Self.citem" Multiplicity="0..1" />
-          <End Role="corder" Type="Self.corder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="citem">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="corder">
-              <PropertyRef Name="itemId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="providerId">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.comessa5.vorders' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vorders">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="quantity" />
+            <PropertyRef Name="price" />
+            <PropertyRef Name="total" />
+            <PropertyRef Name="date" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="itemName" Type="text" />
+          <Property Name="comment" Type="text" />
+          <Property Name="quantity" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="total" Type="decimal" Precision="20" Scale="4" Nullable="false" />
+          <Property Name="ordering" Type="text" />
+          <Property Name="status" Type="int" />
+          <Property Name="date" Type="timestamp" Precision="0" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'def.comessa5.vpayment' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="vpayment">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="amount" />
+            <PropertyRef Name="date" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="comment" Type="text" />
+          <Property Name="type" Type="int" />
+          <Property Name="amount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="date" Type="timestamp" Precision="0" Nullable="false" />
+          <Property Name="senderId" Type="int" />
+          <Property Name="senderyName" Type="text" />
+          <Property Name="recipiendId" Type="int" />
+          <Property Name="recipientName" Type="text" />
+        </EntityType>
+        <Association Name="fk_citem_cprovider1">
           <End Role="cprovider" Type="Self.cprovider" Multiplicity="0..1" />
           <End Role="citem" Type="Self.citem" Multiplicity="*" />
           <ReferentialConstraint>
@@ -144,7 +142,55 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="userID">
+        <Association Name="fk_citemcount_citem">
+          <End Role="citem" Type="Self.citem" Multiplicity="0..1" />
+          <End Role="citemcount" Type="Self.citemcount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="citem">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="citemcount">
+              <PropertyRef Name="itemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cnotification_cuser1">
+          <End Role="cuser" Type="Self.cuser" Multiplicity="1" />
+          <End Role="cnotification" Type="Self.cnotification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cuser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cnotification">
+              <PropertyRef Name="userId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cnotification_cuser2">
+          <End Role="cuser" Type="Self.cuser" Multiplicity="0..1" />
+          <End Role="cnotification" Type="Self.cnotification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cuser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cnotification">
+              <PropertyRef Name="senderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_corder_citem1">
+          <End Role="citem" Type="Self.citem" Multiplicity="0..1" />
+          <End Role="corder" Type="Self.corder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="citem">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="corder">
+              <PropertyRef Name="itemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_corder_cuser1">
           <End Role="cuser" Type="Self.cuser" Multiplicity="0..1" />
           <End Role="corder" Type="Self.corder" Multiplicity="*" />
           <ReferentialConstraint>
@@ -156,40 +202,82 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_cpayment_cuser1">
+          <End Role="cuser" Type="Self.cuser" Multiplicity="0..1" />
+          <End Role="cpayment" Type="Self.cpayment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cuser">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cpayment">
+              <PropertyRef Name="senderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="comessa5ModelStoreContainer">
           <EntitySet Name="citem" EntityType="Self.citem" Schema="comessa5" store:Type="Tables" />
+          <EntitySet Name="citemcount" EntityType="Self.citemcount" Schema="comessa5" store:Type="Tables" />
           <EntitySet Name="cnotification" EntityType="Self.cnotification" Schema="comessa5" store:Type="Tables" />
           <EntitySet Name="corder" EntityType="Self.corder" Schema="comessa5" store:Type="Tables" />
           <EntitySet Name="cpayment" EntityType="Self.cpayment" Schema="comessa5" store:Type="Tables" />
           <EntitySet Name="cprovider" EntityType="Self.cprovider" Schema="comessa5" store:Type="Tables" />
           <EntitySet Name="cuser" EntityType="Self.cuser" Schema="comessa5" store:Type="Tables" />
-          <AssociationSet Name="FK_cnotification_cuser" Association="Self.FK_cnotification_cuser">
-            <End Role="cuser" EntitySet="cuser" />
-            <End Role="cnotification" EntitySet="cnotification" />
-          </AssociationSet>
-          <AssociationSet Name="FK_cnotification_cuser_2" Association="Self.FK_cnotification_cuser_2">
-            <End Role="cuser" EntitySet="cuser" />
-            <End Role="cnotification" EntitySet="cnotification" />
-          </AssociationSet>
-          <AssociationSet Name="FK_cpayment_cuser" Association="Self.FK_cpayment_cuser">
-            <End Role="cuser" EntitySet="cuser" />
-            <End Role="cpayment" EntitySet="cpayment" />
-          </AssociationSet>
-          <AssociationSet Name="itemID" Association="Self.itemID">
-            <End Role="citem" EntitySet="citem" />
-            <End Role="corder" EntitySet="corder" />
-          </AssociationSet>
-          <AssociationSet Name="providerId" Association="Self.providerId">
+          <EntitySet Name="vorders" EntityType="Self.vorders" store:Type="Views" store:Schema="comessa5">
+            <DefiningQuery>SELECT
+`vorders`.`id`, 
+`vorders`.`itemName`, 
+`vorders`.`comment`, 
+`vorders`.`quantity`, 
+`vorders`.`price`, 
+`vorders`.`total`, 
+`vorders`.`ordering`, 
+`vorders`.`status`, 
+`vorders`.`date`
+FROM `vorders` AS `vorders`</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="vpayment" EntityType="Self.vpayment" store:Type="Views" store:Schema="comessa5">
+            <DefiningQuery>SELECT
+`vpayment`.`id`, 
+`vpayment`.`comment`, 
+`vpayment`.`type`, 
+`vpayment`.`amount`, 
+`vpayment`.`date`, 
+`vpayment`.`senderId`, 
+`vpayment`.`senderyName`, 
+`vpayment`.`recipiendId`, 
+`vpayment`.`recipientName`
+FROM `vpayment` AS `vpayment`</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="fk_citem_cprovider1" Association="Self.fk_citem_cprovider1">
             <End Role="cprovider" EntitySet="cprovider" />
             <End Role="citem" EntitySet="citem" />
           </AssociationSet>
-          <AssociationSet Name="userID" Association="Self.userID">
+          <AssociationSet Name="fk_citemcount_citem" Association="Self.fk_citemcount_citem">
+            <End Role="citem" EntitySet="citem" />
+            <End Role="citemcount" EntitySet="citemcount" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cnotification_cuser1" Association="Self.fk_cnotification_cuser1">
+            <End Role="cuser" EntitySet="cuser" />
+            <End Role="cnotification" EntitySet="cnotification" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cnotification_cuser2" Association="Self.fk_cnotification_cuser2">
+            <End Role="cuser" EntitySet="cuser" />
+            <End Role="cnotification" EntitySet="cnotification" />
+          </AssociationSet>
+          <AssociationSet Name="fk_corder_citem1" Association="Self.fk_corder_citem1">
+            <End Role="citem" EntitySet="citem" />
+            <End Role="corder" EntitySet="corder" />
+          </AssociationSet>
+          <AssociationSet Name="fk_corder_cuser1" Association="Self.fk_corder_cuser1">
             <End Role="cuser" EntitySet="cuser" />
             <End Role="corder" EntitySet="corder" />
           </AssociationSet>
+          <AssociationSet Name="fk_cpayment_cuser1" Association="Self.fk_cpayment_cuser1">
+            <End Role="cuser" EntitySet="cuser" />
+            <End Role="cpayment" EntitySet="cpayment" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="comessa5Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -207,6 +295,7 @@
           <Property Name="priority" Type="Int32" Nullable="false" />
           <NavigationProperty Name="corder" Relationship="Self.itemID" FromRole="citem" ToRole="corder" />
           <NavigationProperty Name="cprovider" Relationship="Self.providerId" FromRole="citem" ToRole="cprovider" />
+          <NavigationProperty Name="citemcount" Relationship="comessa5Model.fk_citemcount_citem" FromRole="citem" ToRole="citemcount" />
         </EntityType>
         <EntityType Name="cnotification">
           <Key>
@@ -387,7 +476,69 @@
             <End Role="cuser" EntitySet="cuser" />
             <End Role="cpayment" EntitySet="cpayment" />
           </AssociationSet>
+          <EntitySet Name="citemcount" EntityType="comessa5Model.citemcount" />
+          <EntitySet Name="vorders" EntityType="comessa5Model.vorders" />
+          <AssociationSet Name="fk_citemcount_citem" Association="comessa5Model.fk_citemcount_citem">
+            <End Role="citem" EntitySet="citem" />
+            <End Role="citemcount" EntitySet="citemcount" />
+          </AssociationSet>
+          <EntitySet Name="vpayment" EntityType="comessa5Model.vpayment" />
         </EntityContainer>
+        <EntityType Name="citemcount">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="itemId" Type="Int32" />
+          <Property Name="count" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="citem" Relationship="comessa5Model.fk_citemcount_citem" FromRole="citemcount" ToRole="citem" />
+        </EntityType>
+        <EntityType Name="vorders">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="quantity" />
+            <PropertyRef Name="price" />
+            <PropertyRef Name="total" />
+            <PropertyRef Name="date" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="itemName" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="comment" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="quantity" Type="Decimal" Nullable="false" />
+          <Property Name="price" Type="Decimal" Nullable="false" />
+          <Property Name="total" Type="Decimal" Nullable="false" />
+          <Property Name="ordering" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="date" Type="DateTime" Nullable="false" />
+        </EntityType>
+        <Association Name="fk_citemcount_citem">
+          <End Type="comessa5Model.citem" Role="citem" Multiplicity="0..1" />
+          <End Type="comessa5Model.citemcount" Role="citemcount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="citem">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="citemcount">
+              <PropertyRef Name="itemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="vpayment">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="amount" />
+            <PropertyRef Name="date" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="comment" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="type" Type="Int32" />
+          <Property Name="amount" Type="Decimal" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" />
+          <Property Name="senderId" Type="Int32" />
+          <Property Name="senderyName" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="recipiendId" Type="Int32" />
+          <Property Name="recipientName" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -476,6 +627,45 @@
                 <ScalarProperty Name="ip" ColumnName="ip" />
                 <ScalarProperty Name="isMasterServer" ColumnName="isMasterServer" />
                 <ScalarProperty Name="isServer" ColumnName="isServer" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="citemcount">
+            <EntityTypeMapping TypeName="comessa5Model.citemcount">
+              <MappingFragment StoreEntitySet="citemcount">
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="itemId" ColumnName="itemId" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vorders">
+            <EntityTypeMapping TypeName="comessa5Model.vorders">
+              <MappingFragment StoreEntitySet="vorders">
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="ordering" ColumnName="ordering" />
+                <ScalarProperty Name="total" ColumnName="total" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="itemName" ColumnName="itemName" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="vpayment">
+            <EntityTypeMapping TypeName="comessa5Model.vpayment">
+              <MappingFragment StoreEntitySet="vpayment">
+                <ScalarProperty Name="recipientName" ColumnName="recipientName" />
+                <ScalarProperty Name="recipiendId" ColumnName="recipiendId" />
+                <ScalarProperty Name="senderyName" ColumnName="senderyName" />
+                <ScalarProperty Name="senderId" ColumnName="senderId" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

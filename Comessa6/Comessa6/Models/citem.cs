@@ -18,6 +18,7 @@ namespace Comessa6.Models
         public citem()
         {
             this.corder = new HashSet<corder>();
+            this.citemcount = new HashSet<citemcount>();
         }
     
         public int id { get; set; }
@@ -32,5 +33,7 @@ namespace Comessa6.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<corder> corder { get; set; }
         public virtual cprovider cprovider { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<citemcount> citemcount { get; set; }
     }
 }

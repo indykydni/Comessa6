@@ -17,6 +17,10 @@
         <AssociationConnector Association="comessa5Model.FK_cnotification_cuser_2" ManuallyRouted="false" />
         <AssociationConnector Association="comessa5Model.userID" ManuallyRouted="false" />
         <AssociationConnector Association="comessa5Model.FK_cpayment_cuser" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="comessa5Model.citemcount" Width="1.5" PointX="6" PointY="1.375" />
+        <EntityTypeShape EntityType="comessa5Model.vorders" Width="1.5" PointX="8.375" PointY="0.75" />
+        <AssociationConnector Association="comessa5Model.fk_citemcount_citem" />
+        <EntityTypeShape EntityType="comessa5Model.vpayment" Width="1.5" PointX="8.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
