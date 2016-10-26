@@ -6,25 +6,66 @@
 <body>
     <div id="orders-list-wrapper">
         <ul id="orders-list">
-            <li>
-                <div class="providerName"><span>Przelewy</span></div>
-            </li>
-            @foreach (PaymentViewModel payment in Model)
-            {
-                string itemClass = payment.Type == PaymentType.Payment ? "order-item-wrapper-payment" : "order-item-wrapper-transfer";
+            @{
+              bool shown = false;
+              foreach (PaymentViewModel payment in Model.Where(p => p.Type == PaymentType.Payment))
+              {
+                  string itemClass = "order-item-wrapper-payment";
+                  bool isMine = string.Equals(payment.SenderID, Session["UserID"]) || string.Equals(payment.RecipientID, Session["UserID"]) || string.Equals(2, Session["UserID"]);
+                  if (!isMine)
+                  {
+                      continue;
+                  }
+                  if (!shown)
+                  {
+                      shown = true;
+                        <li>
+                            <div class="paymentTitle"><span>Wpłaty</span></div>
+                        </li>
+                  }
 
-                <li class="order-item" id="@("header" + payment.ID.ToString())">
-                    <ul class="@itemClass" id="@("order" + payment.ID.ToString())">
-                        <li class="order-item-content order-item-left">
-                            <div class="item"><div class="autoFontSize">@payment.SenderName -> @payment.RecipientName</div></div>
-                            <div class="comment"><span class="fonticon"></span>@payment.Comment</div>
+                    <li class="order-item" id="@("header" + payment.ID.ToString())">
+                        <ul class="@itemClass" id="@("order" + payment.ID.ToString())">
+                            <li class="order-item-content order-item-left">
+                                <div class="item"><div class="autoFontSize">@payment.SenderName</div></div>
+                                <div class="comment"><span class="fonticon"></span>@payment.Comment</div>
+                            </li>
+                            <li class="order-item-content order-item-right">
+                                <span class="price">@((payment.Value).ToString("N2"))</span>
+                            </li>
+                        </ul>
+                    </li>
+              }
+              shown = false;
+              foreach (PaymentViewModel payment in Model.Where(p => p.Type == PaymentType.Transfer))
+              {
+                  string itemClass = "order-item-wrapper-transfer";
+                  bool isMine = string.Equals(payment.SenderID, Session["UserID"]) || string.Equals(payment.RecipientID, Session["UserID"]) || string.Equals(2, Session["UserID"]);
+                  if (!isMine)
+                  {
+                      continue;
+                  }
+                  if (!shown)
+                  {
+                      shown = true;
+                        <li>
+                            <div class="transferTitle"><span>Przelewy</span></div>
                         </li>
-                        <li class="order-item-content order-item-right">
-                            <span class="price">@((payment.Value).ToString("N2"))</span>
-                        </li>
-                    </ul>
-                </li>
-            }
+                  }
+
+                    <li class="order-item" id="@("header" + payment.ID.ToString())">
+                        <ul class="@itemClass" id="@("order" + payment.ID.ToString())">
+                            <li class="order-item-content order-item-left">
+                                <div class="item"><div class="autoFontSize">@payment.SenderName >>> @payment.RecipientName</div></div>
+                                <div class="comment"><span class="fonticon"></span>@payment.Comment</div>
+                            </li>
+                            <li class="order-item-content order-item-right">
+                                <span class="price">@((payment.Value).ToString("N2"))</span>
+                            </li>
+                        </ul>
+                    </li>
+                  }
+              }
         </ul>
     </div>
 </body>

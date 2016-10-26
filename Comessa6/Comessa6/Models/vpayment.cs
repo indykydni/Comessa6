@@ -20,8 +20,8 @@ namespace Comessa6.Models
         public decimal amount { get; set; }
         public System.DateTime date { get; set; }
         public Nullable<int> senderId { get; set; }
-        public string senderyName { get; set; }
-        public Nullable<int> recipiendId { get; set; }
+        public string senderName { get; set; }
+        public Nullable<int> recipientId { get; set; }
         public string recipientName { get; set; }
     }
 }

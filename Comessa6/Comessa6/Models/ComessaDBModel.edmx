@@ -126,8 +126,8 @@ warning 6002: The table/view 'def.comessa5.vpayment' does not have a primary key
           <Property Name="amount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="date" Type="timestamp" Precision="0" Nullable="false" />
           <Property Name="senderId" Type="int" />
-          <Property Name="senderyName" Type="text" />
-          <Property Name="recipiendId" Type="int" />
+          <Property Name="senderName" Type="text" />
+          <Property Name="recipientId" Type="int" />
           <Property Name="recipientName" Type="text" />
         </EntityType>
         <Association Name="fk_citem_cprovider1">
@@ -243,8 +243,8 @@ FROM `vorders` AS `vorders`</DefiningQuery>
 `vpayment`.`amount`, 
 `vpayment`.`date`, 
 `vpayment`.`senderId`, 
-`vpayment`.`senderyName`, 
-`vpayment`.`recipiendId`, 
+`vpayment`.`senderName`, 
+`vpayment`.`recipientId`, 
 `vpayment`.`recipientName`
 FROM `vpayment` AS `vpayment`</DefiningQuery>
           </EntitySet>
@@ -535,8 +535,8 @@ FROM `vpayment` AS `vpayment`</DefiningQuery>
           <Property Name="amount" Type="Decimal" Nullable="false" />
           <Property Name="date" Type="DateTime" Nullable="false" />
           <Property Name="senderId" Type="Int32" />
-          <Property Name="senderyName" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="recipiendId" Type="Int32" />
+          <Property Name="senderName" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="recipientId" Type="Int32" />
           <Property Name="recipientName" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
         </EntityType>
       </Schema>
@@ -658,8 +658,8 @@ FROM `vpayment` AS `vpayment`</DefiningQuery>
             <EntityTypeMapping TypeName="comessa5Model.vpayment">
               <MappingFragment StoreEntitySet="vpayment">
                 <ScalarProperty Name="recipientName" ColumnName="recipientName" />
-                <ScalarProperty Name="recipiendId" ColumnName="recipiendId" />
-                <ScalarProperty Name="senderyName" ColumnName="senderyName" />
+                <ScalarProperty Name="recipientId" ColumnName="recipientId" />
+                <ScalarProperty Name="senderName" ColumnName="senderName" />
                 <ScalarProperty Name="senderId" ColumnName="senderId" />
                 <ScalarProperty Name="date" ColumnName="date" />
                 <ScalarProperty Name="amount" ColumnName="amount" />

@@ -24,15 +24,17 @@ namespace Comessa6.Controllers
         paymentsOlderThan -= TimeSpan.FromHours(paymentsOlderThan.Hour);
 
         //int id = (int)Session["UserID"];
-        List<PaymentViewModel> payments = await db.cpayment.Include("cuser")
+        List<PaymentViewModel> payments = await db.vpayment
           .Where(payment => payment.date > paymentsOlderThan)
           .Select(paymentInfo => new PaymentViewModel
           {
             ID = paymentInfo.id,
             Value = paymentInfo.amount,
             Comment = paymentInfo.comment,
-            SenderName = paymentInfo.cuser.name,
-            RecipientName = paymentInfo.recipientId.ToString(),
+            SenderID = paymentInfo.senderId,
+            RecipientID = paymentInfo.recipientId,
+            SenderName = paymentInfo.senderName,
+            RecipientName = paymentInfo.recipientName,
             Type = (PaymentType)paymentInfo.type
           }
           ).ToListAsync();

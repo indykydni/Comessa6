@@ -169,7 +169,7 @@ body {
 	margin:							0;
 	padding:						0;
 	list-style:						none;
-	border-bottom:					3px solid #00cccc;
+	border-bottom:					2px solid #E6E6E6;
 }
 
 #orders-list .order-item-wrapper-transfer {
@@ -180,7 +180,7 @@ body {
 	margin:							0;
 	padding:						0;
 	list-style:						none;
-	border-bottom:					3px solid #9900cc;
+	border-bottom:					2px solid #E6E6E6;
 }
 
 #orders-list .order-item-wrapper:hover, #orders-list .order-item-wrapper:active{
@@ -652,11 +652,24 @@ body {
 
 .providerName{
 	font-family: 					"Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size:                      1.0em;
+    font-size:                      1.3em;
     border-bottom:                  2px solid #86d0f4;
     margin:                         10px 0px 10px 0px;
 }
 
+.paymentTitle{
+	font-family: 					"Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size:                      1.3em;
+    border-bottom:                  2px solid #00cccc;
+    margin:                         10px 0px 10px 0px;
+}
+
+.transferTitle{
+	font-family: 					"Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size:                      1.3em;
+    border-bottom:                  2px solid #9900cc;
+    margin:                         10px 0px 10px 0px;
+}
 
 
 /* -------------------------------------------------------------------------- */
