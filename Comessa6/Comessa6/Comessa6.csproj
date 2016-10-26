@@ -220,6 +220,9 @@
     <Compile Include="Models\vorders.cs">
       <DependentUpon>ComessaDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\vpayment.cs">
+      <DependentUpon>ComessaDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\FooterViewModel.cs" />
     <Compile Include="ViewModels\IndexViewModel.cs" />
