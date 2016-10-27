@@ -45,6 +45,35 @@ namespace Comessa6
 #endif
         }
     }
+    //public decimal GetUserBalance(User user)
+    //{
+    //    if (user == null)
+    //        return 0;
+
+    //    decimal balance = 0;
+
+    //    // get negative balance
+    //    object result = this.ExecuteScalar("SELECT SUM(o.`amount` * ip.`price`) FROM `Order` o LEFT JOIN `ItemPrice` ip ON o.`itemPriceId` = ip.`id` WHERE o.`userId` = ? AND o.`status` = 2", user.Id);
+    //    if (result is DBNull == false && result != null)
+    //        balance -= Convert.ToDecimal(result);
+
+    //    // get positive balance
+    //    result = this.ExecuteScalar("SELECT SUM(o.`amount` * ip.`price`) FROM `Order` o LEFT JOIN `ItemPrice` ip ON o.`itemPriceId` = ip.`id` WHERE o.`sellerId` = ? AND o.`status` = 2", user.Id);
+    //    if (result is DBNull == false && result != null)
+    //        balance += Convert.ToDecimal(result);
+
+    //    // get negative balance 
+    //    result = this.ExecuteScalar("SELECT SUM(t.`amount`) FROM `Transfer` t WHERE (t.`senderId` = ? AND t.`type` = 0) OR (t.`recipientId` = ? AND t.`type` = 1)", user.Id, user.Id);
+    //    if (result is DBNull == false && result != null)
+    //        balance -= Convert.ToDecimal(result);
+
+    //    // get positive balance
+    //    result = this.ExecuteScalar("SELECT SUM(t.`amount`) FROM `Transfer` t WHERE (t.`recipientId` = ? AND t.`type` = 0) OR (t.`senderId` = ? AND t.`type` = 1)", user.Id, user.Id);
+    //    if (result is DBNull == false && result != null)
+    //        balance += Convert.ToDecimal(result);
+
+    //    return balance;
+    //}
 
     /// <summary>
     /// As already defined in the existing DB
@@ -57,9 +86,9 @@ namespace Comessa6
         Payment = 99
     }
 
-  public enum PaymentType
-  {
-    Transfer = 0,
-    Payment = 1
-  }
+    public enum PaymentType
+    {
+        Transfer = 0,
+        Payment = 1
+    }
 }
