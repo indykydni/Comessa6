@@ -11,7 +11,6 @@ namespace Comessa6.Models
     [StringLength(20, MinimumLength = 2, ErrorMessage = "Name length should be between 2 and 20")]
     public string Name { get; set; }
     public string Password { get; set; }
-        [Display(Name = "Create Second Mail Body")]
     public bool RememberMe { get; set; }
   }
 }
