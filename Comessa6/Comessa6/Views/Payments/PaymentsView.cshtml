@@ -32,6 +32,9 @@
                             </li>
                             <li class="order-item-content order-item-right">
                                 <span class="price">@((payment.Value).ToString("N2"))</span>
+                                <div class="userName">
+                                    @payment.Date.ToString("dd.MM.yy")
+                                </div>
                             </li>
                         </ul>
                     </li>
