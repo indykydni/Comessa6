@@ -87,7 +87,9 @@
         $("#currentOrders").load(link);
     };
     function loadPayments() {
-        $("#currentPayments").load('@Url.Action("GetPayments", "Payments")');
+        var link = '@Url.Action("GetPayments", "Payments")';
+        link = link + "?userID=" + OrdersUserID;
+        $("#currentPayments").load(link);
     };
     $(document).ready(function () {
         loadOrders();
@@ -107,11 +109,13 @@
         $("#myOrdersHeader, #todaysOrdersHeader").toggle("slow", function () { });
         OrdersUserID = '@Session["UserID"]';
         loadOrders();
+        loadPayments();
     });
 
     $("#myOrdersHeader").click(function () {
         $("#myOrdersHeader, #todaysOrdersHeader").toggle("slow", function () { });
         OrdersUserID = -1;
         loadOrders();
+        loadPayments();
     });
 </script>

@@ -15,7 +15,7 @@ namespace Comessa6.Controllers
   {
     // GET: Orders
     [HttpGet]
-    public async Task<ActionResult> GetPayments()
+    public async Task<ActionResult> GetPayments(int userID)
     {
       using (var db = new comessa5Entities())
       {
@@ -25,7 +25,7 @@ namespace Comessa6.Controllers
 
         //int id = (int)Session["UserID"];
         List<PaymentViewModel> payments = await db.vpayment
-          .Where(payment => payment.date > paymentsOlderThan)
+          .Where(payment => userID == -1 ?  (payment.date > paymentsOlderThan) : (payment.recipientId == userID || payment.senderId == userID))
           .Select(paymentInfo => new PaymentViewModel
           {
             ID = paymentInfo.id,
@@ -35,7 +35,8 @@ namespace Comessa6.Controllers
             RecipientID = paymentInfo.recipientId,
             SenderName = paymentInfo.senderName,
             RecipientName = paymentInfo.recipientName,
-            Type = (PaymentType)paymentInfo.type
+            Type = (PaymentType)paymentInfo.type,
+            Date = paymentInfo.date
           }
           ).ToListAsync();
 
