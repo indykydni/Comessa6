@@ -6,16 +6,18 @@
 <body>
     <div id="orders-list-wrapper">
         <ul id="orders-list">
-            @{string providerName = string.Empty; decimal providerSum = 0;}
+            @{string providerName = string.Empty; decimal providerSum = 0; DateTime date = DateTime.MaxValue;}
             @foreach (OrderViewModel order in Model)
             {
                 bool isMine = string.Equals(order.UserID, Session["UserID"]);
                 string itemClass = isMine ? "order-item-wrapper-mine" : "order-item-wrapper";
 
-                if (!string.Equals(order.ProviderName, providerName))
-                {//the first order of a new provider - show the name of the provider
-                    if (!string.Equals(string.Empty, providerName))
-                    {//after finishing each showing items for each provider - show the sum of all the order values
+                if (!order.ForCurrentUserOnly)
+                {//display the provider header fake item for the todays orders view
+                    if (!string.Equals(order.ProviderName, providerName))
+                    {//the first order of a new provider - show the name of the provider
+                        if (!string.Equals(string.Empty, providerName))
+                        {//after finishing each showing items for each provider - show the sum of all the order values
                         <li>
                             <ul class="order-item-sum">
                                 <li class="order-item-content order-item-left">
@@ -26,13 +28,21 @@
                                 </li>
                             </ul>
                         </li>
+                        }
+                        <li>
+                            <div class="providerName"><span>@(order.ProviderName)</span></div>
+                        </li>
+                        providerSum = 0;
                     }
-                    <li>
-                        <div class="providerName"><span>@(order.ProviderName)</span></div>
-                    </li>
-                    providerSum = 0;
                 }
-                <li class="order-item" id="@("header" + order.ID.ToString())" @if (!isMine) { <text> itemID="@order.ItemID" onclick="OrderClicked(this)"  orderID="@order.ID" , comment="@order.Comment"</text>   }>
+                else if (order.Date.Date != date.Date)//display the date of the order
+                {//the first order with a new date - show the date   
+                    date = order.Date;                 
+                    <li>
+                        <div class="providerName"><span>@order.Date.ToString("dd.MM.yy")</span></div>
+                    </li>
+                }
+                <li class="order-item" id="@("header" + order.ID.ToString())" itemID="@order.ItemID" onclick="OrderClicked(this)"  orderID="@order.ID" , comment="@order.Comment">
                     <ul class="@itemClass" id="@("order" + order.ID.ToString())">
                         <li class="order-item-content order-item-left">
                             <div class="item"><div class="autoFontSize">@order.ItemName</div></div>
@@ -40,7 +50,16 @@
                         </li>
                         <li class="order-item-content order-item-right">
                             <span class="price">@((order.Price * order.Quantity).ToString("N2"))</span>
-                            <div class="userName">@order.UserName</div>
+                            <div class="userName">
+                            @if (order.ForCurrentUserOnly)
+                            {//username for todays orders and provider for my orders
+                                @order.ProviderName
+                            }
+                            else
+                            {
+                                @order.UserName
+                            }
+                            </div>
                         </li>
                         @if (order.Status == OrderStatus.Ordered && isMine)
                         {//show the delete button
@@ -52,8 +71,11 @@
                 </li>
 
                 <li class="itemToOrder-panel" id="@("panelOrder" + order.ID.ToString())"></li>
-                providerName = order.ProviderName;
-                providerSum += order.Price * order.Quantity;
+                if (!order.ForCurrentUserOnly)
+                {
+                    providerName = order.ProviderName;
+                    providerSum += order.Price * order.Quantity;
+                }
             }
             @if (providerSum != 0)
             {//show the sum for the last provider

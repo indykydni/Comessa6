@@ -24,5 +24,7 @@ namespace Comessa6.ViewModels
         public int UserID { get; set; }
         public string Comment { get; set; }
         public OrderStatus Status { get; set; }
+        public bool ForCurrentUserOnly { get; set; }
+        public DateTime Date { get; set; }
     }
 }

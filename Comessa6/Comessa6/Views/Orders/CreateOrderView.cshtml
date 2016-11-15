@@ -20,7 +20,7 @@
       });
 
         function success(result) {
-            $("#currentOrders").load('@Url.Action("GetOrders", "Orders")');
+            $("#currentOrders").load('@Url.Action("GetOrders", "Orders", new { userID = -1 })');
       }
     </script>
 </head>

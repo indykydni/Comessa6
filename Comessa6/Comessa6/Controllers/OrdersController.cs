@@ -15,35 +15,63 @@ namespace Comessa6.Controllers
     {
         // GET: Orders
         [HttpGet]
-        public async Task<ActionResult> GetOrders()
+        public async Task<ActionResult> GetOrders(int userID)
         {
             using (var db = new comessa5Entities())
             {
-                #region Get orders
-                DateTime ordersOlderThan = DateTime.Now;
-                ordersOlderThan -= TimeSpan.FromHours(ordersOlderThan.Hour);
+                List<OrderViewModel> orders = null;
+                #region Get todays orders
+                if (userID == -1)
+                {
+                    DateTime ordersOlderThan = DateTime.Now;
+                    ordersOlderThan -= TimeSpan.FromHours(ordersOlderThan.Hour);
 
-                //int id = (int)Session["UserID"];
-                List<OrderViewModel> orders = await db.corder.Include("citem").Include("citem.cprovider").Include("cuser")
-                  .Where(order => order.date > ordersOlderThan)
-                  .OrderByDescending(order => order.citem.cprovider.id)
-                  .Select(orderInfo => new OrderViewModel
-                  {
-                      ID = orderInfo.id,
-                      ItemName = orderInfo.citem.name,
-                      ItemID = (int)orderInfo.itemId,
-                      Price = orderInfo.price,
-                      Quantity = orderInfo.quantity,
-                      Comment = orderInfo.comment,
-                      ProviderName = orderInfo.citem.cprovider.name,
-                      Status = (OrderStatus)orderInfo.status,
-                      UserName = orderInfo.cuser.name,
-                      UserID = orderInfo.userId ?? -1
-                  }
-                  ).ToListAsync();
-
-                return PartialView("OrdersView", orders);
+                    //int id = (int)Session["UserID"];
+                    orders = await db.corder.Include("citem").Include("citem.cprovider").Include("cuser")
+                      .Where(order => order.date > ordersOlderThan)
+                      .OrderByDescending(order => order.citem.cprovider.id)
+                      .Select(orderInfo => new OrderViewModel
+                      {
+                          ID = orderInfo.id,
+                          ItemName = orderInfo.citem.name,
+                          ItemID = (int)orderInfo.itemId,
+                          Price = orderInfo.price,
+                          Quantity = orderInfo.quantity,
+                          Comment = orderInfo.comment,
+                          ProviderName = orderInfo.citem.cprovider.name,
+                          Status = (OrderStatus)orderInfo.status,
+                          UserName = orderInfo.cuser.name,
+                          UserID = orderInfo.userId ?? -1,
+                          ForCurrentUserOnly = false
+                      }
+                      ).ToListAsync();
+                }
                 #endregion
+                #region get orders for current user
+                else
+                {
+                    orders = await db.corder.Include("citem").Include("citem.cprovider").Include("cuser")
+                     .Where(order => order.userId == userID)
+                     .OrderByDescending(order => order.id)
+                     .Select(orderInfo => new OrderViewModel
+                     {
+                         ID = orderInfo.id,
+                         ItemName = orderInfo.citem.name,
+                         ItemID = (int)orderInfo.itemId,
+                         Price = orderInfo.price,
+                         Quantity = orderInfo.quantity,
+                         Comment = orderInfo.comment,
+                         ProviderName = orderInfo.citem.cprovider.name,
+                         Status = (OrderStatus)orderInfo.status,
+                         UserName = orderInfo.cuser.name,
+                         UserID = orderInfo.userId ?? -1,
+                         ForCurrentUserOnly = true,
+                         Date = orderInfo.date
+            }
+                     ).ToListAsync();
+                }
+                #endregion
+                return PartialView("OrdersView", orders);
             }
         }
         [HttpGet]
