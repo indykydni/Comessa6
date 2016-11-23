@@ -87,7 +87,7 @@ namespace Comessa6.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> SaveOrder(int itemID, int quantity, string comments)
+        public async Task<ActionResult> SaveOrder(int itemID, decimal quantity, string comments)
         {
             using (var db = new comessa5Entities())
             {
