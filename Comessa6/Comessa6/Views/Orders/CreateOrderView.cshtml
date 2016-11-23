@@ -9,7 +9,7 @@
           $.ajax({
             type: 'POST',
             url: '@Url.Action("SaveOrder", "Orders")',
-            data: JSON.stringify({ "itemID":itemID, "quantity": $('#orderQuantity').val(), "comments": $('#orderComments').val() }),
+            data: JSON.stringify({ "itemID":itemID, "quantity": parseFloat($('#orderQuantity').val()), "comments": $('#orderComments').val() }),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (result) { success(result); },
@@ -30,7 +30,7 @@
         <form class="panel-body">
             <div class="row">
                 <div class="col-md-12 form-group">
-                    <input class="form-control" id="orderQuantity" name="quantity" placeholder="Quantity" type="number" min="0.01" max="6666" step="1" value="@Model.Quantity" required>
+                    <input class="form-control" id="orderQuantity" name="quantity" placeholder="Quantity" type="number" min="0" max="6666" step="any" value="@Model.Quantity" required>
                 </div>
             </div>
             <div class="row">
