@@ -94,6 +94,7 @@ namespace Comessa6.Controllers
                 //ToDo: check if it's possible to do that using 1 operation instead of 2 using EF
                 //...or parse the whole citem as argument here
                 citem item = db.citem.Where(citem => citem.id == itemID).FirstOrDefault();
+                cuser server = db.cuser.Where(cuser => cuser.isServer && !cuser.isMasterServer).FirstOrDefault();
                 db.corder.Add(new corder
                 {
                     itemId = itemID,
@@ -104,7 +105,7 @@ namespace Comessa6.Controllers
                     price = item.price,
                     date = DateTime.Now,
                     status = (int)OrderStatus.Ordered,
-                    sellerId = -1//??? as in the desktop app
+                    sellerId = server == null ? -1 : server.id
                 });
                 await db.SaveChangesAsync();
             }
