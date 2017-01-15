@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comessa6", "Comessa6\Comess
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comessa6.Tests", "Comessa6.Tests\Comessa6.Tests.csproj", "{28FAED03-95CD-4A72-B874-91B3893003B8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comessa6.TestsDebug", "Comessa6.TestsDebug\Comessa6.TestsDebug.csproj", "{D434742D-2E6A-4944-A448-496247435E0E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{28FAED03-95CD-4A72-B874-91B3893003B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28FAED03-95CD-4A72-B874-91B3893003B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28FAED03-95CD-4A72-B874-91B3893003B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D434742D-2E6A-4944-A448-496247435E0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D434742D-2E6A-4944-A448-496247435E0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D434742D-2E6A-4944-A448-496247435E0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D434742D-2E6A-4944-A448-496247435E0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
