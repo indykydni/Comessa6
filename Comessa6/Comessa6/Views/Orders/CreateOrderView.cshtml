@@ -9,7 +9,7 @@
           $.ajax({
             type: 'POST',
             url: '@Url.Action("SaveOrder", "Orders")',
-            data: JSON.stringify({ "itemID":itemID, "quantity": $('#orderQuantity').val(), "comments": $('#orderComments').val() }),
+            data: JSON.stringify({ "itemID":itemID, "quantity": parseFloat($('#orderQuantity').val()), "comments": $('#orderComments').val() }),
             contentType: 'application/json; charset=utf-8',
             dataType: 'json',
             success: function (result) { success(result); },
@@ -20,7 +20,7 @@
       });
 
         function success(result) {
-            $("#currentOrders").load('@Url.Action("GetOrders", "Orders")');
+            $("#currentOrders").load('@Url.Action("GetOrders", "Orders", new { userID = -1 })');
       }
     </script>
 </head>
@@ -30,20 +30,20 @@
         <form class="panel-body">
             <div class="row">
                 <div class="col-md-12 form-group">
-                    <input class="form-control" id="orderQuantity" name="quantity" placeholder="Quantity" type="number" min="1" max="666" value="@Model.Quantity" required>
+                    <input class="form-control" id="orderQuantity" name="quantity" placeholder="Quantity" type="number" min="0" max="6666" step="any" value="@Model.Quantity" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12 form-group">
-                    <textarea class="form-control" id="orderComments" name="comment" placeholder="Comments" rows="5">@Model.Comment</textarea>
+                    <textarea class="form-control" id="orderComments" name="comment" placeholder="komentarz..." rows="5">@Model.Comment</textarea>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-3 form-group">
-                    <button class="btn" value="SaveOrder" type="submit">Order</button>
+                    <button class="btn" value="SaveOrder" type="submit">Zamów</button>
                 </div>
                 <div class="col-md-9 form-group">
-                    <button class="btn btn-defaul" onclick="CancelOrder();">Cancel</button>
+                    <button class="btn btn-defaul" onclick="CancelOrder();">Anuluj</button>
                 </div>
             </div>
         </form>

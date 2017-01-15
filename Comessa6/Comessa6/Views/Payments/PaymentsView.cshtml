@@ -32,26 +32,33 @@
                             </li>
                             <li class="order-item-content order-item-right">
                                 <span class="price">@((payment.Value).ToString("N2"))</span>
+                                <div class="userName">
+                                    @payment.Date.ToString("dd.MM.yy")
+                                </div>
                             </li>
                         </ul>
                     </li>
-              }
-              shown = false;
-              foreach (PaymentViewModel payment in Model.Where(p => p.Type == PaymentType.Transfer))
-              {
-                  string itemClass = "order-item-wrapper-transfer";
-                  bool isMine = string.Equals(payment.SenderID, Session["UserID"]) || string.Equals(payment.RecipientID, Session["UserID"]) || string.Equals(2, Session["UserID"]);
-                  if (!isMine)
-                  {
-                      continue;
-                  }
-                  if (!shown)
-                  {
-                      shown = true;
+                }
+                shown = false;
+                foreach (PaymentViewModel payment in Model.Where(p => p.Type == PaymentType.Transfer))
+                {
+                    bool isOut = string.Equals(payment.SenderID, Session["UserID"]);
+                    bool isIn = string.Equals(payment.RecipientID, Session["UserID"]);
+                    bool isMine = isIn || isOut || string.Equals(2, Session["UserID"]);
+                    if (!isMine)
+                    {
+                        continue;
+                    }
+                    if (!shown)
+                    {
+                        shown = true;
                         <li>
                             <div class="transferTitle"><span>Przelewy</span></div>
                         </li>
-                  }
+                    }
+
+
+                    string itemClass = isIn ? "order-item-wrapper-transfer-in" : (isOut ? "order-item-wrapper-transfer-out" : "order-item-wrapper-transfer");
 
                     <li class="order-item" id="@("header" + payment.ID.ToString())">
                         <ul class="@itemClass" id="@("order" + payment.ID.ToString())">
@@ -61,6 +68,9 @@
                             </li>
                             <li class="order-item-content order-item-right">
                                 <span class="price">@((payment.Value).ToString("N2"))</span>
+                                <div class="userName">
+                                        @payment.Date.ToString("dd.MM.yy")
+                                </div>
                             </li>
                         </ul>
                     </li>

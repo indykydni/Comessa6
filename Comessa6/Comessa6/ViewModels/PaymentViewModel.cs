@@ -16,5 +16,6 @@ namespace Comessa6.ViewModels
     public string RecipientName { get; set; }
     public string Comment { get; set; }
     public PaymentType Type { get; set; }
+    public DateTime Date { get; set; }
   }
 }

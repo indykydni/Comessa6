@@ -40,6 +40,7 @@ namespace Comessa6.Controllers
           }
           Session["UserName"] = u.Name;
           Session["UserID"] = dbUser.id;
+          Session["UserIDForOrders"] = -1;
           Session["IsAdmin"] = dbUser.isServer;
           FormsAuthentication.SetAuthCookie(u.Name, u.RememberMe);
           return RedirectToAction("Index", "Home");

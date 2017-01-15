@@ -15,35 +15,63 @@ namespace Comessa6.Controllers
     {
         // GET: Orders
         [HttpGet]
-        public async Task<ActionResult> GetOrders()
+        public async Task<ActionResult> GetOrders(int userID)
         {
             using (var db = new comessa5Entities())
             {
-                #region Get orders
-                DateTime ordersOlderThan = DateTime.Now;
-                ordersOlderThan -= TimeSpan.FromHours(ordersOlderThan.Hour);
+                List<OrderViewModel> orders = null;
+                #region Get todays orders
+                if (userID == -1)
+                {
+                    DateTime ordersOlderThan = DateTime.Now;
+                    ordersOlderThan -= TimeSpan.FromHours(ordersOlderThan.Hour);
 
-                //int id = (int)Session["UserID"];
-                List<OrderViewModel> orders = await db.corder.Include("citem").Include("citem.cprovider").Include("cuser")
-                  .Where(order => order.date > ordersOlderThan)
-                  .OrderByDescending(order => order.citem.cprovider.id)
-                  .Select(orderInfo => new OrderViewModel
-                  {
-                      ID = orderInfo.id,
-                      ItemName = orderInfo.citem.name,
-                      ItemID = (int)orderInfo.itemId,
-                      Price = orderInfo.price,
-                      Quantity = orderInfo.quantity,
-                      Comment = orderInfo.comment,
-                      ProviderName = orderInfo.citem.cprovider.name,
-                      Status = (OrderStatus)orderInfo.status,
-                      UserName = orderInfo.cuser.name,
-                      UserID = orderInfo.userId ?? -1
-                  }
-                  ).ToListAsync();
-
-                return PartialView("OrdersView", orders);
+                    //int id = (int)Session["UserID"];
+                    orders = await db.corder.Include("citem").Include("citem.cprovider").Include("cuser")
+                      .Where(order => order.date > ordersOlderThan)
+                      .OrderByDescending(order => order.citem.cprovider.id)
+                      .Select(orderInfo => new OrderViewModel
+                      {
+                          ID = orderInfo.id,
+                          ItemName = orderInfo.citem.name,
+                          ItemID = (int)orderInfo.itemId,
+                          Price = orderInfo.price,
+                          Quantity = orderInfo.quantity,
+                          Comment = orderInfo.comment,
+                          ProviderName = orderInfo.citem.cprovider.name,
+                          Status = (OrderStatus)orderInfo.status,
+                          UserName = orderInfo.cuser.name,
+                          UserID = orderInfo.userId ?? -1,
+                          ForCurrentUserOnly = false
+                      }
+                      ).ToListAsync();
+                }
                 #endregion
+                #region get orders for current user
+                else
+                {
+                    orders = await db.corder.Include("citem").Include("citem.cprovider").Include("cuser")
+                     .Where(order => order.userId == userID)
+                     .OrderByDescending(order => order.id)
+                     .Select(orderInfo => new OrderViewModel
+                     {
+                         ID = orderInfo.id,
+                         ItemName = orderInfo.citem.name,
+                         ItemID = (int)orderInfo.itemId,
+                         Price = orderInfo.price,
+                         Quantity = orderInfo.quantity,
+                         Comment = orderInfo.comment,
+                         ProviderName = orderInfo.citem.cprovider.name,
+                         Status = (OrderStatus)orderInfo.status,
+                         UserName = orderInfo.cuser.name,
+                         UserID = orderInfo.userId ?? -1,
+                         ForCurrentUserOnly = true,
+                         Date = orderInfo.date
+            }
+                     ).ToListAsync();
+                }
+                #endregion
+                return PartialView("OrdersView", orders);
             }
         }
         [HttpGet]
@@ -59,13 +87,14 @@ namespace Comessa6.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> SaveOrder(int itemID, int quantity, string comments)
+        public async Task<ActionResult> SaveOrder(int itemID, decimal quantity, string comments)
         {
             using (var db = new comessa5Entities())
             {
                 //ToDo: check if it's possible to do that using 1 operation instead of 2 using EF
                 //...or parse the whole citem as argument here
                 citem item = db.citem.Where(citem => citem.id == itemID).FirstOrDefault();
+                cuser server = db.cuser.Where(cuser => cuser.isServer && !cuser.isMasterServer).FirstOrDefault();
                 db.corder.Add(new corder
                 {
                     itemId = itemID,
@@ -76,7 +105,7 @@ namespace Comessa6.Controllers
                     price = item.price,
                     date = DateTime.Now,
                     status = (int)OrderStatus.Ordered,
-                    sellerId = -1//??? as in the desktop app
+                    sellerId = server == null ? -1 : server.id
                 });
                 await db.SaveChangesAsync();
             }

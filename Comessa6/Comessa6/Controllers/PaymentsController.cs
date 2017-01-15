@@ -15,31 +15,30 @@ namespace Comessa6.Controllers
   {
     // GET: Orders
     [HttpGet]
-    public async Task<ActionResult> GetPayments()
+    public async Task<ActionResult> GetPayments(int userID)
     {
       using (var db = new comessa5Entities())
       {
         #region Get Payments
         DateTime paymentsOlderThan = DateTime.Now;
         paymentsOlderThan -= TimeSpan.FromHours(paymentsOlderThan.Hour);
-
-        //int id = (int)Session["UserID"];
-        List<PaymentViewModel> payments = await db.vpayment
-          .Where(payment => payment.date > paymentsOlderThan)
-          .Select(paymentInfo => new PaymentViewModel
+        List<PaymentViewModel> payments = await (from payment in db.vpayment
+          where ((userID == -1 && payment.date > paymentsOlderThan) || payment.recipientId == userID || payment.senderId == userID)
+          orderby payment.id descending
+          select new PaymentViewModel
           {
-            ID = paymentInfo.id,
-            Value = paymentInfo.amount,
-            Comment = paymentInfo.comment,
-            SenderID = paymentInfo.senderId,
-            RecipientID = paymentInfo.recipientId,
-            SenderName = paymentInfo.senderName,
-            RecipientName = paymentInfo.recipientName,
-            Type = (PaymentType)paymentInfo.type
+              ID = payment.id,
+              Value = payment.amount,
+              Comment = payment.comment,
+              SenderID = payment.senderId,
+              RecipientID = payment.recipientId,
+              SenderName = payment.senderName,
+              RecipientName = payment.recipientName,
+              Type = (PaymentType)payment.type,
+              Date = payment.date
           }
           ).ToListAsync();
-
-        return PartialView("PaymentsView", payments);
+          return PartialView("PaymentsView", payments);
         #endregion
       }
     }

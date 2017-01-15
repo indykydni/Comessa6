@@ -45,7 +45,8 @@
         </div>
     </div>
     <div class="col-lg-6">
-        <div class="columnHeader">Zamówione dziś</div>
+        <div id="todaysOrdersHeader" class="columnHeaderSwitchable">Zamówione dziś</div>
+        <div id="myOrdersHeader" class="columnHeaderSwitchable">Moje zamówienia</div>
         <div>
             <div id="currentOrders" />
         </div>
@@ -55,7 +56,7 @@
     </div>
 </div>
 <script>
-
+    var OrdersUserID = -1;
     $(function () {
         $(".provider-header").each(function () {
             var button = $(this);
@@ -80,14 +81,20 @@
         });
     });
     function loadOrders() {
-        $("#currentOrders").load('@Url.Action("GetOrders", "Orders")');
+        var link = '@Url.Action("GetOrders", "Orders")';
+        link = link + "?userID=" + OrdersUserID;
+        //link.replace("replace", "asfd");
+        $("#currentOrders").load(link);
     };
     function loadPayments() {
-        $("#currentPayments").load('@Url.Action("GetPayments", "Payments")');
+        var link = '@Url.Action("GetPayments", "Payments")';
+        link = link + "?userID=" + OrdersUserID;
+        $("#currentPayments").load(link);
     };
     $(document).ready(function () {
         loadOrders();
         loadPayments();
+        $('#myOrdersHeader').hide();
     });
 
     setInterval(function () {
@@ -97,4 +104,18 @@
     setInterval(function () {
         loadPayments();
     }, 60000);
+
+    $("#todaysOrdersHeader").click(function () {
+        $("#myOrdersHeader, #todaysOrdersHeader").toggle("slow", function () { });
+        OrdersUserID = '@Session["UserID"]';
+        loadOrders();
+        loadPayments();
+    });
+
+    $("#myOrdersHeader").click(function () {
+        $("#myOrdersHeader, #todaysOrdersHeader").toggle("slow", function () { });
+        OrdersUserID = -1;
+        loadOrders();
+        loadPayments();
+    });
 </script>

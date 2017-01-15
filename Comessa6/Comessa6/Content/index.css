@@ -183,7 +183,33 @@ body {
 	border-bottom:					2px solid #E6E6E6;
 }
 
+#orders-list .order-item-wrapper-transfer-in {
+	position:						relative;
+	overflow:						hidden;
+	width:							686px;
+	height:							50px;
+	margin:							0;
+	padding:						0;
+	list-style:						none;
+	border-bottom:					2px solid #b3ffb3;
+}
+
+#orders-list .order-item-wrapper-transfer-out {
+	position:						relative;
+	overflow:						hidden;
+	width:							686px;
+	height:							50px;
+	margin:							0;
+	padding:						0;
+	list-style:						none;
+	border-bottom:					2px solid #ff9999;
+}
+
 #orders-list .order-item-wrapper:hover, #orders-list .order-item-wrapper:active{
+    cursor: pointer;	
+	border-bottom:					2px solid #0066A0;
+}
+#orders-list .order-item-wrapper-mine:hover, #orders-list .order-item-wrapper-mine:active{
     cursor: pointer;	
 	border-bottom:					2px solid #0066A0;
 }
@@ -680,6 +706,13 @@ body {
 	font-family: 					"Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size:                      2.8em;
     text-align:                     center;
+}
+
+.columnHeaderSwitchable {
+	font-family: 					"Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size:                      2.8em;
+    text-align:                     center;
+	cursor: pointer
 }
 
 .comessaTitle {
