@@ -11,6 +11,12 @@ namespace Comessa6.Controllers
   [AllowAnonymous]
   public class AuthenticationController : Controller
   {
+    private comessa5Entities repository;
+
+    public AuthenticationController(comessa5Entities repository)
+    {
+      this.repository = repository;
+    }
 
     public ActionResult Logout()
     {
@@ -30,21 +36,18 @@ namespace Comessa6.Controllers
     {
       if (ModelState.IsValid)
       {
-        using (var db = new comessa5Entities())
+        cuser dbUser = repository.cuser.Where(user => string.Equals(user.login, u.Name)).FirstOrDefault();
+        if (dbUser == null || !string.Equals(u.Password.CalculateMD5Hash(), dbUser.password, StringComparison.InvariantCultureIgnoreCase))
         {
-          cuser dbUser = db.cuser.Where(user => string.Equals(user.login, u.Name)).FirstOrDefault();
-          if (dbUser == null || !string.Equals(u.Password.CalculateMD5Hash(), dbUser.password, StringComparison.InvariantCultureIgnoreCase))
-          {
-            ModelState.AddModelError("CredentialError", "Invalid Name or Password");
-              return View("Login");
-          }
-          Session["UserName"] = u.Name;
-          Session["UserID"] = dbUser.id;
-          Session["UserIDForOrders"] = -1;
-          Session["IsAdmin"] = dbUser.isServer;
-          FormsAuthentication.SetAuthCookie(u.Name, u.RememberMe);
-          return RedirectToAction("Index", "Home");
+          ModelState.AddModelError("CredentialError", "Invalid Name or Password");
+          return View("Login");
         }
+        Session["UserName"] = u.Name;
+        Session["UserID"] = dbUser.id;
+        Session["UserIDForOrders"] = -1;
+        Session["IsAdmin"] = dbUser.isServer;
+        FormsAuthentication.SetAuthCookie(u.Name, u.RememberMe);
+        return RedirectToAction("Index", "Home");
       }
       return View("Login");
     }

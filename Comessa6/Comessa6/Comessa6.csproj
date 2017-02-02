@@ -305,6 +305,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AuthenticationController.cs" />
+    <Compile Include="Controllers\ComessaControllerFactory.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ItemsController.cs" />
     <Compile Include="Controllers\PaymentsController.cs" />
@@ -357,6 +358,7 @@
     <Compile Include="Models\vpayment.cs">
       <DependentUpon>ComessaDBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Utils\ControllerFactoryHelper.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\FooterViewModel.cs" />
     <Compile Include="ViewModels\IndexViewModel.cs" />

@@ -10,6 +10,13 @@ namespace Comessa6.Controllers
 {
   public class HomeController : Controller
   {
+    private comessa5Entities repository;
+
+    public HomeController(comessa5Entities repository)
+    {
+      this.repository = repository;
+    }
+
     [Authorize]
     public ActionResult Index()
     {
@@ -19,36 +26,34 @@ namespace Comessa6.Controllers
         return RedirectToAction("Login", "Authentication");
       }
       IndexViewModel indexVM = new IndexViewModel();
-      using (var db = new comessa5Entities())
-      {
-        #region Get Providers with Items
-        //indexVM.Providers = new ProvidersViewModel();
-        //var itemsInfo = db.citem.Include("cprovider").Where(item => item.isVisible).OrderBy(item => item.cprovider.priority).ThenBy(item => item.priority);
-        //foreach (var itemInfo in itemsInfo)
-        //{
-        //  ItemViewModel itemVM = new ItemViewModel { ID = itemInfo.id, Name = itemInfo.name, Price = itemInfo.price };
-        //  ProviderViewModel providerVM = indexVM.Providers.Providers.Where(prov => prov.ID.Equals(itemInfo.providerId)).FirstOrDefault();
-        //  if (!itemInfo.providerId.HasValue)
-        //    continue;
-        //  if (providerVM == null)
-        //  {
-        //    providerVM = new ProviderViewModel { Name = itemInfo.cprovider.name, ID = itemInfo.providerId.Value };
-        //    indexVM.Providers.Providers.Add(providerVM);
-        //  }
+      #region Get Providers with Items
+      //indexVM.Providers = new ProvidersViewModel();
+      //var itemsInfo = repository.citem.Include("cprovider").Where(item => item.isVisible).OrderBy(item => item.cprovider.priority).ThenBy(item => item.priority);
+      //foreach (var itemInfo in itemsInfo)
+      //{
+      //  ItemViewModel itemVM = new ItemViewModel { ID = itemInfo.id, Name = itemInfo.name, Price = itemInfo.price };
+      //  ProviderViewModel providerVM = indexVM.Providers.Providers.Where(prov => prov.ID.Equals(itemInfo.providerId)).FirstOrDefault();
+      //  if (!itemInfo.providerId.HasValue)
+      //    continue;
+      //  if (providerVM == null)
+      //  {
+      //    providerVM = new ProviderViewModel { Name = itemInfo.cprovider.name, ID = itemInfo.providerId.Value };
+      //    indexVM.Providers.Providers.Add(providerVM);
+      //  }
 
-        //  providerVM.Items.Add(itemVM);
-        //}
-        #endregion
-        #region Get Providers
-        indexVM.Providers = new ProvidersViewModel();
-        var itemsInfo = db.cprovider.OrderBy(provider => provider.priority);
+      //  providerVM.Items.Add(itemVM);
+      //}
+      #endregion
+      #region Get Providers
+      indexVM.Providers = new ProvidersViewModel();
+        var itemsInfo = repository.cprovider.OrderBy(provider => provider.priority);
         foreach (var providerInfo in itemsInfo)
         {
           ProviderViewModel providerVM = new ProviderViewModel { ID = providerInfo.id, Name = providerInfo.name, IsVisible = providerInfo.isVisible, TodaysDinner = (DateTime.Today.Year.Equals(providerInfo.dinnerLastModified.Year) && (DateTime.Today.DayOfYear.Equals(providerInfo.dinnerLastModified.DayOfYear))) ? providerInfo.dinnerText : null };
           indexVM.Providers.Providers.Add(providerVM);
         }
         #endregion
-      }
+      
       return View(indexVM);
     }
 

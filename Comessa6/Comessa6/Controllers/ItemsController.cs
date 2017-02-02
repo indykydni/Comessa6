@@ -14,24 +14,26 @@ namespace Comessa6.Controllers
 {
   public class ItemsController : Controller
   {
+    private comessa5Entities repository;
+
+    public ItemsController(comessa5Entities repository)
+    {
+      this.repository = repository;
+    }
     [HttpGet]
     public async Task<ActionResult> GetItems(int providerID)
     {
-      using (var db = new comessa5Entities())
-      {
-        //List<ItemViewModel> items = new List<ItemViewModel>();
-        List<ItemViewModel> items = await (from citem item 
-                                   in db.citem
-                                   where item.providerId == providerID
-                                   select new ItemViewModel
-                                   {
-                                     ID = item.id,
-                                     Name = item.name,
-                                     Price = item.price,
-                                     Priority = item.priority
-                                   }).ToListAsync();
-        return PartialView("ItemsView", items.OrderBy(item => item.Priority));
-      }
+      List<ItemViewModel> items = await (from citem item
+                                 in repository.citem
+                                         where item.providerId == providerID
+                                         select new ItemViewModel
+                                         {
+                                           ID = item.id,
+                                           Name = item.name,
+                                           Price = item.price,
+                                           Priority = item.priority
+                                         }).ToListAsync();
+      return PartialView("ItemsView", items.OrderBy(item => item.Priority));
     }
   }
 }

@@ -23,5 +23,11 @@ namespace Comessa6.Tests.Controllers
       Assert.That(result, Is.Not.Null);
       Assert.That(result.ViewName, Is.EqualTo("CreateOrderView"));
     }
+
+    [Test]
+    public void OrdersController_GetOrders_ReturnsAllOrders()
+    {
+
+    }
   }
 }
