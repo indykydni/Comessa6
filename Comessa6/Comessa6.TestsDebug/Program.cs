@@ -12,7 +12,7 @@ namespace Comessa6.TestsDebug
     static void Main(string[] args)
     {
       var test = new OrdersController_CreateOrder();
-      test.ReturnsCorrectView();
+      test.OrdersController_CreateOrder_ReturnsCorrectView();
     }
   }
 }

@@ -8,15 +8,15 @@ using System.Web.Routing;
 
 namespace Comessa6
 {
-    public class MvcApplication : System.Web.HttpApplication
+  public class MvcApplication : System.Web.HttpApplication
+  {
+    protected void Application_Start()
     {
-        protected void Application_Start()
-        {
-            AreaRegistration.RegisterAllAreas();
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
-            ModelBinders.Binders.Add(typeof(decimal?), new DecimalModelBinder());
+      AreaRegistration.RegisterAllAreas();
+      FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+      RouteConfig.RegisterRoutes(RouteTable.Routes);
+      BundleConfig.RegisterBundles(BundleTable.Bundles);
+      ModelBinders.Binders.Add(typeof(decimal?), new DecimalModelBinder());
     }
-    }
+  }
 }

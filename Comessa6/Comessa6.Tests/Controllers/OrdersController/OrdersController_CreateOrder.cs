@@ -17,8 +17,11 @@ namespace Comessa6.Tests.Controllers
     {
       var controller = new OrdersController();
       var result = controller.CreateOrder(2) as PartialViewResult;
-      Assert.IsNotNull(result);
-      Assert.AreEqual(result.ViewName, "CreateOrderView");
+      //the old way
+      //Assert.IsNotNull(result);
+      //Assert.AreEqual(result.ViewName, "CreateOrderView");
+      Assert.That(result, Is.Not.Null);
+      Assert.That(result.ViewName, Is.EqualTo("CreateOrderView"));
     }
   }
 }
