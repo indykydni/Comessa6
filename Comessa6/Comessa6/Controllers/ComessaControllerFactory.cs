@@ -11,22 +11,22 @@ namespace Comessa6.Controllers
 {
   public class ComessaControllerFactory : DefaultControllerFactory
   {
-    private Dictionary<string, Func<RequestContext, IController>> controllers = new Dictionary<string, Func<RequestContext, IController>>();
+    private Dictionary<Type, Func<RequestContext, IController>> controllers = new Dictionary<Type, Func<RequestContext, IController>>();
 
     public ComessaControllerFactory(comessa5Entities repository)
     {
-      controllers["Authentication"] = controller => new AuthenticationController(repository);
-      controllers["Home"] = controller => new HomeController(repository);
-      controllers["Items"] = controller => new ItemsController(repository);
-      controllers["Orders"] = controller => new OrdersController(repository);
-      controllers["Payments"] = controller => new PaymentsController(repository);
+      controllers[typeof(AuthenticationController)] = controller => new AuthenticationController(repository);
+      controllers[typeof(HomeController)] = controller => new HomeController(repository);
+      controllers[typeof(ItemsController)] = controller => new ItemsController(repository);
+      controllers[typeof(OrdersController)] = controller => new OrdersController(repository);
+      controllers[typeof(PaymentsController)] = controller => new PaymentsController(repository);
     }
 
-    public override IController CreateController(RequestContext requestContext, string controllerName)
+    protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
     {
-      if (!controllers.ContainsKey(controllerName))
-        return base.CreateController(requestContext, controllerName);
-      return controllers[controllerName](requestContext);
+      if (!controllers.ContainsKey(controllerType))
+        return base.GetControllerInstance(requestContext, controllerType);
+      return controllers[controllerType](requestContext);
     }
   }
 }
