@@ -18,7 +18,6 @@ namespace Comessa6
       RouteConfig.RegisterRoutes(RouteTable.Routes);
       BundleConfig.RegisterBundles(BundleTable.Bundles);
       ModelBinders.Binders.Add(typeof(decimal?), new DecimalModelBinder());
-      ControllerBuilder.Current.SetControllerFactory(ControllerFactoryHelper.GetControllerFactory());
     }
   }
 }

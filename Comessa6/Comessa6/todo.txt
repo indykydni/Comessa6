@@ -1,0 +1,4 @@
+﻿Use Unity with Unit of work and Repository patterns
+[like so](https://docs.microsoft.com/en-us/aspnet/mvc/overview/older-versions/getting-started-with-ef-5-using-mvc-4/implementing-the-repository-and-unit-of-work-patterns-in-an-asp-net-mvc-application)
+
+[or so](https://www.codeproject.com/Articles/786332/ASP-NET-MVC-with-Unity-Dependency-Injection)

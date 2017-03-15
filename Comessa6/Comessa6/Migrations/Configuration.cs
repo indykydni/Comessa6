@@ -5,14 +5,14 @@ namespace Comessa6.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Comessa6.Models.comessa5Entities>
+    internal sealed class Configuration : DbMigrationsConfiguration<Comessa6.Models.Comessa5Context>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Comessa6.Models.comessa5Entities context)
+        protected override void Seed(Comessa6.Models.Comessa5Context context)
         {
             //  This method will be called after migrating to the latest version.
 

@@ -11,11 +11,11 @@ namespace Comessa6.Controllers
   [AllowAnonymous]
   public class AuthenticationController : Controller
   {
-    private comessa5Entities repository;
+    private IComessaEntitiesFactory factory;
 
-    public AuthenticationController(comessa5Entities repository)
+    public AuthenticationController(IComessaEntitiesFactory factory)
     {
-      this.repository = repository;
+      this.factory = factory;
     }
 
     public ActionResult Logout()
@@ -36,17 +36,21 @@ namespace Comessa6.Controllers
     {
       if (ModelState.IsValid)
       {
-        cuser dbUser = repository.cuser.Where(user => string.Equals(user.login, u.Name)).FirstOrDefault();
-        if (dbUser == null || !string.Equals(u.Password.CalculateMD5Hash(), dbUser.password, StringComparison.InvariantCultureIgnoreCase))
+        using (Comessa5Context repository = factory.GetContext())
         {
-          ModelState.AddModelError("CredentialError", "Invalid Name or Password");
-          return View("Login");
+          cuser dbUser = repository.cuser.Where(user => string.Equals(user.login, u.Name)).FirstOrDefault();
+          if (dbUser == null || !string.Equals(u.Password.CalculateMD5Hash(), dbUser.password, StringComparison.InvariantCultureIgnoreCase))
+          {
+            ModelState.AddModelError("CredentialError", "Invalid Name or Password");
+            return View("Login");
+          }
+
+          Session["UserName"] = u.Name;
+          Session["UserID"] = dbUser.id;
+          Session["UserIDForOrders"] = -1;
+          Session["IsAdmin"] = dbUser.isServer;
+          FormsAuthentication.SetAuthCookie(u.Name, u.RememberMe);
         }
-        Session["UserName"] = u.Name;
-        Session["UserID"] = dbUser.id;
-        Session["UserIDForOrders"] = -1;
-        Session["IsAdmin"] = dbUser.isServer;
-        FormsAuthentication.SetAuthCookie(u.Name, u.RememberMe);
         return RedirectToAction("Index", "Home");
       }
       return View("Login");

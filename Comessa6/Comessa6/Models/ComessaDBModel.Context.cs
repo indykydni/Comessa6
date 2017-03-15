@@ -13,9 +13,9 @@ namespace Comessa6.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class comessa5Entities : DbContext
+    public partial class Comessa5Context : DbContext
     {
-        public comessa5Entities()
+        public Comessa5Context()
             : base("name=comessa5Entities")
         {
         }

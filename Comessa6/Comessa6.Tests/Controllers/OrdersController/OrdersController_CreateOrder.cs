@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Comessa6.Controllers;
 using System.Web.Mvc;
+using Moq;
+using Comessa6.Models;
 
 namespace Comessa6.Tests.Controllers
 {
@@ -15,19 +17,14 @@ namespace Comessa6.Tests.Controllers
     [Test]
     public void OrdersController_CreateOrder_ReturnsCorrectView()
     {
-      var controller = new OrdersController();
+      var factoryMock = new Mock<ComessaEntitiesFactory>();
+      var controller = new OrdersController(factoryMock.Object);
       var result = controller.CreateOrder(2) as PartialViewResult;
       //the old way
       //Assert.IsNotNull(result);
       //Assert.AreEqual(result.ViewName, "CreateOrderView");
       Assert.That(result, Is.Not.Null);
       Assert.That(result.ViewName, Is.EqualTo("CreateOrderView"));
-    }
-
-    [Test]
-    public void OrdersController_GetOrders_ReturnsAllOrders()
-    {
-
     }
   }
 }

@@ -13,11 +13,11 @@ namespace Comessa6.Controllers
 {
   public class OrdersController : Controller
   {
-    private comessa5Entities repository;
+    private IComessaEntitiesFactory factory;
 
-    public OrdersController(comessa5Entities repository)
+    public OrdersController(IComessaEntitiesFactory factory)
     {
-      this.repository = repository;
+      this.factory = factory;
     }
     // GET: Orders
     [HttpGet]
@@ -31,7 +31,9 @@ namespace Comessa6.Controllers
         ordersOlderThan -= TimeSpan.FromHours(ordersOlderThan.Hour);
 
         //int id = (int)Session["UserID"];
-        orders = await repository.corder.Include("citem").Include("citem.cprovider").Include("cuser")
+        using (Comessa5Context repository = factory.GetContext())
+        {
+          orders = await repository.corder.Include("citem").Include("citem.cprovider").Include("cuser")
           .Where(order => order.date > ordersOlderThan)
           .OrderByDescending(order => order.citem.cprovider.id)
           .Select(orderInfo => new OrderViewModel
@@ -49,12 +51,15 @@ namespace Comessa6.Controllers
             ForCurrentUserOnly = false
           }
           ).ToListAsync();
+        }
       }
       #endregion
       #region get orders for current user
       else
       {
-        orders = await repository.corder.Include("citem").Include("citem.cprovider").Include("cuser")
+        using (Comessa5Context repository = factory.GetContext())
+        {
+          orders = await repository.corder.Include("citem").Include("citem.cprovider").Include("cuser")
          .Where(order => order.userId == userID)
          .OrderByDescending(order => order.id)
          .Select(orderInfo => new OrderViewModel
@@ -73,6 +78,7 @@ namespace Comessa6.Controllers
            Date = orderInfo.date
          }
          ).ToListAsync();
+        }
       }
       #endregion
       return PartialView("OrdersView", orders);
@@ -93,34 +99,44 @@ namespace Comessa6.Controllers
     [HttpPost]
     public async Task<ActionResult> SaveOrder(int itemID, decimal quantity, string comments)
     {
+      return await SaveOrder(itemID, (int)Session["UserID"], quantity, comments);
+    }
+
+    public async Task<ActionResult> SaveOrder(int itemID, int userID, decimal quantity, string comments)
+    {
       //ToDo: check if it's possible to do that using 1 operation instead of 2 using EF
       //...or parse the whole citem as argument here
-      citem item = repository.citem.Where(citem => citem.id == itemID).FirstOrDefault();
-      cuser server = repository.cuser.Where(cuser => cuser.isServer && !cuser.isMasterServer).FirstOrDefault();
-      repository.corder.Add(new corder
+      using (Comessa5Context repository = factory.GetContext())
       {
-        itemId = itemID,
-        quantity = quantity,
-        comment = comments,
-        userId = (int)Session["UserID"],
-        itemName = item.name,
-        price = item.price,
-        date = DateTime.Now,
-        status = (int)OrderStatus.Ordered,
-        sellerId = server == null ? -1 : server.id
-      });
-      await repository.SaveChangesAsync();
-
+        citem item = repository.citem.Where(citem => citem.id == itemID).FirstOrDefault();
+        cuser server = repository.cuser.Where(cuser => cuser.isServer && !cuser.isMasterServer).FirstOrDefault();
+        repository.corder.Add(new corder
+        {
+          itemId = itemID,
+          quantity = quantity,
+          comment = comments,
+          userId = userID,
+          itemName = item.name,
+          price = item.price,
+          date = DateTime.Now,
+          status = (int)OrderStatus.Ordered,
+          sellerId = server == null ? -1 : server.id
+        });
+        await repository.SaveChangesAsync();
+      }
       return Json(true);
     }
 
     [HttpPost]
     public async Task<ActionResult> DeleteOrder(int ID)
     {
-      var toRemove = repository.corder.Where(order => order.id == ID).SingleOrDefault();
-      if (toRemove == null) return Json(false);
-      repository.corder.Remove(toRemove);
-      await repository.SaveChangesAsync();
+      using (Comessa5Context repository = factory.GetContext())
+      {
+        var toRemove = repository.corder.Where(order => order.id == ID).SingleOrDefault();
+        if (toRemove == null) return Json(false);
+        repository.corder.Remove(toRemove);
+        await repository.SaveChangesAsync();
+      }
       // Delete the item in the database
       return Json(true); // or if there is an error, return Json(null); to indicate failure
     }
