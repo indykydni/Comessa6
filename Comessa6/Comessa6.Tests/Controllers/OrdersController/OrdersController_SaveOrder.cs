@@ -57,14 +57,11 @@ namespace Comessa6.Tests.Controllers
 
       var controller = new OrdersController(factoryMock.Object);
       var result = controller.SaveOrder(1, 2, 3, "fake order");
-      //the old way
-      //Assert.IsNotNull(result);
-      //Assert.AreEqual(result.ViewName, "CreateOrderView");
+      
       Assert.That(result, Is.Not.Null);
 
-
       ordersMock.Verify(m => m.Add(It.IsAny<corder>()), Times.Once());
-      contextMock.Verify(m => m.SaveChanges(), Times.Once());
+      contextMock.Verify(m => m.SaveChangesAsync(), Times.Once());
     }
   }
 }
