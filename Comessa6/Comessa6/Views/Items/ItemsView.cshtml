@@ -4,7 +4,7 @@
         @foreach (var item in Model)
         {
             <div class="itemToOrder" type="submit" id="@item.ID" itemName="@item.Name" onclick="ItemClicked(this)">
-                @item.Name @item.Price
+                @item.Name @Math.Round(item.Price, 2)
             </div>
         <div class="itemToOrder-panel" id="@("panel" + item.ID.ToString())"></div>
         }
